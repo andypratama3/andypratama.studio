@@ -1,0 +1,312 @@
+{
+  "common": {
+    "brand": "Andy Pratama Studio",
+    "siteDescription": "Andy Pratama Studio — perangkat lunak operasional harian dari Samarinda, Indonesia.",
+    "comingSoon": "Segera hadir",
+    "stubStatus": "Sedang disiapkan",
+    "stubNote": "Halaman ini masih disusun. Isinya akan muncul di sini setelah siap.",
+    "stubCta": "Ceritakan kebutuhan Anda saja",
+    "scrollHint": "Geser ke bawah",
+    "pause": "Jeda",
+    "play": "Putar",
+    "marqueePause": "Jeda tulisan berjalan",
+    "marqueePlay": "Putar tulisan berjalan"
+  },
+  "productsPage": {
+    "title": "Produk siap pakai",
+    "description": "Template dan alat yang bisa langsung dipakai—tanpa mulai dari nol.",
+    "dualbrandTitle": "DualBrand",
+    "dualbrandDesc": "Website untuk satu merek induk dan dua merek anak. Ada demo langsung.",
+    "dualbrandCta": "Lihat DualBrand",
+    "moreSoon": "Produk lain sedang disiapkan."
+  },
+  "servicesPage": {
+    "title": "Jasa",
+    "description": "Dua paket untuk tim yang ingin merapikan operasional tanpa membangun dari nol.",
+    "pkg1Label": "01",
+    "pkg1Title": "Pembayaran + WhatsApp untuk Laravel",
+    "pkg1Desc": "Sambungkan Midtrans payment gateway dan WhatsApp Business API ke aplikasi Laravel yang sudah ada. Tagihan dibuat, dicocokkan dengan transfer masuk, lalu orang yang perlu tahu mendapat pesan WhatsApp secara otomatis.",
+    "pkg1Scope": "Lingkup: webhook Midtrans, pencocokan pembayaran, pengiriman template WhatsApp.",
+    "pkg1Prereq": "Prasyarat: aplikasi Laravel yang sudah berjalan dengan akses database.",
+    "pkg2Label": "02",
+    "pkg2Title": "Perangkat lunak khusus",
+    "pkg2Desc": "Portal, sistem absensi, dasbor, migrasi data—apa pun yang dipakai tim setiap hari. Lingkup disepakati sebelum pekerjaan dimulai, lalu saya serahkan sesuatu yang siap dipakai.",
+    "pkg2Scope": "Lingkup: disepakati sebelum pekerjaan dimulai. Tidak ada keterlibatan tanpa batas.",
+    "pkg2Prereq": "Prasyarat: pernyataan masalah yang jelas. Kita diskusikan bersama jika diperlukan.",
+    "cta": "Ceritakan kebutuhan Anda"
+  },
+  "workPage": {
+    "description": "Karya pilihan — sistem sekolah, alat operasional, dan proyek klien."
+  },
+  "licensePage": {
+    "description": "Cara DualBrand boleh dipakai. Ketentuan yang mengikat tampil saat checkout.",
+    "body": "DualBrand dijual sebagai paket template. Apa yang boleh dan tidak — termasuk untuk klien — ditentukan oleh lisensi yang Anda setujui saat membeli.",
+    "pointCheckout": "Teks lisensi lengkap muncul di Gumroad sebelum pembayaran.",
+    "pointFaq": "Pertanyaan lisensi umum dijawab di halaman FAQ.",
+    "pointContact": "Untuk klarifikasi sebelum membeli, gunakan Mulai di sini.",
+    "faqCta": "Baca FAQ"
+  },
+  "faqPage": {
+    "title": "FAQ",
+    "description": "Jawaban langsung tentang proyek, rekrutmen, DualBrand, dan pilot sekolah."
+  },
+  "notFound": {
+    "kicker": "404",
+    "title": "Halaman ini tidak ada",
+    "description": "Tautannya mungkin lama, atau halaman sudah dipindah. Kembali ke beranda atau ceritakan kebutuhan Anda.",
+    "homeCta": "Kembali ke beranda"
+  },
+  "contactPage": {
+    "description": "Ceritakan kebutuhan Anda. Pilih topik agar pesan sampai ke tempat yang tepat.",
+    "name": "Nama",
+    "email": "Email",
+    "topic": "Topik",
+    "message": "Pesan",
+    "submit": "Kirim pesan",
+    "topicProject": "Proyek / jasa",
+    "topicHiring": "Rekrutmen",
+    "topicSchool": "Pilot sekolah",
+    "topicOther": "Lainnya"
+  },
+  "nav": {
+    "brand": "Andy Pratama Studio",
+    "menu": "Menu",
+    "closeMenu": "Tutup menu",
+    "work": "Karya",
+    "products": "Produk",
+    "services": "Jasa",
+    "journal": "Jurnal",
+    "about": "Tentang",
+    "start": "Mulai di sini"
+  },
+  "theme": {
+    "toggle": "Ganti tema",
+    "system": "Sistem",
+    "light": "Terang",
+    "dark": "Gelap"
+  },
+  "lang": {
+    "toggle": "Ganti bahasa",
+    "en": "English",
+    "id": "Bahasa Indonesia",
+    "current": "ID"
+  },
+  "footer": {
+    "rights": "Hak cipta dilindungi.",
+    "location": "Samarinda, Indonesia",
+    "navLabel": "Jelajah",
+    "socialLabel": "Sosial",
+    "legalLabel": "Legal",
+    "privacy": "Privasi",
+    "terms": "Syarat & Ketentuan",
+    "license": "Lisensi",
+    "github": "GitHub",
+    "twitter": "X",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "notesTitle": "Catatan angka",
+    "statusStated": "Dinyatakan",
+    "statusVerified": "Terverifikasi"
+  },
+  "localNav": {
+    "overview": "Ikhtisar",
+    "docs": "Panduan",
+    "license": "Lisensi",
+    "buy": "Beli"
+  },
+  "brandToggle": {
+    "groupLabel": "Tampilan merek",
+    "notePrefix": "Catatan"
+  },
+  "introVideo": {
+    "pauseLabel": "Jeda"
+  },
+  "contactForm": {
+    "errorRateLimit": "Terlalu banyak percobaan. Coba lagi sebentar.",
+    "errorServer": "Pesan gagal terkirim. Periksa isian formulir.",
+    "errorNetwork": "Kesalahan jaringan. Coba lagi.",
+    "successSent": "Pesan diterima. Saya akan membalas lewat email.",
+    "fieldRequired": "Kolom ini wajib diisi.",
+    "emailInvalid": "Masukkan alamat email yang valid.",
+    "topicRequired": "Pilih topik terlebih dahulu.",
+    "messageRequired": "Masukkan pesan Anda.",
+    "sending": "Mengirim…",
+    "privacyNote": "Kebijakan privasi"
+  },
+  "newsletterForm": {
+    "errorRateLimit": "Terlalu banyak percobaan. Coba lagi sebentar.",
+    "errorSubscribe": "Gagal berlangganan. Periksa alamat email Anda.",
+    "errorNetwork": "Kesalahan jaringan. Coba lagi.",
+    "successConfirm": "Cek email Anda untuk konfirmasi."
+  },
+  "home": {
+    "hero": {
+      "title": "Operasional yang lebih rapi—tanpa Anda harus paham teknisnya.",
+      "description": "Saya membantu sekolah, instansi, dan perusahaan merapikan tagihan, pembayaran, pemberitahuan, dan kerja harian tim. Studio ini terbuka untuk dilihat.",
+      "primaryCta": "Lihat hasil kerja",
+      "secondaryCta": "Ceritakan kebutuhan Anda",
+      "pathBuild": "Saya butuh dibuatkan",
+      "pathTemplate": "Saya butuh template siap pakai",
+      "pathHiring": "Saya ingin merekrut"
+    },
+    "proof": {
+      "yearsLabel": "tahun membantu operasional yang dipakai setiap hari",
+      "studentsLabel": "siswa terlayani di SD Muhammadiyah 3 Samarinda",
+      "modulesLabel": "fitur aktif di SAKOLENTRA"
+    },
+    "introVideo": {
+      "title": "Kenalan singkat, 45 detik",
+      "summary": "Saya membantu operasional nyata—dari sekolah sampai bisnis—dari Samarinda, Indonesia.",
+      "placeholder": "Video segera hadir"
+    },
+    "whatIDo": {
+      "title": "Bagaimana saya bisa membantu",
+      "servicesTitle": "Jasa",
+      "servicesDesc": "Menyambungkan pembayaran dan WhatsApp ke yang sudah Anda punya, atau membangun alur baru sesuai kebutuhan. Lingkup dibahas dulu supaya jelas.",
+      "productsTitle": "Produk",
+      "productsDesc": "DualBrand: template website untuk satu merek induk dan dua merek anak. Ada demo langsung.",
+      "journalTitle": "Jurnal",
+      "journalDesc": "Setiap minggu saya bagikan satu yang berhasil dan satu yang bermasalah—bahasa plain, tanpa basa-basi."
+    },
+    "sakolentra": {
+      "title": "SAKOLENTRA di SD Muhammadiyah 3 Samarinda",
+      "description": "Membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua.",
+      "pilotCta": "Coba di sekolah Anda",
+      "caseStudyCta": "Baca ceritanya",
+      "flowTitle": "Alur SAKOLENTRA",
+      "flowSubtitle": "Tagihan → bayar → cocok → kabari orang tua",
+      "flowBadge": "Contoh alur",
+      "flowFooter": "Tidak menampilkan data siswa asli.",
+      "step1Title": "Tagihan",
+      "step1Desc": "Jadwal SPP & biaya sekolah",
+      "step2Title": "Bayar lewat bank",
+      "step2Desc": "Nomor bayar unik per siswa",
+      "step3Title": "Dicocokkan",
+      "step3Desc": "Transfer masuk langsung ketahuan",
+      "step4Title": "WhatsApp",
+      "step4Desc": "Orang tua dapat kabar"
+    },
+    "otherProjects": {
+      "title": "Proyek lain",
+      "description": "Proyek lain—deskripsi umum.",
+      "colName": "Proyek",
+      "colType": "Jenis",
+      "colBuilt": "Hasil untuk klien",
+      "p1Name": "Portal Pemerintah",
+      "p1Type": "Situs publik",
+      "p1Built": "Portal baru + data lama dipindahkan rapi",
+      "p2Name": "Operasional Multi-cabang",
+      "p2Type": "Operasional harian",
+      "p2Built": "Absensi cabang terhubung ke penggajian",
+      "p3Name": "Presensi Keanggotaan",
+      "p3Type": "Alat internal",
+      "p3Built": "Absensi QR dan peta anggota",
+      "p4Name": "Penjualan Tiket",
+      "p4Type": "Penjualan online",
+      "p4Built": "Tiket online dengan pembayaran langsung"
+    },
+    "dualbrand": {
+      "title": "DualBrand",
+      "subtitle": "Template website multi-merek",
+      "description": "Satu paket untuk merek induk dan dua merek anak—tanpa membangun tiga situs terpisah.",
+      "demoCta": "Lihat demo",
+      "buyCta": "Beli template",
+      "licenseNote": "Baca ketentuan lisensi sebelum membeli.",
+      "previewTitle": "Satu merek induk. Dua merek anak.",
+      "previewLead": "Paket website siap pakai untuk merek holding dan dua sub-merek berbeda dalam satu kode.",
+      "previewItems": "File sumber · Dokumentasi · Demo langsung · Lisensi · Panduan pemasangan"
+    },
+    "stack": {
+      "title": "Cara kita bekerja",
+      "techTitle": "Yang biasa saya sambungkan",
+      "techList": "Midtrans · WhatsApp · Laravel · dasbor · portal · absensi · migrasi data",
+      "habitsTitle": "Langkah kerja sama",
+      "habit1": "Kita bahas kebutuhannya dulu—baru saya bangun sampai siap dipakai.",
+      "habit2": "Sebelum dipakai, alurnya dicek supaya kesalahan umum tertangkap lebih awal.",
+      "habit3": "Susunannya dijaga sederhana agar mudah dirawat setelah tim Anda memakai.",
+      "habit4": "Setelah jalan, saya pantau apakah semuanya tetap berjalan baik."
+    },
+    "journal": {
+      "title": "Catatan mingguan",
+      "subtitle": "Satu yang berhasil, satu yang bermasalah",
+      "allCta": "Semua catatan",
+      "emptyState": "Catatan pertama segera hadir",
+      "builtLabel": "Berhasil",
+      "brokenLabel": "Bermasalah",
+      "builtEmpty": "Cerita berhasil segera hadir",
+      "brokenEmpty": "Cerita masalah segera hadir"
+    },
+    "socialProof": {
+      "title": "Kata mitra"
+    },
+    "faq": {
+      "title": "Pertanyaan yang sering diajukan",
+      "allCta": "Semua pertanyaan"
+    },
+    "newsletter": {
+      "title": "Sesekali satu email: apa yang saya bangun, apa yang bermasalah.",
+      "description": "Tanpa spam. Bisa berhenti kapan saja.",
+      "inputPlaceholder": "Alamat email Anda",
+      "submitButton": "Langganan",
+      "privacyNote": "Email Anda dijaga aman. Baca kebijakan privasi."
+    },
+    "finalCta": {
+      "title": "Siap mulai?",
+      "hireMe": "Rekrut saya",
+      "getTemplate": "Ambil template",
+      "workWithMe": "Pesan jasa",
+      "downloadCv": "Unduh CV",
+      "cvEn": "CV Bahasa Inggris (PDF)",
+      "cvId": "CV Bahasa Indonesia (PDF)"
+    },
+    "footer": {
+      "rights": "Hak cipta dilindungi.",
+      "location": "Samarinda, Indonesia",
+      "privacy": "Privasi",
+      "terms": "Syarat & Ketentuan",
+      "license": "Lisensi"
+    }
+  },
+  "privacyPage": {
+    "title": "Privasi",
+    "draftDisclaimer": "Draf — kebijakan lengkap sedang disiapkan.",
+    "intro": "Situs ini mengumpulkan data pribadi hanya saat Anda mengambil tindakan:",
+    "contactForm": "Formulir kontak: nama, alamat email, dan isi pesan.",
+    "newsletter": "Newsletter: alamat email (saat Anda berlangganan).",
+    "shortLinks": "Klik tautan singkat melalui jalur /go/* — hanya tujuan yang dicatat, tanpa alamat IP atau user-agent.",
+    "contact": "Ada pertanyaan? Email contact@andypratama.studio."
+  },
+  "termsPage": {
+    "title": "Syarat & Ketentuan",
+    "draftDisclaimer": "Draf — ketentuan lengkap sedang disiapkan.",
+    "intro": "Dengan menggunakan situs ini Anda menyetujui ketentuan berikut.",
+    "products": "Pembelian produk diatur oleh lisensi yang ditampilkan saat checkout.",
+    "contact": "Ada pertanyaan? Email contact@andypratama.studio."
+  },
+  "cvPage": {
+    "title": "CV",
+    "intro": "Andy Pratama — software engineer berbasis di Samarinda, Indonesia.",
+    "skills": "Pengembangan web full-stack, integrasi pembayaran, otomasi WhatsApp, dan sistem manajemen sekolah.",
+    "requestNote": "CV lengkap tersedia atas permintaan. Gunakan tautan di bawah.",
+    "requestCta": "Minta CV"
+  },
+  "linksPage": {
+    "title": "Tautan",
+    "dualbrandLabel": "DualBrand — template website",
+    "dualbrandDemoLabel": "DualBrand — demo langsung",
+    "pendingNote": "menunggu konfirmasi"
+  },
+  "aboutPage": {
+    "title": "Tentang",
+    "intro": "Andy Pratama adalah software engineer berbasis di Samarinda, Indonesia.",
+    "bio": "Saya membangun sistem web untuk sekolah, instansi, dan perusahaan — fokus pada tagihan, pembayaran, dan operasional harian.",
+    "school": "Pembuat SAKOLENTRA, sistem administrasi sekolah yang berjalan di SD Muhammadiyah 3 Samarinda.",
+    "startCta": "Mulai di sini"
+  },
+  "journalPage": {
+    "title": "Jurnal",
+    "emptyTitle": "Belum ada catatan",
+    "emptyDescription": "Catatan mingguan akan muncul di sini — satu yang berhasil, satu masalah yang ditemui.",
+    "subscribeCta": "Langganan pembaruan"
+  }
+}

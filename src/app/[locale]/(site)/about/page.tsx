@@ -1,0 +1,46 @@
+import { getTranslations } from "next-intl/server"
+import { Container } from "@/components/brand/container"
+import { PageTransition } from "@/components/brand/page-transition"
+import { Reveal, TextReveal } from "@/components/brand/reveal"
+import { Section } from "@/components/brand/section"
+import { SectionHeading } from "@/components/brand/section-heading"
+import { buttonVariants } from "@/components/ui/button"
+import { Link } from "@/lib/navigation"
+import { cn } from "@/lib/utils"
+
+export default async function AboutPage() {
+  const t = await getTranslations("aboutPage")
+
+  return (
+    <PageTransition>
+      <Section emphasis navTheme="light" className="border-b border-border bg-secondary">
+        <Container>
+          <TextReveal>
+          <SectionHeading title={t("title")} titleAs="h1" />
+          </TextReveal>
+        </Container>
+      </Section>
+
+      <Section navTheme="light" className="border-b border-border">
+        <Container>
+          <Reveal delayMs={80}>
+          <div className="max-w-prose space-y-6">
+            <p className="text-base leading-relaxed text-foreground">{t("intro")}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{t("bio")}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{t("school")}</p>
+            <Link
+              href="/start"
+              className={cn(
+                buttonVariants({ size: "default" }),
+                "h-11 min-h-11 rounded-full bg-primary px-4 font-medium text-primary-foreground hover:bg-primary/90 cta-lift"
+              )}
+            >
+              {t("startCta")}
+            </Link>
+          </div>
+          </Reveal>
+        </Container>
+      </Section>
+    </PageTransition>
+  )
+}

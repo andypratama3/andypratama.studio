@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  'esbuild': true
+minimumReleaseAgeExclude:
+  - framer-motion@14.11.1
+  - motion-dom@14.11.1
+  - motion@14.11.1

@@ -1,0 +1,686 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans: var(--font-inter);
+    --font-heading: var(--font-inter);
+    --color-brand: var(--brand);
+    --color-brand-foreground: var(--brand-foreground);
+    --color-brand-on-dark: var(--brand-on-dark);
+    --color-input-border: var(--input-border);
+    --color-surface-contrast: var(--surface-contrast);
+    --color-surface-contrast-foreground: var(--surface-contrast-foreground);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* Realtime Colors: text #050315, bg #fbfbfe, primary #2f27ce (CTAs/sections), secondary #dedcff (cards), accent #433bff (links/highlights via --brand). */
+    --background: #fbfbfe;
+    --foreground: #050315;
+    --card: #ffffff;
+    --card-foreground: #050315;
+    --popover: #ffffff;
+    --popover-foreground: #050315;
+    --primary: #2f27ce;
+    --primary-foreground: #fbfbfe;
+    --secondary: #dedcff;
+    --secondary-foreground: #050315;
+    --muted: #eeedfc;
+    --muted-foreground: #4a4766;
+    --accent: #eeedfc;
+    --accent-foreground: #050315;
+    --destructive: #c4262e;
+    --border: #dedcff;
+    --input: #cfcdf5;
+    --ring: #433bff;
+    --brand: #433bff;
+    --brand-foreground: #fbfbfe;
+    /* Brand colour on permanent dark surfaces (--surface-contrast). Contrast ≥4.5:1 on #050315. */
+    --brand-on-dark: #6f69ff;
+    /* Input border — ≥3:1 on --background (#fbfbfe). */
+    --input-border: #5e58c5;
+    /* Always-dark board for hero/CTA — independent of theme invert flip */
+    --surface-contrast: #050315;
+    --surface-contrast-foreground: #fbfbfe;
+    /* Softer studio radius — avoid stiff boxy corners on cards/panels */
+    --radius: 0.875rem;
+    --sidebar: #fbfbfe;
+    --sidebar-foreground: #050315;
+    --sidebar-primary: #2f27ce;
+    --sidebar-primary-foreground: #fbfbfe;
+    --sidebar-accent: #eeedfc;
+    --sidebar-accent-foreground: #050315;
+    --sidebar-border: #dedcff;
+    --sidebar-ring: #433bff;
+    /* FloatingNav capsule + offset (hash / focus scroll) */
+    --scroll-anchor: 6.5rem;
+    /* D.1 motion + z-index (src/lib/motion.ts) */
+    --dur-fast: 180ms;
+    --dur-base: 240ms;
+    --dur-slow: 550ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --z-base: 0;
+    --z-sticky: 20;
+    --z-nav: 40;
+    --z-overlay: 50;
+    --z-toast: 60;
+}
+
+.dark {
+    --background: #050315;
+    --foreground: #fbfbfe;
+    --card: #0c0a24;
+    --card-foreground: #fbfbfe;
+    --popover: #0c0a24;
+    --popover-foreground: #fbfbfe;
+    --primary: #8b86ff;
+    --primary-foreground: #050315;
+    --secondary: #1b1850;
+    --secondary-foreground: #fbfbfe;
+    --muted: #14123a;
+    --muted-foreground: #a9a6c9;
+    --accent: #14123a;
+    --accent-foreground: #fbfbfe;
+    --destructive: #ff6b6b;
+    --border: #25226a;
+    --input: #25226a;
+    --ring: #8b86ff;
+    --brand: #6f69ff;
+    --brand-foreground: #050315;
+    /* Brand on dark surface — same value as light --brand-on-dark, contrast ≥4.5:1 on #050315. */
+    --brand-on-dark: #6f69ff;
+    /* Input border — ≥3:1 on --background (#050315). */
+    --input-border: #8882ef;
+    --surface-contrast: #050315;
+    --surface-contrast-foreground: #fbfbfe;
+    --sidebar: #0c0a24;
+    --sidebar-foreground: #fbfbfe;
+    --sidebar-primary: #8b86ff;
+    --sidebar-primary-foreground: #050315;
+    --sidebar-accent: #14123a;
+    --sidebar-accent-foreground: #fbfbfe;
+    --sidebar-border: #25226a;
+    --sidebar-ring: #8b86ff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+    scroll-padding-top: var(--scroll-anchor);
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--brand) 28%, transparent);
+    color: var(--foreground);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer utilities {
+  /* §3 typography scale — Inter only */
+  .text-wordmark {
+    font-size: clamp(3.5rem, 12vw, 11rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+
+  .text-wordmark-compact {
+    font-size: clamp(2.5rem, 10.5vw, 3.25rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .scroll-anchor {
+    scroll-margin-top: var(--scroll-anchor);
+  }
+
+  .text-display {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .text-hero {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-wrap: balance;
+  }
+
+  .text-stat {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .text-section {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .text-label {
+    font-size: 0.75rem; /* 12px — WCAG minimum for meaningful text */
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .text-body-measure {
+    max-width: 60ch;
+  }
+
+  .text-title-measure {
+    max-width: 36ch;
+  }
+
+  /* Permanent dark surface (hero / final CTA). Do NOT use bg-foreground —
+     that flips to light in .dark and washes the board. */
+  .surface-invert {
+    background-color: var(--surface-contrast);
+    color: var(--surface-contrast-foreground);
+  }
+
+  .surface-glow {
+    background-image:
+      radial-gradient(
+        ellipse 85% 65% at 50% -12%,
+        color-mix(in oklab, var(--brand) 25%, transparent),
+        transparent 65%
+      ),
+      radial-gradient(
+        circle 480px at 85% 15%,
+        color-mix(in oklab, var(--brand) 12%, transparent),
+        transparent 70%
+      );
+  }
+
+  .edge-fade-x {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+  }
+
+  .glass-card {
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  }
+
+  .reveal-line {
+    transition:
+      transform 280ms ease-out,
+      color 280ms ease-out,
+      opacity 280ms ease-out;
+  }
+
+  .reveal-block {
+    --reveal-delay: 0ms;
+    /* Visible by default — no-JS / SSR renders content without flash. */
+    transition:
+      opacity var(--dur-slow) var(--ease-out) var(--reveal-delay),
+      transform var(--dur-slow) var(--ease-out) var(--reveal-delay);
+  }
+
+  /* Only hide when JS is active (html.js-reveal added by reveal.tsx on mount). */
+  html.js-reveal .reveal-block[data-reveal="out"] {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .reveal-block[data-reveal="in"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes reveal-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Above-the-fold entrance — runs at first paint, independent of hydration. */
+  .reveal-enter {
+    animation: reveal-enter var(--dur-slow) var(--ease-out) var(--reveal-delay, 0ms)
+      both;
+  }
+
+  .hero-parallax {
+    transition: transform 320ms ease-out;
+  }
+
+  .path-card {
+    border-color: color-mix(in oklab, var(--surface-contrast-foreground) 14%, transparent);
+    background-color: color-mix(in oklab, var(--surface-contrast-foreground) 4%, transparent);
+    transition:
+      border-color 220ms ease-out,
+      background-color 220ms ease-out,
+      transform 220ms ease-out,
+      box-shadow 220ms ease-out;
+  }
+
+  .path-card:hover,
+  .path-card:focus-visible {
+    border-color: color-mix(in oklab, var(--brand) 50%, transparent);
+    background-color: color-mix(in oklab, var(--brand) 10%, transparent);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px color-mix(in oklab, var(--brand) 18%, transparent);
+  }
+
+  .path-card:active {
+    transform: translateY(0);
+  }
+
+  .interactive-surface {
+    transition:
+      border-color 220ms ease-out,
+      transform 220ms ease-out,
+      box-shadow 220ms ease-out,
+      background-color 220ms ease-out;
+  }
+
+  .interactive-surface:hover,
+  .interactive-surface:focus-within {
+    border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
+    box-shadow: 0 18px 40px color-mix(in oklab, var(--brand) 12%, transparent);
+  }
+
+  .media-zoom-inner {
+    transform-origin: center center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .media-zoom-inner,
+    .group:hover .media-zoom-inner,
+    .group:focus-within .media-zoom-inner {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  .capability-chip {
+    transition:
+      border-color 180ms ease-out,
+      background-color 180ms ease-out,
+      color 180ms ease-out,
+      transform 180ms ease-out;
+  }
+
+  .capability-chip:hover {
+    border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
+    background-color: color-mix(in oklab, var(--brand) 8%, var(--background));
+    color: var(--foreground);
+    transform: translateY(-1px);
+  }
+
+  .flow-card {
+    transition:
+      border-color 200ms ease-out,
+      background-color 200ms ease-out,
+      transform 200ms ease-out;
+  }
+
+  .flow-card:hover {
+    border-color: color-mix(in oklab, var(--brand) 45%, var(--border));
+    background-color: color-mix(in oklab, var(--brand) 4%, var(--card));
+  }
+
+  .media-card {
+    transition: border-color 220ms ease-out;
+  }
+
+  .media-card:hover {
+    border-color: color-mix(in oklab, var(--brand) 30%, var(--border));
+  }
+
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 240ms ease-out;
+  }
+
+  .faq-answer > * {
+    overflow: hidden;
+  }
+
+  .faq-item[open] .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  @keyframes faq-fade {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .faq-item[open] .faq-answer > * {
+    animation: faq-fade 220ms ease-out;
+  }
+
+  @keyframes wordmark-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-wordmark-marquee {
+    animation: wordmark-marquee 36s linear infinite;
+  }
+
+  @keyframes hero-grid-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-28px, -18px, 0);
+    }
+  }
+
+  .animate-hero-grid-drift {
+    animation: hero-grid-drift 48s linear infinite alternate;
+  }
+
+  /* Sticky steps — stack below 640px; sticky only ≥640px (unless reduced motion) */
+  @media (max-width: 639px) {
+    .sticky-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .sticky-step {
+      position: static;
+      min-height: 0;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .sticky-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-bottom: 2rem;
+    }
+
+    .sticky-step {
+      position: sticky;
+      top: var(--scroll-anchor);
+      min-height: 0;
+      transition:
+        border-color 320ms var(--ease-out),
+        box-shadow 320ms var(--ease-out);
+      box-shadow:
+        0 -6px 24px color-mix(in oklab, var(--foreground) 8%, transparent),
+        0 1px 0 color-mix(in oklab, var(--border) 80%, transparent);
+    }
+
+    .sticky-step[data-active="true"] {
+      border-color: color-mix(in oklab, var(--brand) 55%, var(--border));
+    }
+
+    .sticky-index {
+      transition:
+        background-color 280ms var(--ease-out),
+        border-color 280ms var(--ease-out),
+        transform 280ms var(--ease-out);
+    }
+
+    .sticky-step[data-active="true"] .sticky-index {
+      background-color: color-mix(in oklab, var(--brand) 16%, var(--card));
+      border-color: color-mix(in oklab, var(--brand) 60%, var(--border));
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes hero-beat {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes nav-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-beat {
+      animation: hero-beat 720ms var(--ease-out) var(--reveal-delay, 0ms) both;
+    }
+
+    .hero-fade {
+      animation: hero-fade 1100ms var(--ease-out) both;
+    }
+
+    .nav-enter {
+      animation: nav-enter 560ms var(--ease-out) both;
+    }
+  }
+
+  .cta-lift {
+    transition:
+      transform 200ms var(--ease-out),
+      background-color 200ms var(--ease-out),
+      border-color 200ms var(--ease-out),
+      color 200ms var(--ease-out);
+  }
+
+  .cta-lift:hover,
+  .cta-lift:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .cta-lift:active {
+    transform: translateY(0);
+  }
+
+  .soft-card {
+    border-color: color-mix(in oklab, var(--border) 70%, transparent);
+    box-shadow: 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent);
+    transition:
+      transform 240ms var(--ease-out),
+      box-shadow 240ms var(--ease-out),
+      border-color 240ms var(--ease-out),
+      background-color 240ms var(--ease-out);
+  }
+
+  .soft-card:hover,
+  .soft-card:focus-visible {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+    box-shadow: 0 20px 44px color-mix(in oklab, var(--brand) 10%, transparent);
+  }
+
+  .panel-soft {
+    border-radius: 1.75rem;
+    border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--secondary) 88%, white),
+        color-mix(in oklab, var(--card) 92%, var(--secondary))
+      );
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent),
+      0 18px 40px color-mix(in oklab, var(--brand) 6%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .reveal-line {
+      transition: none;
+    }
+
+    .reveal-block {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .reveal-enter,
+    .hero-beat,
+    .hero-fade,
+    .nav-enter {
+      animation: none;
+    }
+
+    .hero-parallax {
+      transform: none !important;
+      transition: none;
+    }
+
+    .path-card:hover,
+    .path-card:focus-visible,
+    .path-card:active,
+    .flow-card:hover,
+    .capability-chip:hover,
+    .interactive-surface:hover,
+    .cta-lift:hover,
+    .cta-lift:focus-visible,
+    .cta-lift:active,
+    .soft-card:hover,
+    .soft-card:focus-visible,
+    .sticky-step[data-active="true"] .sticky-index {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .media-card img {
+      transition: none;
+    }
+
+    .faq-answer,
+    .faq-item[open] .faq-answer > * {
+      transition: none;
+      animation: none;
+    }
+
+    .animate-wordmark-marquee {
+      animation: none;
+    }
+
+    .animate-hero-grid-drift {
+      animation: none;
+    }
+
+    .link-rule {
+      transition: none;
+    }
+
+    .sticky-step {
+      position: static;
+    }
+
+    ::view-transition-old(*),
+    ::view-transition-new(*),
+    ::view-transition-group(*) {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+    }
+  }
+}
+
+::view-transition {
+  pointer-events: none;
+}

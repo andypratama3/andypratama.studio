@@ -1,0 +1,13 @@
+Tugas,Tanggal,Sesi,Jalur,Durasi (menit),Prioritas,Status,Hasil selesai
+Setup repositori dan env Next.js 16,2026-11-10,pagi,produk,60,kritis,selesai,Repo siap dengan build sukses
+Implementasi skema database Drizzle dan auth,2026-11-10,siang,produk,90,kritis,selesai,Migrasi 20 tabel berhasil
+Kirim 3 lamaran tech lead / fullstack,2026-11-10,malam,karier,45,tinggi,selesai,Tercatat di tabel applications
+Riset 10 calon lead agensi multi-brand di LinkedIn,2026-11-11,pagi,distribusi,60,tinggi,jalan,10 lead masuk pipeline
+Rekam dan susun draft video intro 45 detik,2026-11-11,siang,video,120,tinggi,belum,Draft video siap review
+Review metrik harian dan cek feedback Gumroad,2026-11-11,malam,review,30,fleksibel,belum,Catatan metrik terupdate
+Lengkapi checklist kesiapan pilot SAKOLENTRA,2026-11-12,pagi,produk,60,tinggi,belum,Checklist pilot terisi lengkap
+Outreach ke 5 sekolah potensial via email/WA,2026-11-12,siang,distribusi,60,tinggi,belum,5 kontak terhubung
+Kirim 3 lamaran remote global,2026-11-12,malam,karier,45,tinggi,belum,Tercatat di applications
+Publikasi catatan mingguan 1 win 1 problem di LinkedIn,2026-11-13,pagi,distribusi,45,tinggi,belum,Post live dengan UTM tracking
+Update demo DualBrand dan validasi checkout Lynk/Gumroad,2026-11-13,siang,produk,60,kritis,belum,Tes transaksi dummy berhasil
+Review mingguan minggu 1 dan evaluasi target,2026-11-13,malam,review,60,kritis,belum,Evaluasi 9 lamaran dan 30 outreach

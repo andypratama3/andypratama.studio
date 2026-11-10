@@ -1,0 +1,312 @@
+{
+  "common": {
+    "brand": "Andy Pratama Studio",
+    "siteDescription": "Andy Pratama Studio — day-to-day operations software from Samarinda, Indonesia.",
+    "comingSoon": "Coming soon",
+    "stubStatus": "In progress",
+    "stubNote": "This page is being prepared. Content will appear here when it is ready.",
+    "stubCta": "Tell me what you need instead",
+    "scrollHint": "Scroll down",
+    "pause": "Pause",
+    "play": "Play",
+    "marqueePause": "Pause wordmark marquee",
+    "marqueePlay": "Play wordmark marquee"
+  },
+  "productsPage": {
+    "title": "Ready-made products",
+    "description": "Templates and tools you can use right away—without starting from scratch.",
+    "dualbrandTitle": "DualBrand",
+    "dualbrandDesc": "A website for one parent brand and two child brands. Live demo included.",
+    "dualbrandCta": "See DualBrand",
+    "moreSoon": "More products are on the way."
+  },
+  "servicesPage": {
+    "title": "Services",
+    "description": "Two packages for teams that want to tidy operations without building from scratch.",
+    "pkg1Label": "01",
+    "pkg1Title": "Payments + WhatsApp for Laravel",
+    "pkg1Desc": "Connect Midtrans payment gateway and WhatsApp Business API to your existing Laravel application. Invoices are created, matched to incoming transfers, and the right person gets a WhatsApp message automatically.",
+    "pkg1Scope": "Scope: Midtrans webhook, payment matching, WhatsApp template message send.",
+    "pkg1Prereq": "Prerequisite: running Laravel application with database access.",
+    "pkg2Label": "02",
+    "pkg2Title": "Custom software",
+    "pkg2Desc": "Portals, attendance systems, dashboards, data migration—anything your team uses every day. We agree the full scope before anything is built, and I hand over something ready to use.",
+    "pkg2Scope": "Scope: agreed before work begins. No open-ended engagements.",
+    "pkg2Prereq": "Prerequisite: a clear problem statement. We work it out together if needed.",
+    "cta": "Tell me what you need"
+  },
+  "workPage": {
+    "description": "Selected work — school systems, operations tools, and client projects."
+  },
+  "licensePage": {
+    "description": "How DualBrand may be used. The binding terms are shown at checkout.",
+    "body": "DualBrand is sold as a template package. What you can and cannot do — including client work — is defined by the license you accept when you buy.",
+    "pointCheckout": "Full license text appears on Gumroad before payment.",
+    "pointFaq": "Common license questions are answered on the FAQ page.",
+    "pointContact": "For a clarification before you buy, use Start here.",
+    "faqCta": "Read FAQ"
+  },
+  "faqPage": {
+    "title": "FAQ",
+    "description": "Straight answers about projects, hiring, DualBrand, and school pilots."
+  },
+  "notFound": {
+    "kicker": "404",
+    "title": "This page is not here",
+    "description": "The link may be old, or the page moved. Head home or tell me what you need.",
+    "homeCta": "Back home"
+  },
+  "contactPage": {
+    "description": "Tell me what you need. Choose a topic so the message lands in the right place.",
+    "name": "Name",
+    "email": "Email",
+    "topic": "Topic",
+    "message": "Message",
+    "submit": "Send message",
+    "topicProject": "Project / services",
+    "topicHiring": "Hiring",
+    "topicSchool": "School pilot",
+    "topicOther": "Something else"
+  },
+  "nav": {
+    "brand": "Andy Pratama Studio",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "work": "Work",
+    "products": "Products",
+    "services": "Services",
+    "journal": "Journal",
+    "about": "About",
+    "start": "Start here"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "lang": {
+    "toggle": "Switch language",
+    "en": "English",
+    "id": "Bahasa Indonesia",
+    "current": "EN"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "location": "Samarinda, Indonesia",
+    "navLabel": "Explore",
+    "socialLabel": "Social",
+    "legalLabel": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "license": "License",
+    "github": "GitHub",
+    "twitter": "X",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "notesTitle": "About these numbers",
+    "statusStated": "Stated",
+    "statusVerified": "Verified"
+  },
+  "localNav": {
+    "overview": "Overview",
+    "docs": "Guide",
+    "license": "License",
+    "buy": "Buy"
+  },
+  "brandToggle": {
+    "groupLabel": "Brand view",
+    "notePrefix": "Note"
+  },
+  "introVideo": {
+    "pauseLabel": "Pause"
+  },
+  "contactForm": {
+    "errorRateLimit": "Too many requests. Try again shortly.",
+    "errorServer": "Could not send. Check the fields.",
+    "errorNetwork": "Network error. Try again.",
+    "successSent": "Message received. I will reply by email.",
+    "fieldRequired": "This field is required.",
+    "emailInvalid": "Please enter a valid email address.",
+    "topicRequired": "Please select a topic.",
+    "messageRequired": "Please enter your message.",
+    "sending": "Sending…",
+    "privacyNote": "Privacy policy"
+  },
+  "newsletterForm": {
+    "errorRateLimit": "Too many requests. Try again shortly.",
+    "errorSubscribe": "Could not subscribe. Check your email.",
+    "errorNetwork": "Network error. Try again.",
+    "successConfirm": "Check your email to confirm."
+  },
+  "home": {
+    "hero": {
+      "title": "Clearer day-to-day operations—without you needing the tech talk.",
+      "description": "I help schools, agencies, and companies tidy billing, payments, notifications, and how teams work each day. This studio is open to see.",
+      "primaryCta": "See the work",
+      "secondaryCta": "Tell me what you need",
+      "pathBuild": "I need something built",
+      "pathTemplate": "I need a ready-made template",
+      "pathHiring": "I'm hiring"
+    },
+    "proof": {
+      "yearsLabel": "years helping day-to-day operations",
+      "studentsLabel": "students served at SD Muhammadiyah 3 Samarinda",
+      "modulesLabel": "active features in SAKOLENTRA"
+    },
+    "introVideo": {
+      "title": "A quick hello, 45 seconds",
+      "summary": "I help real operations—from schools to businesses—from Samarinda, Indonesia.",
+      "placeholder": "Video coming soon"
+    },
+    "whatIDo": {
+      "title": "How I can help",
+      "servicesTitle": "Services",
+      "servicesDesc": "Connect payments and WhatsApp to what you already have, or build a new flow around your needs. We agree the scope first so nothing is fuzzy.",
+      "productsTitle": "Products",
+      "productsDesc": "DualBrand: a website template for one parent brand and two child brands. Live demo included.",
+      "journalTitle": "Journal",
+      "journalDesc": "Every week I share one win and one problem—plain language, no fluff."
+    },
+    "sakolentra": {
+      "title": "SAKOLENTRA at SD Muhammadiyah 3 Samarinda",
+      "description": "Helps school admin and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents.",
+      "pilotCta": "Try it at your school",
+      "caseStudyCta": "Read the story",
+      "flowTitle": "How SAKOLENTRA flows",
+      "flowSubtitle": "Bill → pay → match → tell parents",
+      "flowBadge": "Example flow",
+      "flowFooter": "No real student data is shown.",
+      "step1Title": "Billing",
+      "step1Desc": "Tuition & school fee schedule",
+      "step2Title": "Pay via bank",
+      "step2Desc": "A unique pay number per student",
+      "step3Title": "Matched",
+      "step3Desc": "Incoming transfers are spotted",
+      "step4Title": "WhatsApp",
+      "step4Desc": "Parents get an update"
+    },
+    "otherProjects": {
+      "title": "Other projects",
+      "description": "Other projects—general descriptions.",
+      "colName": "Project",
+      "colType": "Type",
+      "colBuilt": "Outcome for the client",
+      "p1Name": "Government Portal",
+      "p1Type": "Public website",
+      "p1Built": "New portal + older data moved cleanly",
+      "p2Name": "Multi-branch Operations",
+      "p2Type": "Day-to-day ops",
+      "p2Built": "Branch attendance tied to payroll",
+      "p3Name": "Membership Attendance",
+      "p3Type": "Internal tool",
+      "p3Built": "QR check-in and member map",
+      "p4Name": "Ticket Sales",
+      "p4Type": "Online sales",
+      "p4Built": "Online tickets with checkout"
+    },
+    "dualbrand": {
+      "title": "DualBrand",
+      "subtitle": "Multi-brand website template",
+      "description": "One package for a parent brand and two child brands—without building three separate sites.",
+      "demoCta": "See live demo",
+      "buyCta": "Buy template",
+      "licenseNote": "Read the license before you buy.",
+      "previewTitle": "One parent brand. Two child brands.",
+      "previewLead": "A ready-made website package that handles a holding brand and two distinct sub-brands in one codebase.",
+      "previewItems": "Source files · Documentation · Live demo · License · Setup guide"
+    },
+    "stack": {
+      "title": "How we work",
+      "techTitle": "What I usually connect",
+      "techList": "Midtrans · WhatsApp · Laravel · dashboards · portals · attendance · data migration",
+      "habitsTitle": "Working together",
+      "habit1": "We clarify the need first—then I build and hand over something ready to use.",
+      "habit2": "Before people rely on it, the flow is checked so common mistakes are caught early.",
+      "habit3": "The setup stays simple so your team can keep it going after launch.",
+      "habit4": "After it goes live, I watch that it keeps running smoothly."
+    },
+    "journal": {
+      "title": "Weekly notes",
+      "subtitle": "One win, one problem",
+      "allCta": "All notes",
+      "emptyState": "First notes coming soon",
+      "builtLabel": "Win",
+      "brokenLabel": "Problem",
+      "builtEmpty": "First win landing soon",
+      "brokenEmpty": "First problem landing soon"
+    },
+    "socialProof": {
+      "title": "From partners"
+    },
+    "faq": {
+      "title": "Common questions",
+      "allCta": "All questions"
+    },
+    "newsletter": {
+      "title": "Occasional email: what I built, what went wrong.",
+      "description": "No spam. Unsubscribe anytime.",
+      "inputPlaceholder": "Your email address",
+      "submitButton": "Subscribe",
+      "privacyNote": "Your email stays private. See the privacy policy."
+    },
+    "finalCta": {
+      "title": "Ready to start?",
+      "hireMe": "Hire me",
+      "getTemplate": "Get the template",
+      "workWithMe": "Book a project",
+      "downloadCv": "Download CV",
+      "cvEn": "English CV (PDF)",
+      "cvId": "Indonesian CV (PDF)"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "location": "Samarinda, Indonesia",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "license": "License"
+    }
+  },
+  "privacyPage": {
+    "title": "Privacy",
+    "draftDisclaimer": "Draft — full policy in preparation.",
+    "intro": "This site collects personal data only when you take an action:",
+    "contactForm": "Contact form: name, email address, and message content.",
+    "newsletter": "Newsletter: email address (when you subscribe).",
+    "shortLinks": "Short-link clicks through /go/* routes — destination only, no IP address or user-agent stored.",
+    "contact": "Questions? Email contact@andypratama.studio."
+  },
+  "termsPage": {
+    "title": "Terms",
+    "draftDisclaimer": "Draft — full terms in preparation.",
+    "intro": "By using this site you agree to these terms.",
+    "products": "Product purchases are governed by the license shown at checkout.",
+    "contact": "Questions? Email contact@andypratama.studio."
+  },
+  "cvPage": {
+    "title": "CV",
+    "intro": "Andy Pratama — software engineer based in Samarinda, Indonesia.",
+    "skills": "Full-stack web development, payment integration, WhatsApp automation, and school management systems.",
+    "requestNote": "The full CV is available on request. Use the link below.",
+    "requestCta": "Request CV"
+  },
+  "linksPage": {
+    "title": "Links",
+    "dualbrandLabel": "DualBrand — website template",
+    "dualbrandDemoLabel": "DualBrand — live demo",
+    "pendingNote": "pending confirmation"
+  },
+  "aboutPage": {
+    "title": "About",
+    "intro": "Andy Pratama is a software engineer based in Samarinda, Indonesia.",
+    "bio": "I build web systems for schools, agencies, and companies — focused on billing, payments, and day-to-day operations.",
+    "school": "Creator of SAKOLENTRA, a school administration system running at SD Muhammadiyah 3 Samarinda.",
+    "startCta": "Start here"
+  },
+  "journalPage": {
+    "title": "Journal",
+    "emptyTitle": "No entries yet",
+    "emptyDescription": "Weekly notes will appear here — one thing that worked, one problem found.",
+    "subscribeCta": "Subscribe for updates"
+  }
+}
