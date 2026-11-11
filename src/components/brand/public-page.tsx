@@ -13,10 +13,10 @@ import { cn } from "@/lib/utils"
 export async function PublicStubPanel() {
   const t = await getTranslations("common")
   return (
-    <div className="panel-soft overflow-hidden">
-      <div className="flex min-h-[11rem] flex-col justify-between gap-6 bg-background/80 p-6 sm:min-h-[14rem] sm:p-8">
+    <div className="overflow-hidden rounded-[1.25rem] border border-border">
+      <div className="flex min-h-[11rem] flex-col justify-between gap-6 p-6 sm:min-h-[14rem] sm:p-8">
         <div className="space-y-3">
-          <p className="text-label text-brand">{t("stubStatus")}</p>
+          <p className="text-sm text-muted-foreground">{t("stubStatus")}</p>
           <p className="max-w-md text-base leading-relaxed text-muted-foreground">
             {t("stubNote")}
           </p>
@@ -50,7 +50,7 @@ export async function PublicPageShell({
 }) {
   return (
     <PageTransition>
-      <Section emphasis navTheme="light" className="border-b border-border bg-secondary">
+      <Section navTheme="light" className="border-b border-border pt-28 md:pt-32">
         <Container>
           <TextReveal>
             <SectionHeading

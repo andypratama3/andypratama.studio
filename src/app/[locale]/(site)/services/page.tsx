@@ -36,9 +36,9 @@ export default async function ServicesPage() {
             {packages.map((pkg) => (
               <div
                 key={pkg.label}
-                className="soft-card panel-soft flex h-full flex-col gap-5 p-8 sm:p-10"
+                className="flex h-full flex-col gap-5 rounded-[1.25rem] border border-border p-8 sm:p-10"
               >
-                <p className="text-label text-brand">{pkg.label}</p>
+                <p className="text-sm text-muted-foreground">{pkg.label}</p>
                 <h2 className="text-section font-semibold text-foreground">
                   {pkg.title}
                 </h2>

@@ -20,11 +20,11 @@ export default async function ProductsPage() {
           <Reveal>
           <Link
             href="/products/dualbrand"
-            className="group soft-card panel-soft interactive-surface block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="group block overflow-hidden rounded-[1.25rem] border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
           >
             <div className="grid grid-cols-1 gap-0 lg:grid-cols-12">
               <div className="border-b border-border p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r">
-                <p className="text-label text-brand">01</p>
+                <p className="text-sm text-muted-foreground">01</p>
                 <h2 className="mt-3 text-section text-foreground transition-colors group-hover:text-brand">
                   {t("dualbrandTitle")}
                 </h2>

@@ -105,8 +105,8 @@
     "linkedin": "LinkedIn",
     "youtube": "YouTube",
     "notesTitle": "About these numbers",
-    "statusStated": "Stated",
-    "statusVerified": "Verified"
+    "statusStated": "Stated here, not rechecked",
+    "statusVerified": "Checked"
   },
   "localNav": {
     "overview": "Overview",
@@ -147,7 +147,14 @@
       "secondaryCta": "Tell me what you need",
       "pathBuild": "I need something built",
       "pathTemplate": "I need a ready-made template",
-      "pathHiring": "I'm hiring"
+      "pathHiring": "I'm hiring",
+      "mark": "A·P",
+      "discipline": "Day-to-day operations",
+      "cubeCaption": "Scroll to turn — six sides of the practice",
+      "surface": "Surface",
+      "depth": "Depth",
+      "skipIntro": "Skip intro",
+      "stripLabel": "Ways in"
     },
     "proof": {
       "yearsLabel": "years helping day-to-day operations",

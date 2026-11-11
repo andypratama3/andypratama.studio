@@ -11,7 +11,7 @@ export default async function PrivacyPage() {
 
   return (
     <PageTransition>
-      <Section emphasis navTheme="light" className="border-b border-border bg-secondary">
+      <Section navTheme="light" className="border-b border-border pt-28 md:pt-32">
         <Container>
           <TextReveal>
           <SectionHeading kicker={tFooter("legalLabel")} title={t("title")} titleAs="h1" />

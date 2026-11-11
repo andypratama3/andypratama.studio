@@ -105,8 +105,8 @@
     "linkedin": "LinkedIn",
     "youtube": "YouTube",
     "notesTitle": "Catatan angka",
-    "statusStated": "Dinyatakan",
-    "statusVerified": "Terverifikasi"
+    "statusStated": "Dinyatakan di sini, belum dicek ulang",
+    "statusVerified": "Sudah dicek"
   },
   "localNav": {
     "overview": "Ikhtisar",
@@ -147,7 +147,14 @@
       "secondaryCta": "Ceritakan kebutuhan Anda",
       "pathBuild": "Saya butuh dibuatkan",
       "pathTemplate": "Saya butuh template siap pakai",
-      "pathHiring": "Saya ingin merekrut"
+      "pathHiring": "Saya ingin merekrut",
+      "mark": "A·P",
+      "discipline": "Operasional harian",
+      "cubeCaption": "Gulir untuk memutar — enam sisi praktik",
+      "surface": "Permukaan",
+      "depth": "Kedalaman",
+      "skipIntro": "Lewati pembuka",
+      "stripLabel": "Jalan masuk"
     },
     "proof": {
       "yearsLabel": "tahun membantu operasional yang dipakai setiap hari",

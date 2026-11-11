@@ -14,7 +14,10 @@ export function Kicker({
 }: KickerProps) {
   return (
     <Component
-      className={cn("text-label mb-3 text-brand", className)}
+      className={cn(
+        "mb-3 text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase",
+        className
+      )}
       {...props}
     >
       {children}

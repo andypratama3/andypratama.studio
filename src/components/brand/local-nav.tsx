@@ -70,7 +70,7 @@ export function LocalNav({
         className
       )}
     >
-      <div className="mx-auto flex min-h-11 max-w-[1200px] items-center gap-4 px-[clamp(20px,4vw,40px)]">
+      <div className="mx-auto flex min-h-11 max-w-[1440px] items-center gap-4 px-[clamp(20px,4vw,40px)]">
         <nav
           aria-label={ariaLabel}
           className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"

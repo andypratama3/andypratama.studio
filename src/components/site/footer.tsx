@@ -31,6 +31,7 @@ const HOME_FACT_IDS = ["students", "yearsBuilding", "modules"] as const
 export function Footer() {
   const tNav = useTranslations("nav")
   const tFooter = useTranslations("footer")
+  const tProof = useTranslations("home.proof")
   const pathname = usePathname()
   const locale = useLocale()
   const currentLocale = locale === "id" ? "id" : "en"
@@ -38,8 +39,8 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full border-t border-border bg-background text-foreground">
-      <div className="mx-auto max-w-[1200px] px-[clamp(20px,4vw,40px)] py-16">
+    <footer className="view-rise w-full border-t border-border bg-background text-foreground">
+      <div className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,40px)] py-16">
         {isHome ? (
           <FootnoteList
             ids={[...HOME_FACT_IDS]}
@@ -47,7 +48,12 @@ export function Footer() {
             statedLabel={tFooter("statusStated")}
             verifiedLabel={tFooter("statusVerified")}
             locale={currentLocale}
-            className="mb-12 border-t-0 pt-0"
+            captions={{
+              students: tProof("studentsLabel"),
+              yearsBuilding: tProof("yearsLabel"),
+              modules: tProof("modulesLabel"),
+            }}
+            className="mb-14 border-t-0 pt-0"
           />
         ) : null}
 
@@ -59,7 +65,7 @@ export function Footer() {
             >
               {tNav("brand")}
             </Link>
-            <p className="text-label text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {tFooter("location")}
             </p>
             <div className="pt-1">
@@ -71,7 +77,7 @@ export function Footer() {
             delayMs={90}
             className={cn("space-y-3", socialLinks.length > 0 ? "lg:col-span-2" : "lg:col-span-4")}
           >
-            <p className="text-label text-muted-foreground">
+            <p className="text-sm text-foreground">
               {tFooter("navLabel")}
             </p>
             <nav aria-label={tNav("brand")} className="flex flex-col gap-2.5">
@@ -89,7 +95,7 @@ export function Footer() {
 
           {socialLinks.length > 0 ? (
             <Reveal delayMs={160} className="space-y-3 lg:col-span-3">
-              <p className="text-label text-muted-foreground">
+              <p className="text-sm text-foreground">
                 {tFooter("socialLabel")}
               </p>
               <div className="flex flex-col gap-2.5">
@@ -110,7 +116,7 @@ export function Footer() {
             delayMs={180}
             className={cn("space-y-3", socialLinks.length > 0 ? "lg:col-span-3" : "lg:col-span-4")}
           >
-            <p className="text-label text-muted-foreground">
+            <p className="text-sm text-foreground">
               {tFooter("legalLabel")}
             </p>
             <div className="flex flex-col gap-2.5">
@@ -131,7 +137,7 @@ export function Footer() {
           <p>
             © {currentYear} {tNav("brand")}. {tFooter("rights")}
           </p>
-          <p className="text-label">{tFooter("location")}</p>
+          <p>{tFooter("location")}</p>
         </div>
       </div>
     </footer>

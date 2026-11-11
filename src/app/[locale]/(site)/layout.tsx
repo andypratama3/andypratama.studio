@@ -8,7 +8,7 @@ export default function SiteLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+    <div className="public-canvas flex min-h-dvh flex-col bg-background text-foreground">
       <SkipLink />
       <Header />
       <main id="main" className="flex-1">

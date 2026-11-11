@@ -138,6 +138,66 @@
     --sidebar-ring: #8b86ff;
 }
 
+/* Public site follows portfolio.andypratama.studio: warm ink and ivory, Inter at display weight. */
+.public-canvas {
+    --background: #f6f3ec;
+    --foreground: #16140f;
+    --card: #fffcf7;
+    --card-foreground: #16140f;
+    --popover: #fffcf7;
+    --popover-foreground: #16140f;
+    --primary: #16140f;
+    --primary-foreground: #f6f3ec;
+    --secondary: #efeae2;
+    --secondary-foreground: #16140f;
+    --muted: #efeae2;
+    --muted-foreground: #5c574e;
+    --accent: #efeae2;
+    --accent-foreground: #16140f;
+    --border: #e2dcd2;
+    --input: #e2dcd2;
+    --ring: #16140f;
+    --brand: #16140f;
+    --brand-foreground: #f6f3ec;
+    --brand-on-dark: #f3f0e8;
+    --input-border: #8a8478;
+    --surface-contrast: #16140f;
+    --surface-contrast-foreground: #f6f3ec;
+}
+
+.dark .public-canvas {
+    --background: #0e0d0b;
+    --foreground: #f3f0e8;
+    --card: #161512;
+    --card-foreground: #f3f0e8;
+    --popover: #161512;
+    --popover-foreground: #f3f0e8;
+    --primary: #f3f0e8;
+    --primary-foreground: #0e0d0b;
+    --secondary: #1c1b17;
+    --secondary-foreground: #f3f0e8;
+    --muted: #171613;
+    --muted-foreground: #a8a294;
+    --accent: #1c1b17;
+    --accent-foreground: #f3f0e8;
+    --border: #2c2a26;
+    --input: #2c2a26;
+    --ring: #f3f0e8;
+    --brand: #f3f0e8;
+    --brand-foreground: #0e0d0b;
+    --brand-on-dark: #f3f0e8;
+    --input-border: #8d887c;
+    --surface-contrast: #0e0d0b;
+    --surface-contrast-foreground: #f3f0e8;
+}
+
+.public-canvas .text-display,
+.public-canvas .text-hero,
+.public-canvas .text-section {
+    font-weight: 500;
+    letter-spacing: -0.035em;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -458,6 +518,136 @@
     animation: hero-grid-drift 48s linear infinite alternate;
   }
 
+  .fluid-hero {
+    background:
+      radial-gradient(
+        ellipse 42% 34% at 78% 28%,
+        color-mix(in oklab, var(--foreground) 7%, transparent),
+        transparent 70%
+      ),
+      var(--background);
+    color: var(--foreground);
+  }
+
+  .public-canvas img {
+    border-radius: 1.25rem;
+  }
+
+  .fluid-word {
+    font-size: clamp(4.25rem, 12.4vw, 10.25rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.86;
+  }
+
+  .fluid-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in oklab, var(--foreground) 72%, transparent);
+  }
+
+  .fluid-neon {
+    --word-neon: #3ec5ff;
+  }
+
+  .fluid-neon-letter {
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in oklab, var(--foreground) 55%, transparent);
+    animation: neon-pass 1.8s linear infinite;
+  }
+
+  @keyframes neon-pass {
+    0%,
+    55%,
+    100% {
+      color: transparent;
+      -webkit-text-stroke-color: color-mix(in oklab, var(--foreground) 55%, transparent);
+      text-shadow: none;
+    }
+    12%,
+    34% {
+      color: var(--word-neon);
+      -webkit-text-stroke-color: var(--word-neon);
+      text-shadow: 0 0 22px var(--word-neon);
+    }
+  }
+
+  .fluid-marquee-track {
+    animation: wordmark-marquee 36s linear infinite;
+  }
+
+  .fluid-strip {
+    --strip-inset: max(
+      clamp(20px, 4vw, 40px),
+      calc((100% - 1440px) / 2 + clamp(20px, 4vw, 40px))
+    );
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(16rem, 78%);
+    gap: 0.85rem;
+    overflow-x: auto;
+    padding: 0 var(--strip-inset) 1.5rem;
+    scroll-padding-inline: var(--strip-inset);
+    scroll-snap-type: x mandatory;
+  }
+
+  @media (min-width: 1200px) {
+    .fluid-strip {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+  }
+
+  .fluid-cell {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0.7rem;
+    color: var(--foreground);
+    scroll-snap-align: start;
+  }
+
+  .fluid-cell img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .practice-scene {
+    perspective: 1200px;
+  }
+
+  .practice-cube {
+    --cube: min(78vw, 26rem);
+    position: relative;
+    width: var(--cube);
+    height: var(--cube);
+    transform-style: preserve-3d;
+  }
+
+  .practice-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    padding: 1.25rem;
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+
+  .practice-face:nth-child(1) { transform: rotateY(0deg) translateZ(calc(var(--cube) / 2)); }
+  .practice-face:nth-child(2) { transform: rotateY(90deg) translateZ(calc(var(--cube) / 2)); }
+  .practice-face:nth-child(3) { transform: rotateY(180deg) translateZ(calc(var(--cube) / 2)); }
+  .practice-face:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--cube) / 2)); }
+  .practice-face:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--cube) / 2)); }
+  .practice-face:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--cube) / 2)); }
+
   /* Sticky steps — stack below 640px; sticky only ≥640px (unless reduced motion) */
   @media (max-width: 639px) {
     .sticky-steps {
@@ -513,7 +703,7 @@
   @keyframes hero-beat {
     from {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(40px);
     }
     to {
       opacity: 1;
@@ -538,6 +728,28 @@
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  @keyframes view-rise {
+    from {
+      opacity: 0;
+      transform: translateY(36px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .public-canvas main section:not(.fluid-hero),
+      .public-canvas .view-rise {
+        animation: view-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 26%;
+      }
     }
   }
 
@@ -621,7 +833,8 @@
     .reveal-enter,
     .hero-beat,
     .hero-fade,
-    .nav-enter {
+    .nav-enter,
+    .fluid-neon-letter {
       animation: none;
     }
 
@@ -656,7 +869,8 @@
       animation: none;
     }
 
-    .animate-wordmark-marquee {
+    .animate-wordmark-marquee,
+    .fluid-marquee-track {
       animation: none;
     }
 

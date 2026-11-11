@@ -13,7 +13,7 @@ export default async function JournalPage() {
 
   return (
     <PageTransition>
-      <Section emphasis navTheme="light" className="border-b border-border bg-secondary">
+      <Section navTheme="light" className="border-b border-border pt-28 md:pt-32">
         <Container>
           <TextReveal>
           <SectionHeading title={t("title")} titleAs="h1" />
@@ -24,9 +24,9 @@ export default async function JournalPage() {
       <Section navTheme="light" className="border-b border-border">
         <Container>
           <Reveal delayMs={80}>
-          <div className="soft-card panel-soft flex min-h-[16rem] flex-col items-start justify-between gap-8 p-6 sm:p-8">
+          <div className="flex min-h-[16rem] flex-col items-start justify-between gap-8 rounded-[1.25rem] border border-border p-6 sm:p-8">
             <div className="space-y-3">
-              <p className="text-label text-brand">—</p>
+              <p className="text-sm text-muted-foreground">—</p>
               <p className="text-base font-medium text-foreground">{t("emptyTitle")}</p>
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
                 {t("emptyDescription")}
