@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { getTranslations } from "next-intl/server"
 import { Container } from "@/components/brand/container"
+import { EmptyPanel } from "@/components/brand/empty-panel"
 import { PageTransition } from "@/components/brand/page-transition"
 import { PanelReveal, TextReveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
@@ -13,14 +14,11 @@ import { cn } from "@/lib/utils"
 export async function PublicStubPanel() {
   const t = await getTranslations("common")
   return (
-    <div className="overflow-hidden rounded-[1.25rem] border border-border">
-      <div className="flex min-h-[11rem] flex-col justify-between gap-6 p-6 sm:min-h-[14rem] sm:p-8">
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">{t("stubStatus")}</p>
-          <p className="max-w-md text-base leading-relaxed text-muted-foreground">
-            {t("stubNote")}
-          </p>
-        </div>
+    <EmptyPanel
+      status={t("stubStatus")}
+      title={t("comingSoon")}
+      description={t("stubNote")}
+      action={
         <Link
           href="/start"
           className={cn(
@@ -30,8 +28,8 @@ export async function PublicStubPanel() {
         >
           {t("stubCta")}
         </Link>
-      </div>
-    </div>
+      }
+    />
   )
 }
 

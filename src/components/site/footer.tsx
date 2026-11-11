@@ -77,7 +77,7 @@ export function Footer() {
             delayMs={90}
             className={cn("space-y-3", socialLinks.length > 0 ? "lg:col-span-2" : "lg:col-span-4")}
           >
-            <p className="text-sm text-foreground">
+            <p className="text-label text-muted-foreground">
               {tFooter("navLabel")}
             </p>
             <nav aria-label={tNav("brand")} className="flex flex-col gap-2.5">
@@ -95,7 +95,7 @@ export function Footer() {
 
           {socialLinks.length > 0 ? (
             <Reveal delayMs={160} className="space-y-3 lg:col-span-3">
-              <p className="text-sm text-foreground">
+              <p className="text-label text-muted-foreground">
                 {tFooter("socialLabel")}
               </p>
               <div className="flex flex-col gap-2.5">
@@ -116,7 +116,7 @@ export function Footer() {
             delayMs={180}
             className={cn("space-y-3", socialLinks.length > 0 ? "lg:col-span-3" : "lg:col-span-4")}
           >
-            <p className="text-sm text-foreground">
+            <p className="text-label text-muted-foreground">
               {tFooter("legalLabel")}
             </p>
             <div className="flex flex-col gap-2.5">

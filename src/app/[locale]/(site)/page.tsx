@@ -16,7 +16,8 @@ import { ChapterRail } from "@/components/brand/chapter-rail"
 import { DepthGauge } from "@/components/brand/depth-gauge"
 import { PracticeCube } from "@/components/brand/practice-cube"
 import { StudioIntro } from "@/components/brand/studio-intro"
-import { MarqueePause } from "@/components/brand/marquee-pause"
+import { ProductStrip } from "@/components/brand/product-strip"
+import { productCatalog } from "@/content/product-catalog"
 import { Fact } from "@/components/brand/fact"
 import { MediaReveal, PanelReveal, Reveal, TextReveal } from "@/components/brand/reveal"
 import { ScrollBridge } from "@/components/brand/scroll-bridge"
@@ -122,20 +123,31 @@ export default async function HomePage({
       >
         <DepthGauge surface={tHero("surface")} depth={tHero("depth")} />
         <ContainerWide className="relative flex flex-1 flex-col justify-end pt-28 pr-0 pb-10 md:pr-20 md:pb-14">
-          <h1 id="home-hero-heading" className="fluid-word max-w-[12ch]">
+          <h1 id="home-hero-heading" className="fluid-word max-w-[16ch]">
             <span className="hero-beat block">Andy</span>
-            <span className="sr-only">Pratama</span>
+            <span className="sr-only">Pratama Studio</span>
             <span aria-hidden className="fluid-neon hero-beat block" style={{ ["--reveal-delay" as string]: "80ms" }}>
-              {"Pratama".split("").map((letter, index) => (
-                <span
-                  key={`${letter}-${index}`}
-                  className="fluid-neon-letter"
-                  data-letter={letter}
-                  style={{ animationDelay: `${index * motionTokens.stagger}s` }}
-                >
-                  {letter}
-                </span>
-              ))}
+              {"Pratama Studio".split(" ").map((word, wordIndex, words) => {
+                const base = words
+                  .slice(0, wordIndex)
+                  .reduce((total, part) => total + part.length + 1, 0)
+                return (
+                  <span key={word} className="fluid-neon-word">
+                    {word.split("").map((letter, letterIndex) => (
+                      <span
+                        key={`${word}-${letter}-${letterIndex}`}
+                        className="fluid-neon-letter"
+                        data-letter={letter}
+                        style={{
+                          animationDelay: `${(base + letterIndex) * motionTokens.stagger}s`,
+                        }}
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </span>
+                )
+              })}
             </span>
           </h1>
           <div className="hero-beat mt-8 max-w-xl" style={{ ["--reveal-delay" as string]: "160ms" }}>
@@ -202,25 +214,16 @@ export default async function HomePage({
         </nav>
       </section>
 
-      <div data-nav-theme="light" data-decor="" className="relative overflow-hidden border-b border-border bg-background py-7">
-        <MarqueePause />
-        <div className="edge-fade-x overflow-hidden" aria-hidden>
-          <div className="fluid-marquee-track flex w-max items-baseline gap-12 whitespace-nowrap">
-            {[0, 1].map((copy) => (
-              <p key={copy} className="flex items-baseline gap-12 pr-12">
-                {stackTechs.map((item) => (
-                  <span
-                    key={`${copy}-${item}`}
-                    className="text-[clamp(2rem,4.5vw,3.5rem)] font-medium tracking-[-0.04em] text-foreground"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </p>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ProductStrip
+        liveLabel={tProducts("liveLabel")}
+        soonLabel={tProducts("soonLabel")}
+        browseLabel={tProducts("browseLabel")}
+        items={productCatalog.map((item) => ({
+          ...item,
+          title: tProducts(`catalog.${item.id}.title`),
+          blurb: tProducts(`catalog.${item.id}.blurb`),
+        }))}
+      />
 
       <PracticeCube faces={cubeFaces} caption={tHero("cubeCaption")} />
 
@@ -542,10 +545,10 @@ export default async function HomePage({
               title={tJournal("title")}
               description={tJournal("subtitle")}
             />
-            <div className="grid grid-cols-1 border-y border-border sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Link
                 href="/journal"
-                className="group flex min-h-44 flex-col justify-between gap-8 border-b border-border px-1 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:border-r sm:border-b-0 sm:px-8 sm:py-8"
+                className="group panel-soft flex min-h-44 flex-col justify-between gap-8 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
               >
                 <p className="text-sm text-muted-foreground">
                   01 · {tJournal("builtLabel")}
@@ -554,12 +557,12 @@ export default async function HomePage({
                   <p className="max-w-[24ch] text-base leading-snug text-foreground">
                     {tJournal("builtEmpty")}
                   </p>
-                  <ArrowRight aria-hidden className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight aria-hidden className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-brand" />
                 </div>
               </Link>
               <Link
                 href="/journal"
-                className="group flex min-h-44 flex-col justify-between gap-8 px-1 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:px-8 sm:py-8"
+                className="group panel-soft flex min-h-44 flex-col justify-between gap-8 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
               >
                 <p className="text-sm text-muted-foreground">
                   02 · {tJournal("brokenLabel")}
@@ -568,7 +571,7 @@ export default async function HomePage({
                   <p className="max-w-[24ch] text-base leading-snug text-foreground">
                     {tJournal("brokenEmpty")}
                   </p>
-                  <ArrowRight aria-hidden className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                  <ArrowRight aria-hidden className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-brand" />
                 </div>
               </Link>
             </div>
@@ -587,7 +590,7 @@ export default async function HomePage({
 
       {/* Scroll transition 3 — horizontal wordmark scrub into CTA */}
       <div data-nav-theme="light" className="scroll-anchor border-b border-border">
-        <ScrollBridge text="ANDY PRATAMA" />
+        <ScrollBridge text="ANDY PRATAMA STUDIO" />
       </div>
 
       {/* 12. FAQ 4+8 */}
@@ -653,10 +656,10 @@ export default async function HomePage({
         id="about"
         emphasis
         navTheme="dark"
-        className="border-b border-border bg-foreground text-background"
+        className="surface-invert surface-glow border-b border-border"
       >
         <Container>
-          <PanelReveal className="flex flex-col items-start gap-8 py-6 text-background sm:items-center sm:py-4 sm:text-center">
+          <PanelReveal className="flex flex-col items-start gap-8 py-6 text-surface-contrast-foreground sm:items-center sm:py-4 sm:text-center">
             <h2 className="text-display max-w-4xl sm:text-center">
               {tCta("title")}
             </h2>
@@ -668,7 +671,7 @@ export default async function HomePage({
                 href="/start?topic=hiring"
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "cta-lift h-11 rounded-full bg-background px-6 font-medium text-foreground hover:bg-background/90"
+                  "cta-lift h-11 rounded-full bg-surface-contrast-foreground px-6 font-medium text-surface-contrast hover:bg-surface-contrast-foreground/90"
                 )}
               >
                 {tCta("hireMe")}
@@ -680,7 +683,7 @@ export default async function HomePage({
                 href="/products/dualbrand"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "cta-lift h-11 rounded-full border-background/30 bg-transparent px-6 text-background hover:bg-background/10"
+                  "cta-lift h-11 rounded-full border-surface-contrast-foreground/30 bg-transparent px-6 text-surface-contrast-foreground hover:bg-surface-contrast-foreground/10"
                 )}
               >
                 {tCta("getTemplate")}
@@ -691,22 +694,22 @@ export default async function HomePage({
                 href="/start?topic=project"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "cta-lift h-11 rounded-full border-background/30 bg-transparent px-6 text-background hover:bg-background/10"
+                  "cta-lift h-11 rounded-full border-surface-contrast-foreground/30 bg-transparent px-6 text-surface-contrast-foreground hover:bg-surface-contrast-foreground/10"
                 )}
               >
                 {tCta("workWithMe")}
               </TrackedLink>
             </div>
-            <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-background/20 px-4 py-2.5 text-xs text-background/70">
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-surface-contrast-foreground/20 px-4 py-2.5 text-xs text-surface-contrast-foreground/70">
               <FileText className="size-3.5" />
-              <span className="font-medium text-background">
+              <span className="font-medium text-surface-contrast-foreground">
                 {tCta("downloadCv")}
               </span>
               <TrackedLink
                 event="cv_download"
                 payload={{ lang: "en" }}
                 href="/cv"
-                className="inline-flex min-h-7 items-center transition-colors hover:text-background hover:underline"
+                className="inline-flex min-h-7 items-center transition-colors hover:text-surface-contrast-foreground hover:underline"
               >
                 {tCta("cvEn")}
               </TrackedLink>
@@ -715,7 +718,7 @@ export default async function HomePage({
                 event="cv_download"
                 payload={{ lang: "id" }}
                 href="/cv"
-                className="inline-flex min-h-7 items-center transition-colors hover:text-background hover:underline"
+                className="inline-flex min-h-7 items-center transition-colors hover:text-surface-contrast-foreground hover:underline"
               >
                 {tCta("cvId")}
               </TrackedLink>

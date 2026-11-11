@@ -253,10 +253,10 @@
   }
 
   .text-display {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-size: clamp(2.15rem, 5vw, 3.75rem);
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
     text-wrap: balance;
   }
 
@@ -586,6 +586,15 @@
     -webkit-text-stroke: 1.5px color-mix(in oklab, var(--foreground) 72%, transparent);
   }
 
+  .fluid-neon-word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .fluid-neon-word + .fluid-neon-word {
+    margin-left: 0.32em;
+  }
+
   .fluid-neon-letter {
     position: relative;
     display: inline-block;
@@ -661,6 +670,13 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fluid-cell:hover img {
+      transform: scale(1.03);
+    }
   }
 
   .practice-scene {

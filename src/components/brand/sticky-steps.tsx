@@ -80,7 +80,7 @@ export function StickySteps({ steps, className }: StickyStepsProps) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8">
             <span
               aria-hidden
-              className="sticky-index inline-flex size-11 min-h-11 min-w-11 items-center justify-center rounded-full border border-border text-label tabular-nums text-foreground"
+              className="sticky-index inline-flex size-11 min-h-11 min-w-11 items-center justify-center rounded-full border border-border text-label tabular-nums text-muted-foreground transition-colors"
             >
               {String(index + 1).padStart(2, "0")}
             </span>

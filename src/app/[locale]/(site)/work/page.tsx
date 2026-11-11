@@ -14,6 +14,7 @@ export default async function WorkPage() {
   const tWork = await getTranslations("workPage")
   const tSakolentra = await getTranslations("home.sakolentra")
   const tOther = await getTranslations("home.otherProjects")
+  const tCta = await getTranslations("home.finalCta")
 
   const rows = [
     {
@@ -83,6 +84,15 @@ export default async function WorkPage() {
             }}
             rows={rows}
           />
+          <Link
+            href="/start"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "lg" }),
+              "inline-flex h-11 rounded-full px-6 cta-lift"
+            )}
+          >
+            {tCta("workWithMe")}
+          </Link>
         </Container>
       </Section>
     </PublicPageShell>

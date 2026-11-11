@@ -141,7 +141,7 @@ export function ContactForm({ labels }: { labels: Labels }) {
     <Form {...form}>
       <form
         onSubmit={handleFormSubmit}
-        className="mx-auto max-w-xl space-y-5"
+        className="panel-soft mx-auto max-w-xl space-y-5 p-6 sm:p-8"
         noValidate
       >
         <FormField

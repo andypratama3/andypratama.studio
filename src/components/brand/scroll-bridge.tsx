@@ -32,7 +32,7 @@ function NeonWord({
 
   return (
     <m.span
-      className="inline-block pr-[0.28em]"
+      className="inline-block whitespace-nowrap pr-[0.32em] last:pr-0"
       style={motionOk ? { color, opacity, textShadow } : { color: "var(--foreground)", opacity: 0.4 }}
     >
       {word}

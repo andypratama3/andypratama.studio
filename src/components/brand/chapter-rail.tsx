@@ -4,6 +4,7 @@ import * as React from "react"
 import { m } from "motion/react"
 import { useMotionOk } from "@/components/brand/use-motion-ok"
 import { useScrollProgress } from "@/components/brand/scroll-progress"
+import { cn } from "@/lib/utils"
 
 export interface ChapterRailItem {
   id: string
@@ -53,8 +54,11 @@ export function ChapterRail({
           style={motionOk ? { scaleY: smooth } : { scaleY: 1 }}
         />
       </div>
-      <nav aria-label={label} className="border-b border-border">
-        <ol className="mx-auto flex w-full max-w-[1440px] flex-wrap gap-x-6 gap-y-3 px-[clamp(20px,4vw,40px)] py-5">
+      <nav
+        aria-label={label}
+        className="sticky top-[4.5rem] z-[var(--z-sticky)] border-b border-border/80 bg-background/90 backdrop-blur-md"
+      >
+        <ol className="mx-auto flex w-full max-w-[1440px] gap-1 overflow-x-auto px-[clamp(20px,4vw,40px)] py-3 [-webkit-overflow-scrolling:touch]">
           {items.map((item) => {
             const on = active === item.id
             return (
@@ -62,14 +66,23 @@ export function ChapterRail({
                 <a
                   href={`#${item.id}`}
                   aria-current={on ? "true" : undefined}
-                  className={
+                  className={cn(
+                    "relative inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
                     on
-                      ? "text-sm text-foreground"
-                      : "text-sm text-muted-foreground hover:text-foreground"
-                  }
+                      ? "bg-foreground/5 text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
                 >
-                  <span className="mr-2 text-[11px] tracking-[0.18em]">{item.index}</span>
-                  {item.label}
+                  <span className="text-[11px] tracking-[0.18em] text-muted-foreground">
+                    {item.index}
+                  </span>
+                  <span className="whitespace-nowrap">{item.label}</span>
+                  {on ? (
+                    <span
+                      aria-hidden
+                      className="absolute inset-x-3 bottom-1.5 h-px bg-brand"
+                    />
+                  ) : null}
                 </a>
               </li>
             )

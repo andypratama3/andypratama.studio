@@ -33,13 +33,13 @@ export function FaqAccordion({
         {items.map((item) => (
           <AccordionItem key={item.id} value={item.id} className="border-0 px-0">
             <AccordionTrigger
-              className="min-h-11 rounded-xl py-5 text-sm font-medium hover:no-underline hover:text-brand sm:text-base"
+              className="min-h-11 rounded-xl py-5 text-left text-sm font-medium hover:no-underline hover:text-brand data-[panel-open]:text-foreground sm:text-base"
               onClick={() => track("faq_open", { id: item.id })}
             >
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="pb-5">
-              <p className="text-body-measure pr-8 text-sm leading-relaxed text-muted-foreground">
+            <AccordionContent className="pb-6">
+              <p className="text-body-measure max-w-[52ch] pr-8 text-sm leading-relaxed text-muted-foreground">
                 {item.answer}
               </p>
             </AccordionContent>

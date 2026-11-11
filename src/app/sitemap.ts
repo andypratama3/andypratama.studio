@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next"
 const paths = [
   "",
   "/about",
+  "/media-kit",
   "/products",
   "/products/dualbrand",
   "/work",

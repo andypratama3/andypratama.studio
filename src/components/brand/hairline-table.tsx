@@ -38,14 +38,14 @@ export function HairlineTable({ columns, rows, className }: HairlineTableProps) 
             </tr>
           </thead>
           <tbody>
-            <Stagger as="tr" className="border-b border-border/70 transition-colors hover:bg-muted/20" stepMs={70}>
+            <Stagger as="tr" className="border-b border-border/70 transition-colors hover:bg-muted/30" stepMs={70}>
             {rows.map((row) => (
               <React.Fragment key={row.name}>
-                <td className="py-4 pr-4 font-medium tracking-tight text-foreground">
+                <td className="py-5 pr-4 font-medium tracking-tight text-foreground">
                   {row.name}
                 </td>
-                <td className="py-4 pr-4 text-muted-foreground">{row.type}</td>
-                <td className={cn("py-4 text-muted-foreground", showPeriod && "pr-4")}>{row.built}</td>
+                <td className="py-5 pr-4 text-muted-foreground">{row.type}</td>
+                <td className={cn("py-5 text-muted-foreground", showPeriod && "pr-4")}>{row.built}</td>
                 {showPeriod ? (
                   <td className="py-4 text-right text-xs tabular-nums text-muted-foreground">
                     {row.period}

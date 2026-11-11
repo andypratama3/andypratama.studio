@@ -69,7 +69,7 @@ export function DualBrandStage({
         </div>
         <div className="space-y-2">
           <p className="text-section font-semibold leading-snug text-foreground">{title}</p>
-          <p className="text-sm leading-relaxed text-secondary-foreground/80">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             <span className="text-foreground">{current.label}. </span>
             {lead}
           </p>
@@ -77,9 +77,9 @@ export function DualBrandStage({
         {items.length > 0 ? (
           <ul className="divide-y divide-border border-t border-border">
             {items.map((item) => (
-              <li key={item} className="flex items-center gap-3 py-3 text-sm text-secondary-foreground">
+              <li key={item} className="flex items-center gap-3 py-3 text-sm text-muted-foreground">
                 <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-brand" />
-                {item}
+                <span className="text-foreground">{item}</span>
               </li>
             ))}
           </ul>
