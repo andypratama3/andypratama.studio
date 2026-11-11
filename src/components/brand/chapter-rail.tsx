@@ -1,8 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { m, useScroll, useSpring } from "motion/react"
+import { m } from "motion/react"
 import { useMotionOk } from "@/components/brand/use-motion-ok"
+import { useScrollProgress } from "@/components/brand/scroll-progress"
 
 export interface ChapterRailItem {
   id: string
@@ -19,8 +20,7 @@ export function ChapterRail({
   label: string
 }) {
   const motionOk = useMotionOk()
-  const { scrollYProgress } = useScroll()
-  const scaleY = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 })
+  const { smooth } = useScrollProgress()
   const [active, setActive] = React.useState(items[0]?.id ?? "")
 
   React.useEffect(() => {
@@ -48,11 +48,10 @@ export function ChapterRail({
         aria-hidden
         className="pointer-events-none fixed inset-y-0 right-0 z-30 hidden w-px bg-border md:block"
       >
-        {motionOk ? (
-          <m.div className="h-full w-px origin-top bg-foreground" style={{ scaleY }} />
-        ) : (
-          <div className="h-full w-px bg-foreground/40" />
-        )}
+        <m.div
+          className="h-full w-px origin-top bg-foreground"
+          style={motionOk ? { scaleY: smooth } : { scaleY: 1 }}
+        />
       </div>
       <nav aria-label={label} className="border-b border-border">
         <ol className="mx-auto flex w-full max-w-[1440px] flex-wrap gap-x-6 gap-y-3 px-[clamp(20px,4vw,40px)] py-5">

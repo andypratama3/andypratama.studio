@@ -68,7 +68,7 @@ export default async function ProductsDashboardPage() {
                     <div>
                       <span className="text-muted-foreground">Harga Aktif:</span>
                       <div className="font-mono text-base font-bold text-foreground">
-                        ${p.priceUsd ?? "0.00"} USD
+                        ${p.priceUsd ?? "—"} USD
                       </div>
                     </div>
                     <div>

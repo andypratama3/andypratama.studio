@@ -1,0 +1,14 @@
+{
+  "path": "/start",
+  "cls": 0,
+  "lcp": 100,
+  "longTasks": 0,
+  "observerErrors": [],
+  "lcpFromBuffer": 0,
+  "clsFromBuffer": 0,
+  "longTaskEntries": 0,
+  "animationsAtLoad": 1,
+  "animationsAfterScroll": 1,
+  "cpuThrottle": 1,
+  "note": "No DevTools CPU throttle. Compare later runs with the same spec and machine."
+}

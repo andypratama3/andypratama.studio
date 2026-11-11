@@ -51,7 +51,7 @@ export function StatsGrid({
               i === visible.length - 1 && "sm:pr-0"
             )}
           >
-            <TextReveal delayMs={i * 140}>
+            <TextReveal delayMs={i * 60}>
             <p
               id={`stat-${item.id}`}
               className="text-stat scroll-anchor text-primary tabular-nums"

@@ -18,7 +18,10 @@
     "dualbrandTitle": "DualBrand",
     "dualbrandDesc": "Website untuk satu merek induk dan dua merek anak. Ada demo langsung.",
     "dualbrandCta": "Lihat DualBrand",
-    "moreSoon": "Produk lain sedang disiapkan."
+    "moreSoon": "Produk lain sedang disiapkan.",
+    "layerParent": "Merek induk",
+    "layerChildA": "Merek anak A",
+    "layerChildB": "Merek anak B"
   },
   "servicesPage": {
     "title": "Jasa",

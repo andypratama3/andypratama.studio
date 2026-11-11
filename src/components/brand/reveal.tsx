@@ -18,6 +18,7 @@ export interface RevealProps {
   /** Use li or tr inside lists and tables. */
   as?: RevealTag
   role?: string
+  id?: string
 }
 
 const hidden = {
@@ -38,9 +39,38 @@ const durationFor = {
   scale: motionTokens.slow,
 } as const
 
+type RevealListener = (entry: IntersectionObserverEntry) => void
+
+const listeners = new Map<Element, RevealListener>()
+let sharedObserver: IntersectionObserver | null = null
+
+function getObserver() {
+  if (sharedObserver) return sharedObserver
+  if (typeof IntersectionObserver === "undefined") return null
+  sharedObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) listeners.get(entry.target)?.(entry)
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.16 }
+  )
+  return sharedObserver
+}
+
+function watchReveal(node: Element, listener: RevealListener) {
+  const observer = getObserver()
+  if (!observer) return () => {}
+  listeners.set(node, listener)
+  observer.observe(node)
+  return () => {
+    observer.unobserve(node)
+    listeners.delete(node)
+  }
+}
+
 /**
  * Scroll reveal via Motion. First paint stays visible (`initial={false}`).
- * Off-screen nodes hide instantly, then ease in once.
+ * Off-screen nodes hide instantly, then ease in once. One shared observer.
+ * `data-reveal` opts the ancestor section out of CSS `view-rise`.
  */
 export function Reveal({
   className,
@@ -48,6 +78,7 @@ export function Reveal({
   kind = "rise",
   as = "div",
   role,
+  id,
   children,
 }: RevealProps) {
   const motionOk = useMotionOk()
@@ -56,7 +87,6 @@ export function Reveal({
 
   React.useEffect(() => {
     if (!motionOk) return
-    if (typeof IntersectionObserver === "undefined") return
     const node = ref.current
     if (!node) return
 
@@ -70,21 +100,17 @@ export function Reveal({
 
     arm()
 
-    const show = () => setMode("play")
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) show()
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.16 }
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
+    return watchReveal(node, (entry) => {
+      if (entry.isIntersecting) setMode("play")
+    })
   }, [motionOk])
 
   const playing = mode === "play" && motionOk
   const motionProps = {
     className,
     role,
+    id,
+    "data-reveal": "",
     initial: false as const,
     animate: mode === "armed" && motionOk ? hidden[kind] : shown[kind],
     transition: playing
@@ -134,7 +160,7 @@ export function PanelReveal(props: Omit<RevealProps, "kind">) {
 export function Stagger({
   children,
   className,
-  stepMs = 120,
+  stepMs = motionTokens.stagger * 1000,
   kind = "rise",
   as = "div",
 }: {

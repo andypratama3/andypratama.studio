@@ -28,7 +28,7 @@ export function getWiringInventory(): WiringRow[] {
       id: "motion",
       label: "motion (LazyMotion)",
       status: "ok",
-      detail: "LazyMotion domMax; hero CSS choreography; Motion reveal, scroll bridge, nav progress. Marquee stays CSS",
+      detail: "LazyMotion domAnimation; hero CSS choreography; Motion reveal, scroll bridge, nav progress. Marquee stays CSS",
     },
     {
       id: "sonner",

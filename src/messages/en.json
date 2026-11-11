@@ -18,7 +18,10 @@
     "dualbrandTitle": "DualBrand",
     "dualbrandDesc": "A website for one parent brand and two child brands. Live demo included.",
     "dualbrandCta": "See DualBrand",
-    "moreSoon": "More products are on the way."
+    "moreSoon": "More products are on the way.",
+    "layerParent": "Parent brand",
+    "layerChildA": "Child brand A",
+    "layerChildB": "Child brand B"
   },
   "servicesPage": {
     "title": "Services",

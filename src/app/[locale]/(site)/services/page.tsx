@@ -32,7 +32,7 @@ export default async function ServicesPage() {
       <Section navTheme="light" className="border-b border-border">
         <Container className="space-y-10">
           <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
-            <Stagger className="h-full" stepMs={120}>
+            <Stagger className="h-full">
             {packages.map((pkg) => (
               <div
                 key={pkg.label}

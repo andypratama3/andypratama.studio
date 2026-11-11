@@ -7,8 +7,6 @@ import {
   MessageSquare,
   RefreshCw,
 } from "lucide-react"
-import { m, useReducedMotion } from "motion/react"
-import { motionTokens } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
 export type SakolentraFlowNode = {
@@ -42,7 +40,6 @@ export function SakolentraDiagram({
 }: SakolentraDiagramProps) {
   const displayNodes = nodes.slice(0, 4)
   const baseId = React.useId()
-  const reduce = useReducedMotion()
   const [active, setActive] = React.useState(0)
 
   if (displayNodes.length === 0) return null
@@ -90,7 +87,7 @@ export function SakolentraDiagram({
           const Icon = icons[index] ?? FileSpreadsheet
           const checked = selected === index
           return (
-            <m.button
+            <button
               key={node.step}
               id={`${baseId}-step-${index}`}
               type="button"
@@ -108,9 +105,6 @@ export function SakolentraDiagram({
                   move(index, -1)
                 }
               }}
-              whileHover={reduce === false ? { y: -2 } : undefined}
-              whileTap={reduce === false ? { y: 0 } : undefined}
-              transition={{ duration: motionTokens.fast, ease: motionTokens.ease }}
               className={cn(
                 "flow-card flex min-h-11 flex-col gap-3 rounded-[1.35rem] border bg-card/90 p-4 text-left shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
                 checked
@@ -130,7 +124,7 @@ export function SakolentraDiagram({
               <span className="text-xs leading-relaxed text-muted-foreground">
                 {node.description}
               </span>
-            </m.button>
+            </button>
           )
         })}
       </div>

@@ -13,10 +13,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Link, usePathname } from "@/i18n/routing"
-import { motionTokens } from "@/lib/motion"
 import { cn } from "@/lib/utils"
-import { m, useScroll, useSpring } from "motion/react"
+import { m } from "motion/react"
 import { Magnetic } from "@/components/brand/magnetic"
+import { useScrollProgress } from "@/components/brand/scroll-progress"
 import { useMotionOk } from "@/components/brand/use-motion-ok"
 import { LangSwitcher } from "@/components/site/lang-switcher"
 import { ThemeSwitcher } from "@/components/site/theme-switcher"
@@ -43,8 +43,7 @@ export function FloatingNav() {
   const t = useTranslations("nav")
   const pathname = usePathname()
   const motionOk = useMotionOk()
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 })
+  const { smooth } = useScrollProgress()
   const [open, setOpen] = React.useState(false)
   const [surface, setSurface] = React.useState<NavSurface>("light")
 
@@ -81,10 +80,7 @@ export function FloatingNav() {
 
   return (
     <m.div
-      initial={motionOk ? { opacity: 0, y: -12 } : false}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.56, ease: motionTokens.ease }}
-      className="pointer-events-none fixed inset-x-0 top-[max(0.75rem,env(safe-area-inset-top))] z-[var(--z-nav)] px-[max(0.75rem,env(safe-area-inset-right))] ps-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(1rem,env(safe-area-inset-top))]"
+      className="nav-enter pointer-events-none fixed inset-x-0 top-[max(0.75rem,env(safe-area-inset-top))] z-[var(--z-nav)] px-[max(0.75rem,env(safe-area-inset-right))] ps-[max(0.75rem,env(safe-area-inset-left))] sm:top-[max(1rem,env(safe-area-inset-top))]"
     >
       <div className="mx-auto flex max-w-[1440px] items-center gap-2 sm:gap-3">
         {/* Lang/theme capsule — hidden on mobile (<md) because Sheet provides them */}
@@ -144,22 +140,10 @@ export function FloatingNav() {
                   )}
                 >
                   {active ? (
-                    motionOk ? (
-                      <m.span
-                        layoutId="site-nav-pill"
-                        aria-hidden
-                        className="absolute inset-0 rounded-full bg-brand/15"
-                        transition={{
-                          duration: motionTokens.base,
-                          ease: motionTokens.ease,
-                        }}
-                      />
-                    ) : (
-                      <span
-                        aria-hidden
-                        className="absolute inset-0 rounded-full bg-brand/15"
-                      />
-                    )
+                    <span
+                      aria-hidden
+                      className="absolute inset-0 rounded-full bg-brand/15"
+                    />
                   ) : null}
                   <span className="relative">{t(item.key)}</span>
                 </Link>
@@ -241,13 +225,11 @@ export function FloatingNav() {
               </SheetContent>
             </Sheet>
           </div>
-          {motionOk ? (
-            <m.div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-5 bottom-1.5 h-px origin-left rounded-full bg-brand"
-              style={{ scaleX }}
-            />
-          ) : null}
+          <m.div
+            aria-hidden
+            className="nav-progress pointer-events-none absolute inset-x-5 bottom-1.5 h-px origin-left rounded-full bg-brand"
+            style={motionOk ? { scaleX: smooth } : undefined}
+          />
         </div>
       </div>
     </m.div>

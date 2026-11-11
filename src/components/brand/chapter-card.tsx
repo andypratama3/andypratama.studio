@@ -54,16 +54,16 @@ export function ChapterCard({
         {spec && spec.length > 0 ? (
           <dl className="mt-8 border-t border-border">
             {spec.map((row, i) => (
-              <Reveal key={row.id ?? row.label} delayMs={220 + i * 80}>
-                <div
-                  id={row.id}
-                  className="scroll-anchor flex items-baseline justify-between gap-6 border-b border-border py-3.5"
-                >
-                  <dt className="text-sm leading-snug text-muted-foreground">{row.label}</dt>
-                  <dd className="shrink-0 text-right text-lg font-medium tabular-nums text-foreground">
-                    {row.value}
-                  </dd>
-                </div>
+              <Reveal
+                key={row.id ?? row.label}
+                id={row.id}
+                delayMs={i * 60}
+                className="scroll-anchor flex items-baseline justify-between gap-6 border-b border-border py-3.5"
+              >
+                <dt className="text-sm leading-snug text-muted-foreground">{row.label}</dt>
+                <dd className="shrink-0 text-right text-lg font-medium tabular-nums text-foreground">
+                  {row.value}
+                </dd>
               </Reveal>
             ))}
           </dl>

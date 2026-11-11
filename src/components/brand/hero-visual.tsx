@@ -4,10 +4,11 @@ import * as React from "react"
 import {
   m,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from "motion/react"
+import { motionSprings } from "@/lib/motion"
+import { useMotionOk } from "@/components/brand/use-motion-ok"
 import { cn } from "@/lib/utils"
 
 export interface HeroVisualProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -22,12 +23,11 @@ export function HeroVisual({
   ...props
 }: HeroVisualProps) {
   const ref = React.useRef<HTMLDivElement | null>(null)
-  const reduce = useReducedMotion()
+  const motionOk = useMotionOk()
   const px = useMotionValue(0)
   const py = useMotionValue(0)
-  const spring = { stiffness: 70, damping: 18, mass: 0.4 }
-  const sx = useSpring(px, spring)
-  const sy = useSpring(py, spring)
+  const sx = useSpring(px, motionSprings.soft)
+  const sy = useSpring(py, motionSprings.soft)
   const posterX = useTransform(sx, (value) => value * -10)
   const posterY = useTransform(sy, (value) => value * -10)
   const gridX = useTransform(sx, (value) => value * 16)
@@ -37,7 +37,7 @@ export function HeroVisual({
   // Normalised -1…1, applied as transform/opacity-only springs.
   React.useEffect(() => {
     const node = ref.current
-    if (!node || reduce !== false) return
+    if (!node || !motionOk) return
     if (!window.matchMedia("(pointer: fine)").matches) return
 
     let live = true
@@ -71,7 +71,7 @@ export function HeroVisual({
       window.removeEventListener("pointerleave", reset)
       window.removeEventListener("blur", reset)
     }
-  }, [px, py, reduce])
+  }, [motionOk, px, py])
 
   return (
     <div
@@ -107,6 +107,7 @@ export function HeroVisual({
       >
         <svg
           className="size-full opacity-40 motion-safe:animate-hero-grid-drift"
+        data-decor=""
           viewBox="0 0 1000 1000"
           preserveAspectRatio="none"
         >

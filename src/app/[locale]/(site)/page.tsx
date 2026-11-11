@@ -1,14 +1,14 @@
 import { AppWindow, ArrowRight, Code2, CreditCard, Database, FileText, LayoutDashboard, MessageCircle, UserCheck } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import Image from "next/image"
 import { publicEnv } from "@/lib/env"
 import { Container, ContainerWide } from "@/components/brand/container"
-import { DualBrandPreview } from "@/components/brand/dualbrand-preview"
+import { DualBrandStage } from "@/components/brand/dualbrand-stage"
 import { FaqAccordion } from "@/components/brand/faq-accordion"
 import { HairlineTable } from "@/components/brand/hairline-table"
 import { Row } from "@/components/brand/row"
 import { SakolentraDiagram } from "@/components/brand/sakolentra-diagram"
 import { Section } from "@/components/brand/section"
-import { SectionHeading } from "@/components/brand/section-heading"
 import { StatBlock } from "@/components/brand/stat-block"
 import { Magnetic } from "@/components/brand/magnetic"
 import { ChapterCard } from "@/components/brand/chapter-card"
@@ -16,6 +16,7 @@ import { ChapterRail } from "@/components/brand/chapter-rail"
 import { DepthGauge } from "@/components/brand/depth-gauge"
 import { PracticeCube } from "@/components/brand/practice-cube"
 import { StudioIntro } from "@/components/brand/studio-intro"
+import { MarqueePause } from "@/components/brand/marquee-pause"
 import { Fact } from "@/components/brand/fact"
 import { MediaReveal, PanelReveal, Reveal, TextReveal } from "@/components/brand/reveal"
 import { ScrollBridge } from "@/components/brand/scroll-bridge"
@@ -28,6 +29,7 @@ import { OUTBOUND_LINKS } from "@/content/outbound-links"
 import { getResolvedFaqItems } from "@/lib/resolve-faq-tokens"
 import { TrackedAnchor, TrackedLink } from "@/components/brand/tracked-link"
 import { Link } from "@/lib/navigation"
+import { motionTokens } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
 export default async function HomePage({
@@ -50,6 +52,7 @@ export default async function HomePage({
   const tNews = await getTranslations("home.newsletter")
   const tIntro = await getTranslations("home.introVideo")
   const tProducts = await getTranslations("productsPage")
+  const tBrand = await getTranslations("brandToggle")
   const tCta = await getTranslations("home.finalCta")
 
   const homeFaqItems = getResolvedFaqItems(currentLocale).filter((item) => item.home)
@@ -114,26 +117,28 @@ export default async function HomePage({
       <section
         aria-labelledby="home-hero-heading"
         data-nav-theme="dark"
+        data-decor=""
         className="fluid-hero relative flex min-h-dvh flex-col border-b border-border"
       >
         <DepthGauge surface={tHero("surface")} depth={tHero("depth")} />
         <ContainerWide className="relative flex flex-1 flex-col justify-end pt-28 pr-0 pb-10 md:pr-20 md:pb-14">
           <h1 id="home-hero-heading" className="fluid-word max-w-[12ch]">
-            <span className="hero-beat block" style={{ ["--reveal-delay" as string]: "80ms" }}>Andy</span>
+            <span className="hero-beat block">Andy</span>
             <span className="sr-only">Pratama</span>
-            <span aria-hidden className="fluid-neon hero-beat block" style={{ ["--reveal-delay" as string]: "200ms" }}>
+            <span aria-hidden className="fluid-neon hero-beat block" style={{ ["--reveal-delay" as string]: "80ms" }}>
               {"Pratama".split("").map((letter, index) => (
                 <span
                   key={`${letter}-${index}`}
                   className="fluid-neon-letter"
-                  style={{ animationDelay: `${index * 0.16}s` }}
+                  data-letter={letter}
+                  style={{ animationDelay: `${index * motionTokens.stagger}s` }}
                 >
                   {letter}
                 </span>
               ))}
             </span>
           </h1>
-          <div className="hero-beat mt-8 max-w-xl" style={{ ["--reveal-delay" as string]: "340ms" }}>
+          <div className="hero-beat mt-8 max-w-xl" style={{ ["--reveal-delay" as string]: "160ms" }}>
             <p className="text-lg leading-snug font-medium">
               {tHero("title")}
             </p>
@@ -176,13 +181,14 @@ export default async function HomePage({
                   payload={{ href: item.href, index: item.index }}
                   href={item.href}
                   className="fluid-cell hero-beat focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                  style={{ ["--reveal-delay" as string]: `${480 + strip.indexOf(item) * 90}ms` }}
+                  style={{ ["--reveal-delay" as string]: `${240 + strip.indexOf(item) * 60}ms` }}
                 >
-                  <img
+                  <Image
                     src={item.image}
                     alt=""
                     width={800}
                     height={600}
+                    sizes="(min-width: 1200px) 18vw, 78vw"
                     className="aspect-[4/3] w-full rounded-[1.25rem] object-cover"
                   />
                   <span className="flex flex-col gap-1 px-0.5 pb-1">
@@ -196,7 +202,8 @@ export default async function HomePage({
         </nav>
       </section>
 
-      <div data-nav-theme="light" className="view-rise overflow-hidden border-b border-border bg-background py-7">
+      <div data-nav-theme="light" data-decor="" className="relative overflow-hidden border-b border-border bg-background py-7">
+        <MarqueePause />
         <div className="edge-fade-x overflow-hidden" aria-hidden>
           <div className="fluid-marquee-track flex w-max items-baseline gap-12 whitespace-nowrap">
             {[0, 1].map((copy) => (
@@ -465,16 +472,17 @@ export default async function HomePage({
             </TextReveal>
             <ScrollDepth className="lg:col-span-7 lg:col-start-1 lg:row-start-1" intensity={22}>
               <MediaReveal delayMs={100}>
-                <Link
-                  href="/products/dualbrand"
-                  className="interactive-surface block rounded-[1.75rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                >
-                  <DualBrandPreview
-                    title={tDual("previewTitle")}
-                    lead={tDual("previewLead")}
-                    items={tDual("previewItems").split("·").map((s) => s.trim()).filter(Boolean)}
-                  />
-                </Link>
+                <DualBrandStage
+                  groupLabel={tBrand("groupLabel")}
+                  layers={[
+                    { id: "parent", label: tProducts("layerParent") },
+                    { id: "child-a", label: tProducts("layerChildA") },
+                    { id: "child-b", label: tProducts("layerChildB") },
+                  ]}
+                  title={tDual("previewTitle")}
+                  lead={tDual("previewLead")}
+                  items={tDual("previewItems").split("·").map((s) => s.trim()).filter(Boolean)}
+                />
               </MediaReveal>
             </ScrollDepth>
           </div>

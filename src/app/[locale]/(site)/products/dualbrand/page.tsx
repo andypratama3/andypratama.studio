@@ -1,14 +1,14 @@
 import { getTranslations } from "next-intl/server"
 import { BrandToggle } from "@/components/brand/brand-toggle"
 import { Container } from "@/components/brand/container"
-import { DualBrandPreview } from "@/components/brand/dualbrand-preview"
+import { DualBrandStage } from "@/components/brand/dualbrand-stage"
 import { PageTransition } from "@/components/brand/page-transition"
 import { MediaReveal, TextReveal } from "@/components/brand/reveal"
 import { PublicStubPanel } from "@/components/brand/public-page"
 import { Section } from "@/components/brand/section"
 import { SectionHeading } from "@/components/brand/section-heading"
 import { buttonVariants } from "@/components/ui/button"
-import { OUTBOUND_LINKS } from "@/content/outbound-links"
+import { getDualBrandView } from "@/lib/public-product"
 import { Link } from "@/lib/navigation"
 import { LocalNav } from "@/components/brand/local-nav"
 import { cn } from "@/lib/utils"
@@ -16,6 +16,9 @@ import { cn } from "@/lib/utils"
 export default async function DualBrandPage() {
   const tDual = await getTranslations("home.dualbrand")
   const tLocal = await getTranslations("localNav")
+  const tProducts = await getTranslations("productsPage")
+  const tBrand = await getTranslations("brandToggle")
+  const product = await getDualBrandView()
 
   // Real screenshots only — empty until Owner supplies Holding / A / B assets.
   const brandShots: Array<{
@@ -36,7 +39,7 @@ export default async function DualBrandPage() {
           { href: "#license", label: tLocal("license") },
         ]}
         action={
-          OUTBOUND_LINKS.dualbrand.verified
+          product.showBuy
             ? { href: "/go/dualbrand", label: tLocal("buy") }
             : undefined
         }
@@ -58,9 +61,9 @@ export default async function DualBrandPage() {
                 titleAs="h1"
                 align="left"
               />
-              {(OUTBOUND_LINKS["dualbrand-demo"].verified || OUTBOUND_LINKS.dualbrand.verified) ? (
+              {(product.showDemo || product.showBuy) ? (
                 <div className="flex flex-wrap items-center gap-3">
-                  {OUTBOUND_LINKS["dualbrand-demo"].verified ? (
+                  {product.showDemo ? (
                     // eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler outside the locale router
                     <a
                       href="/go/dualbrand-demo"
@@ -72,7 +75,7 @@ export default async function DualBrandPage() {
                       {tDual("demoCta")}
                     </a>
                   ) : null}
-                  {OUTBOUND_LINKS.dualbrand.verified ? (
+                  {product.showBuy ? (
                     // eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler outside the locale router
                     <a
                       href="/go/dualbrand"
@@ -91,7 +94,13 @@ export default async function DualBrandPage() {
               {brandShots.length > 0 ? (
                 <BrandToggle options={brandShots} />
               ) : (
-                <DualBrandPreview
+                <DualBrandStage
+                  groupLabel={tBrand("groupLabel")}
+                  layers={[
+                    { id: "parent", label: tProducts("layerParent") },
+                    { id: "child-a", label: tProducts("layerChildA") },
+                    { id: "child-b", label: tProducts("layerChildB") },
+                  ]}
                   title={tDual("previewTitle")}
                   lead={tDual("previewLead")}
                   items={tDual("previewItems").split("·").map((s) => s.trim()).filter(Boolean)}

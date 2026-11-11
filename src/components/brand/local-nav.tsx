@@ -1,13 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { m } from "motion/react"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Magnetic } from "@/components/brand/magnetic"
-import { useMotionOk } from "@/components/brand/use-motion-ok"
-import { motionTokens } from "@/lib/motion"
 
 export interface LocalNavItem {
   href: string
@@ -28,7 +25,6 @@ export function LocalNav({
   className,
   "aria-label": ariaLabel = "Section navigation",
 }: LocalNavProps) {
-  const motionOk = useMotionOk()
   const [active, setActive] = React.useState(items[0]?.href ?? "")
   const actionClass = cn(
     buttonVariants({ size: "sm" }),
@@ -89,13 +85,7 @@ export function LocalNav({
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                {motionOk && isActive ? (
-                  <m.span
-                    layoutId="local-nav-line"
-                    className="absolute inset-x-3 bottom-2 h-px bg-brand"
-                    transition={{ duration: motionTokens.base, ease: motionTokens.ease }}
-                  />
-                ) : isActive ? (
+                {isActive ? (
                   <span className="absolute inset-x-3 bottom-2 h-px bg-brand" />
                 ) : null}
                 <span className="relative">{item.label}</span>

@@ -1,9 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { m } from "motion/react"
-import { motionTokens } from "@/lib/motion"
-import { useMotionOk } from "@/components/brand/use-motion-ok"
 import { cn } from "@/lib/utils"
 
 /**
@@ -19,19 +16,15 @@ export function MediaFrame({
   className?: string
   overlay?: React.ReactNode
 }) {
-  const motionOk = useMotionOk()
-
   return (
-    <m.div
+    <div
       className={cn(
         "group relative overflow-hidden rounded-[1.75rem] border border-border/70 bg-secondary focus-within:ring-2 focus-within:ring-brand",
         className
       )}
-      whileHover={motionOk ? { y: -3 } : undefined}
-      transition={{ duration: motionTokens.base, ease: motionTokens.ease }}
     >
       <div className="media-zoom overflow-hidden">
-        <div className="media-zoom-inner transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035] group-focus-within:scale-[1.035]">
+        <div className="media-zoom-inner">
           {children}
         </div>
       </div>
@@ -40,6 +33,6 @@ export function MediaFrame({
           {overlay}
         </div>
       ) : null}
-    </m.div>
+    </div>
   )
 }

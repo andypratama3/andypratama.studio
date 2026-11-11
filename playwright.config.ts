@@ -3,7 +3,10 @@ import { defineConfig, devices } from "@playwright/test"
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000"
 
 export default defineConfig({
-  testDir: "./tests/wiring",
+  // wiring specs stay where they are; motion specs live in tests/motion.
+  // Vitest files (*.test.ts) are excluded.
+  testDir: "./tests",
+  testMatch: ["wiring/**/*.spec.ts", "motion/**/*.spec.ts"],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,

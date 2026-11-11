@@ -1,0 +1,29 @@
+{
+  "captured": "2026-11-11",
+  "command": "pnpm build",
+  "next": "16.4.4",
+  "source": ".next/diagnostics/route-bundle-stats.json",
+  "note": "firstLoadUncompressedJsBytes is the sum of first-load client chunks. gzip is gzipSync of those same files, not the Transfer-Encoding size.",
+  "routes": {
+    "/[locale]": { "uncompressed": 958913, "gzip": 310417 },
+    "/[locale]/start": { "uncompressed": 1129971, "gzip": 362151 },
+    "/[locale]/products/dualbrand": { "uncompressed": 940398, "gzip": 303698 },
+    "/[locale]/work": { "uncompressed": 921811, "gzip": 296682 }
+  },
+  "motionFeatureRollupBytes": {
+    "package": "framer-motion via motion@14.11.1",
+    "domAnimation": 86787,
+    "domMax": 137541,
+    "deltaUncompressed": 50754,
+    "note": "Package size-rollup files, not the app gzip delta. The app still imports domMax globally."
+  },
+  "mediaBytes": {
+    "public/media/hero-bg-poster.jpg": 106382,
+    "public/media/path-hiring.jpg": 186209,
+    "public/media/path-notes.jpg": 194742,
+    "public/media/path-build.jpg": 215322,
+    "public/media/path-ledger.jpg": 221482,
+    "public/media/intro-video-poster.jpg": 269837,
+    "public/media/path-template.jpg": 294909
+  }
+}

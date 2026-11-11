@@ -72,6 +72,7 @@
     --brand-foreground: #fbfbfe;
     /* Brand colour on permanent dark surfaces (--surface-contrast). Contrast ≥4.5:1 on #050315. */
     --brand-on-dark: #6f69ff;
+    --word-neon: #3ec5ff;
     /* Input border — ≥3:1 on --background (#fbfbfe). */
     --input-border: #5e58c5;
     /* Always-dark board for hero/CTA — independent of theme invert flip */
@@ -90,10 +91,20 @@
     /* FloatingNav capsule + offset (hash / focus scroll) */
     --scroll-anchor: 6.5rem;
     /* D.1 motion + z-index (src/lib/motion.ts) */
+    --dur-press: 80ms;
     --dur-fast: 180ms;
     --dur-base: 240ms;
     --dur-slow: 550ms;
+    --dur-text: 550ms;
+    --dur-media: 700ms;
+    --dur-hero: 720ms;
+    --dur-intro: 1100ms;
+    --dur-neon: 1.8s;
+    --dur-marquee: 36s;
+    --dur-drift: 48s;
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+    --rise: 16px;
     --z-base: 0;
     --z-sticky: 20;
     --z-nav: 40;
@@ -383,40 +394,64 @@
     border-color: color-mix(in oklab, var(--surface-contrast-foreground) 14%, transparent);
     background-color: color-mix(in oklab, var(--surface-contrast-foreground) 4%, transparent);
     transition:
-      border-color 220ms ease-out,
-      background-color 220ms ease-out,
-      transform 220ms ease-out,
-      box-shadow 220ms ease-out;
+      border-color var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
   }
 
-  .path-card:hover,
   .path-card:focus-visible {
     border-color: color-mix(in oklab, var(--brand) 50%, transparent);
     background-color: color-mix(in oklab, var(--brand) 10%, transparent);
-    transform: translateY(-3px);
-    box-shadow: 0 14px 32px color-mix(in oklab, var(--brand) 18%, transparent);
   }
 
   .path-card:active {
     transform: translateY(0);
+    transition-duration: var(--dur-press);
   }
 
   .interactive-surface {
     transition:
-      border-color 220ms ease-out,
-      transform 220ms ease-out,
-      box-shadow 220ms ease-out,
-      background-color 220ms ease-out;
+      border-color var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out);
   }
 
-  .interactive-surface:hover,
   .interactive-surface:focus-within {
     border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
-    box-shadow: 0 18px 40px color-mix(in oklab, var(--brand) 12%, transparent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .path-card:hover {
+      border-color: color-mix(in oklab, var(--brand) 50%, transparent);
+      background-color: color-mix(in oklab, var(--brand) 10%, transparent);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px color-mix(in oklab, var(--brand) 18%, transparent);
+    }
+
+    .interactive-surface:hover {
+      border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
+      box-shadow: 0 18px 40px color-mix(in oklab, var(--brand) 12%, transparent);
+    }
+
+    .flow-card:hover,
+    .magnetic:hover {
+      transform: translateY(-2px);
+    }
+
+    .group:hover .media-zoom-inner {
+      transform: scale(1.035);
+    }
+  }
+
+  .group:has(:focus-visible) .media-zoom-inner {
+    transform: scale(1.035);
   }
 
   .media-zoom-inner {
     transform-origin: center center;
+    transition: transform var(--dur-media) var(--ease-out);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -430,37 +465,43 @@
 
   .capability-chip {
     transition:
-      border-color 180ms ease-out,
-      background-color 180ms ease-out,
-      color 180ms ease-out,
-      transform 180ms ease-out;
-  }
-
-  .capability-chip:hover {
-    border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
-    background-color: color-mix(in oklab, var(--brand) 8%, var(--background));
-    color: var(--foreground);
-    transform: translateY(-1px);
+      border-color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
   }
 
   .flow-card {
     transition:
-      border-color 200ms ease-out,
-      background-color 200ms ease-out,
-      transform 200ms ease-out;
+      border-color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-press) var(--ease-out);
   }
 
-  .flow-card:hover {
-    border-color: color-mix(in oklab, var(--brand) 45%, var(--border));
-    background-color: color-mix(in oklab, var(--brand) 4%, var(--card));
+  .flow-card:active {
+    transform: translateY(0);
   }
 
   .media-card {
-    transition: border-color 220ms ease-out;
+    transition: border-color var(--dur-base) var(--ease-out);
   }
 
-  .media-card:hover {
-    border-color: color-mix(in oklab, var(--brand) 30%, var(--border));
+  @media (hover: hover) and (pointer: fine) {
+    .capability-chip:hover {
+      border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
+      background-color: color-mix(in oklab, var(--brand) 8%, var(--background));
+      color: var(--foreground);
+      transform: translateY(-1px);
+    }
+
+    .flow-card:hover {
+      border-color: color-mix(in oklab, var(--brand) 45%, var(--border));
+      background-color: color-mix(in oklab, var(--brand) 4%, var(--card));
+    }
+
+    .media-card:hover {
+      border-color: color-mix(in oklab, var(--brand) 30%, var(--border));
+    }
   }
 
   .faq-answer {
@@ -502,7 +543,7 @@
   }
 
   .animate-wordmark-marquee {
-    animation: wordmark-marquee 36s linear infinite;
+    animation: wordmark-marquee var(--dur-marquee) linear infinite;
   }
 
   @keyframes hero-grid-drift {
@@ -515,7 +556,7 @@
   }
 
   .animate-hero-grid-drift {
-    animation: hero-grid-drift 48s linear infinite alternate;
+    animation: hero-grid-drift var(--dur-drift) linear infinite alternate;
   }
 
   .fluid-hero {
@@ -545,34 +586,40 @@
     -webkit-text-stroke: 1.5px color-mix(in oklab, var(--foreground) 72%, transparent);
   }
 
-  .fluid-neon {
-    --word-neon: #3ec5ff;
-  }
-
   .fluid-neon-letter {
+    position: relative;
+    display: inline-block;
     color: transparent;
     -webkit-text-stroke: 1.5px color-mix(in oklab, var(--foreground) 55%, transparent);
-    animation: neon-pass 1.8s linear infinite;
   }
 
-  @keyframes neon-pass {
+  .fluid-neon-letter::after {
+    content: attr(data-letter);
+    position: absolute;
+    inset: 0;
+    color: var(--word-neon);
+    -webkit-text-stroke: 0;
+    text-shadow: 0 0 22px var(--word-neon);
+    opacity: 0;
+    animation: neon-flicker var(--dur-neon) linear infinite;
+    animation-delay: inherit;
+    will-change: opacity;
+  }
+
+  @keyframes neon-flicker {
     0%,
     55%,
     100% {
-      color: transparent;
-      -webkit-text-stroke-color: color-mix(in oklab, var(--foreground) 55%, transparent);
-      text-shadow: none;
+      opacity: 0;
     }
     12%,
     34% {
-      color: var(--word-neon);
-      -webkit-text-stroke-color: var(--word-neon);
-      text-shadow: 0 0 22px var(--word-neon);
+      opacity: 1;
     }
   }
 
   .fluid-marquee-track {
-    animation: wordmark-marquee 36s linear infinite;
+    animation: wordmark-marquee var(--dur-marquee) linear infinite;
   }
 
   .fluid-strip {
@@ -618,6 +665,15 @@
 
   .practice-scene {
     perspective: 1200px;
+  }
+
+  .practice-scene-drag {
+    touch-action: pan-y;
+    cursor: grab;
+  }
+
+  .practice-scene-drag:active {
+    cursor: grabbing;
   }
 
   .practice-cube {
@@ -702,11 +758,9 @@
 
   @keyframes hero-beat {
     from {
-      opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(var(--rise));
     }
     to {
-      opacity: 1;
       transform: none;
     }
   }
@@ -722,30 +776,26 @@
 
   @keyframes nav-enter {
     from {
-      opacity: 0;
-      transform: translateY(-10px);
+      transform: translateY(calc(var(--rise) * -1));
     }
     to {
-      opacity: 1;
       transform: none;
     }
   }
 
   @keyframes view-rise {
     from {
-      opacity: 0;
-      transform: translateY(36px);
+      transform: translateY(var(--rise));
     }
     to {
-      opacity: 1;
       transform: none;
     }
   }
 
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .public-canvas main section:not(.fluid-hero),
-      .public-canvas .view-rise {
+      .public-canvas main section:not(.fluid-hero):not(:has([data-reveal])),
+      .public-canvas .view-rise:not(:has([data-reveal])) {
         animation: view-rise linear both;
         animation-timeline: view();
         animation-range: entry 0% cover 26%;
@@ -755,50 +805,62 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .hero-beat {
-      animation: hero-beat 720ms var(--ease-out) var(--reveal-delay, 0ms) both;
+      animation: hero-beat var(--dur-hero) var(--ease-out) var(--reveal-delay, 0ms) both;
     }
 
     .hero-fade {
-      animation: hero-fade 1100ms var(--ease-out) both;
+      animation: hero-fade var(--dur-intro) var(--ease-out) both;
     }
 
     .nav-enter {
-      animation: nav-enter 560ms var(--ease-out) both;
+      animation: nav-enter var(--dur-slow) var(--ease-out) both;
     }
   }
 
   .cta-lift {
     transition:
-      transform 200ms var(--ease-out),
-      background-color 200ms var(--ease-out),
-      border-color 200ms var(--ease-out),
-      color 200ms var(--ease-out);
+      transform var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
   }
 
-  .cta-lift:hover,
   .cta-lift:focus-visible {
-    transform: translateY(-2px);
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
   }
 
   .cta-lift:active {
     transform: translateY(0);
+    transition-duration: var(--dur-press);
   }
 
   .soft-card {
     border-color: color-mix(in oklab, var(--border) 70%, transparent);
     box-shadow: 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent);
     transition:
-      transform 240ms var(--ease-out),
-      box-shadow 240ms var(--ease-out),
-      border-color 240ms var(--ease-out),
-      background-color 240ms var(--ease-out);
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out);
   }
 
-  .soft-card:hover,
   .soft-card:focus-visible {
-    transform: translateY(-4px);
     border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
-    box-shadow: 0 20px 44px color-mix(in oklab, var(--brand) 10%, transparent);
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cta-lift:hover {
+      transform: translateY(-2px);
+    }
+
+    .soft-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+      box-shadow: 0 20px 44px color-mix(in oklab, var(--brand) 10%, transparent);
+    }
   }
 
   .panel-soft {
@@ -834,8 +896,13 @@
     .hero-beat,
     .hero-fade,
     .nav-enter,
-    .fluid-neon-letter {
+    .fluid-neon-letter,
+    .fluid-neon-letter::after {
       animation: none;
+    }
+
+    .fluid-neon-letter::after {
+      opacity: 0;
     }
 
     .hero-parallax {
@@ -886,6 +953,34 @@
       position: static;
     }
 
+    .practice-scene {
+      perspective: none;
+      width: 100%;
+    }
+
+    .practice-caption {
+      display: none;
+    }
+
+    .practice-cube {
+      display: grid;
+      width: min(100%, 72rem);
+      height: auto;
+      transform: none !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .practice-face {
+      position: relative;
+      transform: none !important;
+      backface-visibility: visible;
+    }
+
+    .nav-progress {
+      display: none;
+    }
+
     ::view-transition-old(*),
     ::view-transition-new(*),
     ::view-transition-group(*) {
@@ -893,8 +988,62 @@
       animation-delay: 0s !important;
     }
   }
+
+  @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+    .practice-cube {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
+
+.public-canvas > header {
+  view-transition-name: site-header;
+}
+
+.public-canvas > footer {
+  view-transition-name: site-footer;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-base);
+  animation-timing-function: var(--ease-out);
+}
+
+html[data-motion="paused"] .fluid-marquee-track,
+html[data-motion="paused"] .animate-wordmark-marquee,
+html[data-motion="paused"] .fluid-neon-letter::after,
+html[data-motion="paused"] .animate-hero-grid-drift,
+html[data-tab-hidden] .fluid-marquee-track,
+html[data-tab-hidden] .animate-wordmark-marquee,
+html[data-tab-hidden] .fluid-neon-letter::after,
+html[data-tab-hidden] .animate-hero-grid-drift,
+[data-offscreen] .fluid-marquee-track,
+[data-offscreen] .fluid-neon-letter::after,
+[data-offscreen] .animate-hero-grid-drift {
+  animation-play-state: paused;
 }
 
 ::view-transition {
+  pointer-events: none;
+}
+
+.studio-intro {
+  display: none;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+html[data-studio-intro="on"] .studio-intro,
+html[data-studio-intro="closing"] .studio-intro {
+  display: flex;
+}
+
+html[data-studio-intro="on"] .studio-intro {
+  opacity: 1;
+}
+
+html[data-studio-intro="closing"] .studio-intro {
+  opacity: 0;
   pointer-events: none;
 }

@@ -1,9 +1,11 @@
 "use client"
 
-import { useRef } from "react"
-import { m, useScroll, useSpring, useTransform } from "motion/react"
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react"
+import { animate, m, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react"
 
 import { Link } from "@/lib/navigation"
+import { yawAdjustToFace } from "@/lib/cube-yaw"
+import { motionSprings, motionTokens } from "@/lib/motion"
 import { useMotionOk } from "@/components/brand/use-motion-ok"
 
 export interface PracticeFace {
@@ -11,6 +13,23 @@ export interface PracticeFace {
   title: string
   body: string
   href: string
+}
+
+const FACE_YAW = [0, 90, 180, -90]
+
+function frontFace(yaw: number) {
+  let best = 0
+  let bestDistance = 360
+  for (let index = 0; index < FACE_YAW.length; index += 1) {
+    const combined = FACE_YAW[index] + yaw
+    let distance = Math.abs(((combined % 360) + 360) % 360)
+    if (distance > 180) distance = 360 - distance
+    if (distance < bestDistance) {
+      bestDistance = distance
+      best = index
+    }
+  }
+  return best
 }
 
 export function PracticeCube({
@@ -22,26 +41,93 @@ export function PracticeCube({
 }) {
   const motionOk = useMotionOk()
   const ref = useRef<HTMLElement>(null)
+  const faceRefs = useRef<Array<HTMLDivElement | null>>([])
+  const [hot, setHot] = useState(false)
+  const [dragging, setDragging] = useState(false)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   })
-  const rotate = useSpring(useTransform(scrollYProgress, [0, 1], [-18, 300]), {
-    stiffness: 80,
-    damping: 24,
-    mass: 0.4,
+  const scrollYaw = useSpring(useTransform(scrollYProgress, [0, 1], [-18, 300]), motionSprings.soft)
+  const dragYaw = useMotionValue(0)
+  const yaw = useTransform([scrollYaw, dragYaw], ([scroll, drag]) => Number(scroll) + Number(drag))
+  const gesture = useRef({ x: 0, yaw: 0, moved: false, id: -1 })
+
+  useMotionValueEvent(yaw, "change", (value) => {
+    if (!motionOk) return
+    const front = frontFace(value)
+    faceRefs.current.forEach((face, index) => {
+      if (!face) return
+      if (index === front) face.removeAttribute("inert")
+      else face.setAttribute("inert", "")
+    })
   })
 
-  if (!motionOk) {
-    return (
-      <section ref={ref} aria-label={caption} className="border-b border-border bg-background">
-        <div className="mx-auto grid max-w-[1440px] gap-3 px-[clamp(20px,4vw,40px)] py-16 sm:grid-cols-2 lg:grid-cols-3">
-          {faces.map((face) => (
-            <FaceCard key={face.href} face={face} />
-          ))}
-        </div>
-      </section>
-    )
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setHot(Boolean(entry?.isIntersecting))
+    }, { rootMargin: "15% 0px" })
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const apply = () => {
+      if (!motionOk) {
+        faceRefs.current.forEach((face) => face?.removeAttribute("inert"))
+        return
+      }
+      const front = frontFace(yaw.get())
+      faceRefs.current.forEach((face, index) => {
+        if (!face) return
+        if (index === front) face.removeAttribute("inert")
+        else face.setAttribute("inert", "")
+      })
+    }
+    apply()
+  }, [motionOk, yaw])
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!motionOk || event.button !== 0) return
+    gesture.current = { x: event.clientX, yaw: dragYaw.get(), moved: false, id: event.pointerId }
+  }
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerId !== gesture.current.id) return
+    const dx = event.clientX - gesture.current.x
+    if (!gesture.current.moved) {
+      if (Math.abs(dx) < 8) return
+      gesture.current.moved = true
+      setDragging(true)
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId)
+      } catch {
+        /* Pointer capture is unavailable for this event. */
+      }
+    }
+    dragYaw.set(gesture.current.yaw + dx * 0.55)
+  }
+
+  const endGesture = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerId !== gesture.current.id) return
+    const moved = gesture.current.moved
+    gesture.current.id = -1
+    setDragging(false)
+    if (!moved) return
+    const stopClick = (click: Event) => {
+      click.preventDefault()
+      click.stopPropagation()
+    }
+    event.currentTarget.addEventListener("click", stopClick, { capture: true, once: true })
+    const adjust = yawAdjustToFace(scrollYaw.get() + dragYaw.get())
+    if (adjust !== 0) {
+      animate(dragYaw, dragYaw.get() + adjust, {
+        duration: motionTokens.base,
+        ease: [...motionTokens.ease],
+      })
+    }
   }
 
   return (
@@ -52,11 +138,26 @@ export function PracticeCube({
       className="relative border-b border-border bg-background"
     >
       <div className="flex min-h-[70vh] flex-col items-center justify-center gap-8 px-6 py-20">
-        <p className="text-sm text-muted-foreground">{caption}</p>
-        <div className="practice-scene">
-          <m.div className="practice-cube" style={{ rotateY: rotate, rotateX: 16 }}>
-            {faces.slice(0, 6).map((face) => (
-              <div key={face.href} className="practice-face">
+        <p className="practice-caption text-sm text-muted-foreground">{caption}</p>
+        <div
+          className={motionOk ? "practice-scene practice-scene-drag" : "practice-scene"}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endGesture}
+          onPointerCancel={endGesture}
+        >
+          <m.div
+            className={(hot && motionOk) || dragging ? "practice-cube will-change-transform" : "practice-cube"}
+            style={motionOk ? { rotateY: yaw, rotateX: 16 } : undefined}
+          >
+            {faces.slice(0, 6).map((face, index) => (
+              <div
+                key={face.href}
+                ref={(node) => {
+                  faceRefs.current[index] = node
+                }}
+                className="practice-face"
+              >
                 <FaceCard face={face} />
               </div>
             ))}
