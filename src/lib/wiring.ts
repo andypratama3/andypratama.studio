@@ -93,14 +93,14 @@ export function getWiringInventory(): WiringRow[] {
     {
       id: "drizzle",
       label: "drizzle-orm",
-      status: "missing",
-      detail: "No schema yet — leads logged to tmp/leads.jsonl",
+      status: "partial",
+      detail: "Schema + migration + dashboard queries wired; needs DATABASE_URL/MySQL at runtime",
     },
     {
       id: "better-auth",
       label: "better-auth",
-      status: "missing",
-      detail: "Dashboard auth not installed",
+      status: "partial",
+      detail: "Owner-only auth wired in dashboard layout/actions; needs BETTER_AUTH_SECRET + OWNER_EMAIL",
     },
   ]
 }

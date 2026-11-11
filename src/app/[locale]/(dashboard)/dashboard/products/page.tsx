@@ -147,7 +147,7 @@ export default async function ProductsDashboardPage() {
                     </div>
                     <button
                       type="submit"
-                      className="rounded-md bg-brand px-3 py-1 text-xs font-medium text-white hover:bg-brand/90 transition-colors whitespace-nowrap"
+                      className="rounded-md bg-brand px-3 py-1 text-xs font-medium text-brand-foreground hover:bg-brand/90 transition-colors whitespace-nowrap"
                     >
                       Perbarui Harga
                     </button>

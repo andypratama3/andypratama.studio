@@ -1,4 +1,5 @@
-import { redirect } from "next/navigation"
+import { getLocale } from "next-intl/server"
+import { redirect } from "@/i18n/routing"
 import { getOwnerSession } from "@/lib/auth"
 import { DashboardNav } from "@/components/dashboard/dashboard-nav"
 import { ThemeSwitcher } from "@/components/site/theme-switcher"
@@ -15,7 +16,7 @@ export default async function DashboardLayout({
   // Protect dashboard in production. In development without DB/OAuth, display dev banner if unauthenticated.
   const isProd = process.env.NODE_ENV === "production"
   if (isProd && !session) {
-    redirect("/auth/sign-in")
+    redirect({ href: "/sign-in", locale: await getLocale() })
   }
 
   return (

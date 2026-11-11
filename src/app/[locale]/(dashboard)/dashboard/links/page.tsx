@@ -94,7 +94,7 @@ export default async function LinksDashboardPage() {
           <div className="flex items-end sm:col-span-2 lg:col-span-4">
             <button
               type="submit"
-              className="rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-white hover:bg-brand/90 transition-colors"
+              className="rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90 transition-colors"
             >
               Simpan Tautan
             </button>

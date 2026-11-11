@@ -113,7 +113,7 @@ export default async function ContentPage() {
           <div className="flex items-end">
             <button
               type="submit"
-              className="w-full rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-white hover:bg-brand/90 transition-colors"
+              className="w-full rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90 transition-colors"
             >
               Simpan Ide
             </button>

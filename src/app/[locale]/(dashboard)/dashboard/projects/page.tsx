@@ -139,7 +139,7 @@ export default async function ProjectsDashboardPage() {
 
                 <button
                   type="submit"
-                  className="rounded-md bg-brand px-3 py-1 text-xs font-medium text-white hover:bg-brand/90"
+                  className="rounded-md bg-brand px-3 py-1 text-xs font-medium text-brand-foreground hover:bg-brand/90"
                 >
                   Simpan
                 </button>

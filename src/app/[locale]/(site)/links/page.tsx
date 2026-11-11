@@ -4,7 +4,6 @@ import { PageTransition } from "@/components/brand/page-transition"
 import { Reveal, TextReveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 import { SectionHeading } from "@/components/brand/section-heading"
-import { Link } from "@/lib/navigation"
 
 export default async function LinksPage() {
   const t = await getTranslations("linksPage")
@@ -34,12 +33,12 @@ export default async function LinksPage() {
                   <span className="text-sm font-medium text-foreground">{item.label}</span>
                   <span className="text-xs text-muted-foreground">/go/{item.slug}</span>
                 </div>
-                <Link
+                <a
                   href={`/go/${item.slug}`}
                   className="text-xs text-muted-foreground underline-offset-4 hover:text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   {t("pendingNote")}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

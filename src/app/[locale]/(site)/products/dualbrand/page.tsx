@@ -61,7 +61,8 @@ export default async function DualBrandPage() {
               {(OUTBOUND_LINKS["dualbrand-demo"].verified || OUTBOUND_LINKS.dualbrand.verified) ? (
                 <div className="flex flex-wrap items-center gap-3">
                   {OUTBOUND_LINKS["dualbrand-demo"].verified ? (
-                    <Link
+                    // eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler outside the locale router
+                    <a
                       href="/go/dualbrand-demo"
                       className={cn(
                         buttonVariants({ variant: "outline", size: "default" }),
@@ -69,10 +70,11 @@ export default async function DualBrandPage() {
                       )}
                     >
                       {tDual("demoCta")}
-                    </Link>
+                    </a>
                   ) : null}
                   {OUTBOUND_LINKS.dualbrand.verified ? (
-                    <Link
+                    // eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler outside the locale router
+                    <a
                       href="/go/dualbrand"
                       className={cn(
                         buttonVariants({ size: "default" }),
@@ -80,7 +82,7 @@ export default async function DualBrandPage() {
                       )}
                     >
                       {tDual("buyCta")}
-                    </Link>
+                    </a>
                   ) : null}
                 </div>
               ) : null}

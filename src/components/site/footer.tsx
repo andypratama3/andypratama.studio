@@ -79,7 +79,7 @@ export function Footer() {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className="w-fit rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  className="inline-flex min-h-6 w-fit items-center rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   {tNav(item.key)}
                 </Link>
@@ -97,7 +97,7 @@ export function Footer() {
                   <Link
                     key={item.key}
                     href={item.href}
-                    className="w-fit rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="inline-flex min-h-6 w-fit items-center rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     {tFooter(item.key)}
                   </Link>
@@ -118,7 +118,7 @@ export function Footer() {
                 <Link
                   key={item.key}
                   href={item.href}
-                  className="w-fit rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  className="inline-flex min-h-6 w-fit items-center rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   {tFooter(item.key)}
                 </Link>

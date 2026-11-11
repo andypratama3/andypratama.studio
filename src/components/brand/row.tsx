@@ -16,7 +16,7 @@ export function Row({ index, title, description, href, className }: RowProps) {
     <Link
       href={href}
       className={cn(
-        "group reveal-line grid min-h-11 grid-cols-1 gap-3 border-b border-border py-7 first:border-t focus-visible:rounded-[calc(var(--radius)*1.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-background active:translate-y-px sm:grid-cols-12 sm:items-baseline sm:gap-6 sm:py-9",
+        "group reveal-line grid min-h-11 grid-cols-1 gap-3 border-b border-border py-7 focus-visible:rounded-[calc(var(--radius)*1.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-background active:translate-y-px sm:grid-cols-12 sm:items-baseline sm:gap-6 sm:py-9",
         className
       )}
     >

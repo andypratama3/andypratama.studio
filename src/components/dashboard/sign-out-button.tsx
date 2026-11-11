@@ -1,7 +1,7 @@
 "use client"
 
 import { signOut } from "@/lib/auth-client"
-import { useRouter } from "next/navigation"
+import { useRouter } from "@/i18n/routing"
 import { LogOut } from "lucide-react"
 
 export function SignOutButton() {
@@ -10,10 +10,10 @@ export function SignOutButton() {
   async function handleSignOut() {
     try {
       await signOut()
-      router.push("/auth/sign-in")
+      router.replace("/sign-in")
     } catch (err) {
       console.error("Sign out error:", err)
-      router.push("/auth/sign-in")
+      router.replace("/sign-in")
     }
   }
 

@@ -190,7 +190,7 @@ export default async function HomePage({
                           <span className="text-label tabular-nums text-surface-contrast-foreground/60">
                             {path.index}
                           </span>
-                          <span className="text-sm font-medium leading-snug text-surface-contrast-foreground transition-colors group-hover:text-brand">
+                          <span className="text-sm font-medium leading-snug text-surface-contrast-foreground transition-colors group-hover:text-brand-on-dark">
                             {path.label}
                           </span>
                           <ArrowRight
@@ -268,7 +268,7 @@ export default async function HomePage({
             <Reveal>
               <SectionHeading kicker="01" title={tWhat("title")} />
             </Reveal>
-            <div>
+            <div className="border-t border-border">
               <Reveal delayMs={40}>
                 <Row
                   index="01"
@@ -527,7 +527,7 @@ export default async function HomePage({
               <Stagger className="h-full" stepMs={140}>
               <Link
                 href="/journal"
-                className="soft-card panel-soft interactive-surface flex h-full min-h-[12rem] flex-col justify-between p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
+                className="group soft-card panel-soft interactive-surface flex h-full min-h-[12rem] flex-col justify-between p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
               >
                 <p className="text-label text-brand">
                   01 · {tJournal("builtLabel")}
@@ -543,7 +543,7 @@ export default async function HomePage({
               </Link>
               <Link
                 href="/journal"
-                className="soft-card panel-soft interactive-surface flex h-full min-h-[12rem] flex-col justify-between p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
+                className="group soft-card panel-soft interactive-surface flex h-full min-h-[12rem] flex-col justify-between p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:p-8"
               >
                 <p className="text-label text-muted-foreground">
                   02 · {tJournal("brokenLabel")}
@@ -689,7 +689,7 @@ export default async function HomePage({
                 event="cv_download"
                 payload={{ lang: "en" }}
                 href="/cv"
-                className="transition-colors hover:text-surface-contrast-foreground hover:underline"
+                className="inline-flex min-h-7 items-center transition-colors hover:text-surface-contrast-foreground hover:underline"
               >
                 {tCta("cvEn")}
               </TrackedLink>
@@ -698,7 +698,7 @@ export default async function HomePage({
                 event="cv_download"
                 payload={{ lang: "id" }}
                 href="/cv"
-                className="transition-colors hover:text-surface-contrast-foreground hover:underline"
+                className="inline-flex min-h-7 items-center transition-colors hover:text-surface-contrast-foreground hover:underline"
               >
                 {tCta("cvId")}
               </TrackedLink>

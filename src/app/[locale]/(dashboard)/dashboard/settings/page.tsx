@@ -137,7 +137,7 @@ export default async function SettingsDashboardPage() {
 
             <button
               type="submit"
-              className="flex items-center gap-1.5 rounded-md bg-brand px-3.5 py-1.5 text-xs font-medium text-white hover:bg-brand/90"
+              className="flex items-center gap-1.5 rounded-md bg-brand px-3.5 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90"
             >
               <Save className="h-3.5 w-3.5" />
               <span>Simpan Ketersediaan</span>
@@ -185,7 +185,7 @@ export default async function SettingsDashboardPage() {
 
             <button
               type="submit"
-              className="flex items-center gap-1.5 rounded-md bg-brand px-3.5 py-1.5 text-xs font-medium text-white hover:bg-brand/90"
+              className="flex items-center gap-1.5 rounded-md bg-brand px-3.5 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90"
             >
               <Save className="h-3.5 w-3.5" />
               <span>Simpan Waktu Balas</span>

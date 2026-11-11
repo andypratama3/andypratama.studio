@@ -87,6 +87,27 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/:locale(en|id)/dashboard/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
+        source: "/sign-in",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
+        source: "/:locale(en|id)/sign-in",
+        headers: [
+          { key: "Cache-Control", value: "no-store" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
         source: "/auth/:path*",
         headers: [
           { key: "Cache-Control", value: "no-store" },

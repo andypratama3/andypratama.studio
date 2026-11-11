@@ -52,6 +52,7 @@ export default async function WorkPage() {
             index="01"
             title={tSakolentra("title")}
             description={tSakolentra("description")}
+            className="border-t border-border"
           />
           <Link
             href="/work/sakolentra"

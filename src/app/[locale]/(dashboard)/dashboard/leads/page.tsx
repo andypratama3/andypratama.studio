@@ -124,7 +124,7 @@ export default async function LeadsPage() {
           <div className="flex items-end sm:col-span-2 lg:col-span-4">
             <button
               type="submit"
-              className="rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-white hover:bg-brand/90 transition-colors"
+              className="rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90 transition-colors"
             >
               Simpan Lead
             </button>
@@ -274,7 +274,7 @@ export default async function LeadsPage() {
           <div className="flex items-end sm:col-span-2 lg:col-span-4">
             <button
               type="submit"
-              className="flex items-center gap-2 rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-white hover:bg-brand/90 transition-colors"
+              className="flex items-center gap-2 rounded-md bg-brand px-4 py-1.5 text-xs font-medium text-brand-foreground hover:bg-brand/90 transition-colors"
             >
               <Send className="h-3.5 w-3.5" />
               <span>Simpan Catatan Outreach</span>

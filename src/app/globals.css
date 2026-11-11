@@ -120,10 +120,10 @@
     --border: #25226a;
     --input: #25226a;
     --ring: #8b86ff;
-    --brand: #6f69ff;
+    --brand: #8b86ff;
     --brand-foreground: #050315;
-    /* Brand on dark surface — same value as light --brand-on-dark, contrast ≥4.5:1 on #050315. */
-    --brand-on-dark: #6f69ff;
+    /* Brand on dark surface — ≥4.5:1 on --secondary (#1b1850) and --surface-contrast (#050315). */
+    --brand-on-dark: #8b86ff;
     /* Input border — ≥3:1 on --background (#050315). */
     --input-border: #8882ef;
     --surface-contrast: #050315;

@@ -55,7 +55,7 @@ export function DashboardNav() {
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
-        className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-lg md:hidden"
+        className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-brand-foreground shadow-lg md:hidden"
         aria-label="Buka menu navigasi"
       >
         <Menu className="h-6 w-6" />
@@ -83,7 +83,7 @@ export function DashboardNav() {
             className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
             onClick={() => setMobileOpen(false)}
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-xs font-bold text-white">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-xs font-bold text-brand-foreground">
               AP
             </div>
             <span>Studio Console</span>

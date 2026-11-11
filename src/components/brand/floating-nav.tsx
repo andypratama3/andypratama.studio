@@ -112,9 +112,9 @@ export function FloatingNav() {
           <Link
             href="/"
             className={cn(
-              "max-w-[9.5rem] shrink-0 truncate rounded-sm text-sm font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:max-w-[14rem]",
+              "inline-flex min-h-11 max-w-[9.5rem] shrink-0 items-center truncate rounded-sm text-sm font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:max-w-[14rem]",
               isDark
-                ? "text-surface-contrast-foreground hover:text-brand"
+                ? "text-surface-contrast-foreground hover:text-brand-on-dark"
                 : "text-foreground hover:text-brand"
             )}
           >
