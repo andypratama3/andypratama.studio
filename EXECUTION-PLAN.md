@@ -1,5 +1,12 @@
 # andypratama.studio — Rencana Eksekusi
 
+> **Update 12 November 2026.** Fase 3 (DB/auth/dashboard) dan operasional dasar sudah
+> dieksekusi lewat `docs/INTEGRATION-PLAN.md` + `docs/INTEGRATION-LOG.md`. Status ringkas:
+> I0–I6 selesai kecuali butir yang butuh persetujuan pemilik (email D-01, analitik D-02,
+> anti-spam D-03, rate-limit persisten D-04, CV A-03, deploy/DNS). Tabel di bawah adalah
+> status per 9 Nov 2026 dan disimpan sebagai riwayat.
+
+
 **Status (diperbarui 9 Nov 2026, Batch 0 rekonsiliasi):** **bukan HOLD.**
 
 | Fase | Status nyata | Catatan (bukti Batch 0) |

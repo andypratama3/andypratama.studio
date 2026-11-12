@@ -12,11 +12,13 @@ import {
   outreachEvents,
   products,
   projects,
+  sales,
   siteSettings,
+  subscribers,
   tasks,
 } from "@/db/schema"
 import { requireOwner } from "@/lib/auth"
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 // ==========================================
 // Tasks Actions
@@ -304,6 +306,17 @@ export async function resolveAgentTask(
   action: "setujui" | "tolak"
 ): Promise<void> {
   await requireOwner()
+
+  const rows = await db
+    .select({ status: agentTasks.status })
+    .from(agentTasks)
+    .where(eq(agentTasks.id, agentTaskId))
+    .limit(1)
+
+  if (rows[0]?.status !== "butuh_persetujuan") {
+    throw new Error("Hanya tugas di gerbang persetujuan yang bisa diputuskan.")
+  }
+
   const status = action === "setujui" ? "selesai" : "ditolak"
   await db
     .update(agentTasks)
@@ -352,6 +365,104 @@ export async function updateSiteSetting(key: string, value: unknown): Promise<vo
       set: { value },
     })
 
+  revalidatePath("/dashboard/settings")
+  revalidatePath("/", "layout")
+}
+
+// ==========================================
+// Links: toggle, sales, subscribers, leads
+// ==========================================
+export async function setLinkActive(linkId: string, active: boolean): Promise<void> {
+  await requireOwner()
+  await db.update(links).set({ active }).where(eq(links.id, linkId))
+  revalidatePath("/dashboard/links")
+}
+
+export async function createSale(formData: FormData): Promise<void> {
+  await requireOwner()
+
+  const productId = String(formData.get("productId") || "").trim()
+  const platform = String(formData.get("platform") || "").trim()
+  const gross = String(formData.get("grossUsd") || "").trim()
+  const externalIdRaw = String(formData.get("externalId") || "").trim()
+  const referrerUtm = String(formData.get("referrerUtm") || "").trim() || null
+
+  const platforms = ["gumroad", "lynk", "etsy", "payhip", "direct"] as const
+  if (!productId || !platforms.includes(platform as (typeof platforms)[number])) {
+    throw new Error("Produk dan platform penjualan wajib valid.")
+  }
+  if (gross && !/^\d+(\.\d{1,2})?$/.test(gross)) {
+    throw new Error("Nominal penjualan tidak valid.")
+  }
+
+  await db.insert(sales).values({
+    productId,
+    platform: platform as (typeof platforms)[number],
+    occurredAt: new Date(),
+    grossUsd: gross || null,
+    externalId: externalIdRaw || `manual-${crypto.randomUUID()}`,
+    referrerUtm,
+    source: "manual",
+  })
+
+  revalidatePath("/dashboard/products")
+  revalidatePath("/dashboard")
+}
+
+export async function updateLeadDetails(formData: FormData): Promise<void> {
+  await requireOwner()
+
+  const leadId = String(formData.get("leadId") || "").trim()
+  const stage = String(formData.get("stage") || "").trim()
+  const segment = String(formData.get("segment") || "").trim()
+  const sourceUtm = String(formData.get("sourceUtm") || "").trim() || null
+
+  const stages = ["baru", "dihubungi", "balas", "diskusi", "penawaran", "menang", "kalah"] as const
+  const segments = [
+    "freelancer",
+    "agency",
+    "multi_brand",
+    "sekolah",
+    "perekrut",
+    "lainnya",
+  ] as const
+
+  if (
+    !leadId ||
+    !stages.includes(stage as (typeof stages)[number]) ||
+    !segments.includes(segment as (typeof segments)[number])
+  ) {
+    throw new Error("Data lead tidak valid.")
+  }
+
+  await db
+    .update(leads)
+    .set({
+      stage: stage as (typeof stages)[number],
+      segment: segment as (typeof segments)[number],
+      sourceUtm,
+    })
+    .where(eq(leads.id, leadId))
+
+  revalidatePath("/dashboard/leads")
+  revalidatePath("/dashboard")
+}
+
+export async function unsubscribeSubscriber(subscriberId: string): Promise<void> {
+  await requireOwner()
+  await db
+    .update(subscribers)
+    .set({ status: "unsubscribed", confirmTokenHash: null })
+    .where(eq(subscribers.id, subscriberId))
+  revalidatePath("/dashboard/settings")
+}
+
+export async function approveSubscriber(subscriberId: string): Promise<void> {
+  await requireOwner()
+  await db
+    .update(subscribers)
+    .set({ status: "confirmed", confirmedAt: new Date(), confirmTokenHash: null })
+    .where(and(eq(subscribers.id, subscriberId), eq(subscribers.status, "pending")))
   revalidatePath("/dashboard/settings")
 }
 

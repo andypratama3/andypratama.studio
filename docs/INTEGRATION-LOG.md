@@ -45,3 +45,52 @@ pnpm test → 18 files / 49 tests passed
 pnpm build → sukses
 pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
 ```
+
+## I3 — Settings publik dari DB
+
+- `src/lib/site-settings.ts`: `getAvailabilityNote(locale)` membaca `site_settings.availability` (zod), null jika kosong/DB down.
+- `/about` dan `/media-kit` (en/id) memakai catatan dari DB, fallback ke teks i18n.
+- Form dashboard memakai enum D-08: `open_fulltime | open_project | closed`.
+- `updateSiteSetting` melakukan `revalidatePath("/", "layout")` agar badge publik ikut segar.
+- Bukti: ubah catatan via action → `curl /about` dan `/id/about` memuat catatan baru.
+
+## I4 — Kelengkapan tulis dashboard
+
+- Action baru: `setLinkActive`, `createSale`, `updateLeadDetails`, `unsubscribeSubscriber`, `approveSubscriber`.
+- `resolveAgentTask` menolak tugas yang statusnya bukan `butuh_persetujuan`.
+- UI: form penjualan manual (products), kolom status tautan (links), aksi subscriber + ekspor CSV (settings), form stage/segment/UTM (leads).
+- `GET /api/dashboard/subscribers.csv`: owner-only, kolom email/locale/status/created_at/confirmed_at/source_utm, tanpa token, `no-store`.
+- Bukti (cookie owner): tanpa auth 401; dengan auth 200 CSV. Action diuji lewat route sementara: availability → tampil publik; approve → `confirmed`; unsubscribe → `unsubscribed`; toggle link → `/go` jatuh ke fallback saat nonaktif dan 302 normal saat aktif; lead → `dihubungi/perekrut/ui-verify`; sale → baris `direct/19.00/manual`.
+- Bukti: typecheck 0, lint 0, 19 file / 55 test lulus, build sukses.
+
+## I5 — API agen per-key
+
+- `agents.api_key_hash` + `can_write` sudah ada di migrasi awal; tidak perlu migrasi baru.
+- `src/lib/agent-key.ts`: hash SHA-256, format `ap_` + 43 base64url, parser Bearer (murni, bisa dites).
+- `src/lib/agent-auth.ts`: lookup hash + agen aktif, `timingSafeEqual`, fail-closed; `agentCanWrite`.
+- Route `/api/agent/tasks`: tanpa bypass dev/master secret; GET butuh key; POST harus cocok `agentSlug`, scope `tasks`, rate limit per agen; gate selalu `butuh_persetujuan`; tulis `agent_messages`.
+- `pnpm agent:key <slug>` (issue) / `--revoke`. Kunci mentah hanya tampil sekali.
+- `.env.example`: `AGENT_SECRET_KEY` dihapus.
+- Bukti: tanpa key 401, key salah 401, GET valid 200, slug salah 403, POST valid 201 + `butuh_persetujuan`; revoke → 401; issue ulang → 200.
+- Test baru: `tests/agent-auth.test.ts` (hash, format, parser, auth) → total 55 test.
+
+## I6 — Operasional
+
+- `next.config.ts`: `output: "standalone"`; build menghasilkan `.next/standalone/server.js`.
+- `Dockerfile` multi-stage (deps → builder → runner non-root; target `migrator`).
+- `docker/docker-compose.prod.yml`: db + migrate (sekali jalan) + app, healthcheck, env dari `.env.production`.
+- `.dockerignore` ditambahkan.
+- `scripts/backup.sh`: dump `--single-transaction --set-gtid-purged=OFF`, enkripsi GPG default, retensi 14 hari, `BACKUP_ENCRYPT=0` untuk uji lokal.
+- Bukti backup: dump 33K, restore ke DB bersih `studio_restore_test` → 21 tabel, 6 agen, 1 lead; DB uji dihapus. Jalur enkripsi diuji dengan keyring sementara → dekripsi membaca header dump.
+- CI sudah ada (`.github/workflows/ci.yml`): typecheck, lint, unit, build, e2e.
+- Redirect legacy ada di `next.config.ts`; CSP + header keamanan aktif.
+- Belum: build image Docker (Docker tidak terpasang di mesin ini), email/analitik/anti-spam produksi (D-01…D-04), deploy/DNS.
+
+## Verifikasi kumulatif I3–I6
+
+```text
+pnpm typecheck → 0 error
+pnpm lint → 0 error
+pnpm test → 19 files / 55 tests passed
+pnpm build → sukses, .next/standalone/server.js ada
+```

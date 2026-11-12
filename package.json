@@ -21,7 +21,9 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed.mjs",
-    "db:import-csv": "tsx --env-file-if-exists=.env.local scripts/import-csv.mjs"
+    "db:import-csv": "tsx --env-file-if-exists=.env.local scripts/import-csv.mjs",
+    "agent:key": "tsx scripts/agent-key.ts",
+    "db:backup": "bash scripts/backup.sh"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

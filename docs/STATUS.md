@@ -1,4 +1,15 @@
-# STATUS — Rekonsiliasi klaim vs bukti (Batch 0)
+# STATUS — Rekonsiliasi klaim vs bukti
+
+> **Update 12 November 2026 — integrasi penuh (I0–I6).**
+> Cabang `feat/full-integration`. Sumber kebenaran eksekusi: `docs/INTEGRATION-LOG.md`.
+> Ringkas: MySQL lokal 20 tabel + seed idempoten; auth owner fail-closed; kontak → `leads`;
+> newsletter double opt-in di DB; `/go` baca `links` + `link_clicks`; dashboard menulis
+> settings/links/sales/leads/subscribers; API agen per-key; Dockerfile + compose produksi;
+> backup terenkripsi teruji restore. Verifikasi: typecheck 0, lint 0, 55 test, build sukses.
+> Masih tertahan persetujuan: email provider (D-01), analitik (D-02), anti-spam (D-03),
+> rate-limit persisten (D-04), CV PDF (A-03), deploy/DNS. Dokumen di bawah adalah arsip
+> Batch 0 (9 Nov 2026) dan tidak mencerminkan kondisi setelah integrasi.
+
 
 Tanggal: 9 November 2026.  
 Cabang: `rebuild/studio` (belum ada commit; seluruh tree masih untracked).  

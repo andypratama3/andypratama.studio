@@ -1,4 +1,22 @@
-# INTEGRATIONS — Matriks alat vs bukti (Batch 0 / v4.1 §1)
+# INTEGRATIONS — Matriks alat vs bukti
+
+> **Update 12 November 2026.** Status terkini (bukan Batch 0):
+>
+> | Alat | Status | Bukti |
+> |---|---|---|
+> | drizzle-orm + drizzle-kit + mysql2 | ok | 20 tabel, migrasi `0000`/`0001`, seed idempoten |
+> | better-auth | ok | owner-only, proxy + layout guard, bootstrap token |
+> | react-hook-form + zod | ok | contact form RHF; route zod (contact/newsletter/agent) |
+> | nodemailer | sebagian | file transport dev; SMTP produksi menunggu D-01 |
+> | vitest | ok | 19 file / 55 test |
+> | Playwright + axe | ok | `pnpm test:e2e` (Chromium terpasang) |
+> | Docker | sebagian | Dockerfile + compose produksi ada; image belum dibangun (Docker tidak terpasang) |
+> | Backup | ok | `scripts/backup.sh`; dump + restore DB bersih teruji; enkripsi GPG teruji |
+> | Analytics (Umami) | menunggu D-02 | env + `track()` no-op; tidak ada script dimuat |
+> | Unicorn Studio | menunggu A-08 | slot + fallback statis |
+>
+> Matriks di bawah adalah arsip Batch 0 (9 Nov 2026).
+
 
 Tanggal: 9 November 2026.  
 Sumber: `package.json`, `pnpm list`, `ls`, `grep`, output Batch 0 (`pnpm typecheck|lint|test|build|test:e2e`).  

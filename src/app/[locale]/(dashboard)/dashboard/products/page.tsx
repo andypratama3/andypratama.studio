@@ -1,7 +1,7 @@
 import { db } from "@/db"
 import { products, sales } from "@/db/schema"
 import { desc } from "drizzle-orm"
-import { updateProductPrice } from "../../actions"
+import { createSale, updateProductPrice } from "../../actions"
 import { Package, ExternalLink, DollarSign } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -155,6 +155,47 @@ export default async function ProductsDashboardPage() {
                   <p className="mt-1.5 text-[10px] text-muted-foreground">
                     Perubahan harga adalah tindakan gerbang persetujuan: agen dilarang mengubah harga tanpa konfirmasi pemilik.
                   </p>
+
+                  <details className="mt-3 rounded-md border border-border bg-muted/20 p-2">
+                    <summary className="cursor-pointer text-[11px] font-medium text-foreground">
+                      Catat penjualan manual
+                    </summary>
+                    <form action={createSale} className="mt-2 grid gap-2 sm:grid-cols-2">
+                      <input type="hidden" name="productId" value={p.id} />
+                      <select
+                        name="platform"
+                        className="rounded border border-border bg-background px-2 py-1 text-[11px]"
+                      >
+                        <option value="gumroad">Gumroad</option>
+                        <option value="lynk">Lynk.id</option>
+                        <option value="etsy">Etsy</option>
+                        <option value="payhip">Payhip</option>
+                        <option value="direct">Direct</option>
+                      </select>
+                      <input
+                        name="grossUsd"
+                        inputMode="decimal"
+                        placeholder="Gross USD (mis. 49.00)"
+                        className="rounded border border-border bg-background px-2 py-1 text-[11px]"
+                      />
+                      <input
+                        name="externalId"
+                        placeholder="ID eksternal (opsional)"
+                        className="rounded border border-border bg-background px-2 py-1 text-[11px]"
+                      />
+                      <input
+                        name="referrerUtm"
+                        placeholder="UTM (opsional)"
+                        className="rounded border border-border bg-background px-2 py-1 text-[11px]"
+                      />
+                      <button
+                        type="submit"
+                        className="rounded bg-brand px-3 py-1 text-[11px] font-medium text-brand-foreground hover:bg-brand/90 sm:col-span-2"
+                      >
+                        Simpan penjualan
+                      </button>
+                    </form>
+                  </details>
                 </div>
               </div>
             )

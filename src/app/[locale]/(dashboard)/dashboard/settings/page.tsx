@@ -1,14 +1,14 @@
 import { db } from "@/db"
 import { siteSettings, subscribers } from "@/db/schema"
 import { desc, eq } from "drizzle-orm"
-import { updateSiteSetting } from "../../actions"
+import { approveSubscriber, unsubscribeSubscriber, updateSiteSetting } from "../../actions"
 import { facts, type FactStatus } from "@/content/facts"
 import { Settings, Users, Save } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
 interface AvailabilityVal {
-  status: "open" | "limited" | "closed"
+  status: "open_fulltime" | "open_project" | "closed"
   noteEn: string
   noteId: string
 }
@@ -20,7 +20,7 @@ interface ReplyTimeVal {
 
 export default async function SettingsDashboardPage() {
   let availability: AvailabilityVal = {
-    status: "open",
+    status: "open_project",
     noteEn: "Open for Q1 projects and advisory roles",
     noteId: "Terbuka untuk proyek Q1 dan peran penasihat",
   }
@@ -95,7 +95,7 @@ export default async function SettingsDashboardPage() {
           <form
             action={async (fd: FormData) => {
               "use server"
-              const status = fd.get("status") as "open" | "limited" | "closed"
+              const status = fd.get("status") as AvailabilityVal["status"]
               const noteEn = String(fd.get("noteEn") || "").trim()
               const noteId = String(fd.get("noteId") || "").trim()
               await updateSiteSetting("availability", { status, noteEn, noteId })
@@ -109,8 +109,8 @@ export default async function SettingsDashboardPage() {
                 defaultValue={availability.status}
                 className="mt-1 w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-brand"
               >
-                <option value="open">Open (Terbuka untuk proyek)</option>
-                <option value="limited">Limited (Slot terbatas)</option>
+                <option value="open_fulltime">Open full-time (Terbuka untuk posisi penuh waktu)</option>
+                <option value="open_project">Open for projects (Terbuka untuk proyek)</option>
                 <option value="closed">Closed (Penuh / Tidak menerima proyek)</option>
               </select>
             </div>
@@ -253,6 +253,12 @@ export default async function SettingsDashboardPage() {
             <Users className="h-4 w-4 text-brand" />
             <span>Manajemen Subscriber Newsletter ({allSubscribers.length})</span>
           </div>
+          <a
+            href="/api/dashboard/subscribers.csv"
+            className="rounded-md border border-border px-2 py-1 text-[10px] font-medium text-foreground hover:bg-muted"
+          >
+            Ekspor CSV
+          </a>
         </div>
 
         <div className="overflow-x-auto">
@@ -264,12 +270,13 @@ export default async function SettingsDashboardPage() {
                 <th className="p-3">Bahasa</th>
                 <th className="p-3">Sumber UTM</th>
                 <th className="p-3">Tanggal Terdaftar</th>
+                <th className="p-3 text-right">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {allSubscribers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-6 text-center text-muted-foreground">
+                  <td colSpan={6} className="p-6 text-center text-muted-foreground">
                     Belum ada subscriber newsletter terdaftar.
                   </td>
                 </tr>
@@ -286,6 +293,34 @@ export default async function SettingsDashboardPage() {
                     <td className="p-3 text-muted-foreground">{sub.sourceUtm ?? "-"}</td>
                     <td className="p-3 text-muted-foreground whitespace-nowrap">
                       {new Date(sub.createdAt).toLocaleDateString("id-ID")}
+                    </td>
+                    <td className="p-3 text-right">
+                      <div className="inline-flex gap-1">
+                        {sub.status === "pending" && (
+                          <form
+                            action={async () => {
+                              "use server"
+                              await approveSubscriber(sub.id)
+                            }}
+                          >
+                            <button className="rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                              Konfirmasi
+                            </button>
+                          </form>
+                        )}
+                        {sub.status !== "unsubscribed" && (
+                          <form
+                            action={async () => {
+                              "use server"
+                              await unsubscribeSubscriber(sub.id)
+                            }}
+                          >
+                            <button className="rounded bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                              Nonaktifkan
+                            </button>
+                          </form>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))

@@ -9,6 +9,7 @@ import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 import { footnoteIdsFromStats } from "@/components/brand/stats-grid"
 import { buttonVariants } from "@/components/ui/button"
+import { getAvailabilityNote } from "@/lib/site-settings"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
 
@@ -18,6 +19,7 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const availabilityNote = await getAvailabilityNote(locale)
   const currentLocale = locale === "id" ? "id" : "en"
   const t = await getTranslations("aboutPage")
   const tOther = await getTranslations("home.otherProjects")
@@ -126,7 +128,7 @@ export default async function AboutPage({
                         {t("location")}
                       </span>
                       <span>{t("timezone")}</span>
-                      <span className="text-foreground">{t("availability")}</span>
+                      <span className="text-foreground">{availabilityNote ?? t("availability")}</span>
                     </p>
                   </div>
                 </div>

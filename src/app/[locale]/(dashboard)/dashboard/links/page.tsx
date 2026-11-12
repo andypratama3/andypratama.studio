@@ -1,7 +1,7 @@
 import { db } from "@/db"
 import { links, linkClicks } from "@/db/schema"
 import { desc } from "drizzle-orm"
-import { createLink } from "../../actions"
+import { createLink, setLinkActive } from "../../actions"
 import { Link2, Plus, MousePointerClick, ExternalLink } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -120,6 +120,7 @@ export default async function LinksDashboardPage() {
                 <th className="p-3">Slug</th>
                 <th className="p-3">Platform</th>
                 <th className="p-3">Kampanye</th>
+                <th className="p-3">Status</th>
                 <th className="p-3">Tujuan</th>
                 <th className="p-3 text-right">Total Klik</th>
               </tr>
@@ -127,7 +128,7 @@ export default async function LinksDashboardPage() {
             <tbody className="divide-y divide-border">
               {allLinks.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                  <td colSpan={6} className="p-8 text-center text-muted-foreground">
                     Belum ada tautan. Jalankan seed database atau buat tautan di atas.
                   </td>
                 </tr>
@@ -141,6 +142,21 @@ export default async function LinksDashboardPage() {
                       </td>
                       <td className="p-3 uppercase text-[10px]">{l.platform ?? "-"}</td>
                       <td className="p-3 text-muted-foreground">{l.campaign ?? "-"}</td>
+                      <td className="p-3">
+                        <form
+                          action={async () => {
+                            "use server"
+                            await setLinkActive(l.id, !l.active)
+                          }}
+                        >
+                          <button
+                            type="submit"
+                            className={`rounded px-2 py-0.5 text-[10px] font-medium ${l.active ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300" : "bg-muted text-muted-foreground"}`}
+                          >
+                            {l.active ? "Aktif" : "Nonaktif"}
+                          </button>
+                        </form>
+                      </td>
                       <td className="p-3 max-w-sm truncate text-muted-foreground font-mono text-[11px]">
                         <a
                           href={l.destination}
