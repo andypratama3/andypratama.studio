@@ -12,16 +12,8 @@ export async function seed() {
   console.log("🌱 Running idempotent database seed...")
 
   // 1. Seed Agents (Roster §3 & §8)
+  // D-07: the owner is not an agent. The roster holds the five assistants only.
   const roster = [
-    {
-      slug: "owner",
-      displayName: "Andy Pratama",
-      role: "Owner & Lead Architect",
-      scope: "Keputusan akhir, rilis produksi, harga, persetujuan gerbang",
-      canWrite: ["all"],
-      requiresApproval: [],
-      active: true,
-    },
     {
       slug: "executive-assistant",
       displayName: "Executive Assistant",
@@ -239,7 +231,7 @@ export async function seed() {
     {
       key: "availability",
       value: {
-        status: "open",
+        status: "open_project",
         noteEn: "Open for Q1 projects and advisory roles",
         noteId: "Terbuka untuk proyek Q1 dan peran penasihat",
       },
@@ -273,13 +265,4 @@ export async function seed() {
   }
 
   console.log("✅ Seed completed successfully.")
-}
-
-if (process.argv[1]?.endsWith("seed.ts") || process.argv[1]?.endsWith("seed.mjs")) {
-  seed()
-    .then(() => process.exit(0))
-    .catch((err) => {
-      console.error("❌ Seed failed:", err)
-      process.exit(1)
-    })
 }

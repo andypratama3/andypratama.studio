@@ -481,5 +481,15 @@
     "problemEmpty": "Catatan masalah pertama segera hadir",
     "subscribeCta": "Langganan pembaruan",
     "homeCta": "Kembali ke beranda"
+  },
+  "newsletterStatus": {
+    "title": "Status newsletter",
+    "confirmed": "Langganan dikonfirmasi",
+    "confirmedNote": "Email Anda sudah terdaftar. Anda bisa berhenti kapan saja lewat tautan di setiap email.",
+    "unsubscribed": "Anda sudah berhenti berlangganan",
+    "unsubscribedNote": "Anda tidak akan menerima email newsletter berikutnya.",
+    "invalid": "Tautan ini tidak valid lagi",
+    "invalidNote": "Tautan mungkin kedaluwarsa atau sudah dipakai.",
+    "backHome": "Kembali ke beranda"
   }
 }

@@ -63,11 +63,22 @@ export async function sendMail(message: MailMessage): Promise<{ id: string }> {
   return { id }
 }
 
-export function confirmationEmail(to: string, confirmUrl: string): MailMessage {
+export function confirmationEmail(
+  to: string,
+  confirmUrl: string,
+  unsubscribeUrl?: string
+): MailMessage {
+  const unsubscribe = unsubscribeUrl
+    ? `\n\nUnsubscribe: ${unsubscribeUrl}`
+    : ""
+  const unsubscribeHtml = unsubscribeUrl
+    ? `<p style="font-size:12px;color:#666">Tidak ingin menerima email? <a href="${unsubscribeUrl}">Berhenti berlangganan</a>.</p>`
+    : ""
+
   return {
     to,
     subject: "Confirm your subscription — Andy Pratama Studio",
-    text: `Confirm your email by opening this link:\n${confirmUrl}\n\nIf you did not subscribe, ignore this message.`,
-    html: `<p>Confirm your email:</p><p><a href="${confirmUrl}">${confirmUrl}</a></p><p>If you did not subscribe, ignore this message.</p>`,
+    text: `Confirm your email by opening this link:\n${confirmUrl}\n\nIf you did not subscribe, ignore this message.${unsubscribe}`,
+    html: `<p>Confirm your email:</p><p><a href="${confirmUrl}">${confirmUrl}</a></p><p>If you did not subscribe, ignore this message.</p>${unsubscribeHtml}`,
   }
 }

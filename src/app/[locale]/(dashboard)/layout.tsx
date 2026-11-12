@@ -13,9 +13,11 @@ export default async function DashboardLayout({
 }>) {
   const session = await getOwnerSession()
 
-  // Protect dashboard in production. In development without DB/OAuth, display dev banner if unauthenticated.
-  const isProd = process.env.NODE_ENV === "production"
-  if (isProd && !session) {
+  const devBypass =
+    process.env.NODE_ENV !== "production" &&
+    process.env.DASHBOARD_DEV_BYPASS === "1"
+
+  if (!session && !devBypass) {
     redirect({ href: "/sign-in", locale: await getLocale() })
   }
 

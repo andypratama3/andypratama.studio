@@ -308,6 +308,7 @@ export const links = mysqlTable("links", {
   platform: varchar("platform", { length: 30 }),
   campaign: varchar("campaign", { length: 80 }),
   medium: varchar("medium", { length: 30 }).default("organic"),
+  active: boolean("active").default(true).notNull(),
   createdAt: createdAt(),
 })
 
@@ -395,6 +396,7 @@ export const subscribers = mysqlTable("subscribers", {
     .notNull(),
   sourceUtm: varchar("source_utm", { length: 120 }),
   confirmTokenHash: varchar("confirm_token_hash", { length: 128 }),
+  unsubscribeTokenHash: varchar("unsubscribe_token_hash", { length: 128 }),
   confirmedAt: timestamp("confirmed_at"),
   createdAt: createdAt(),
 })

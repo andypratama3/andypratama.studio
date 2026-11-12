@@ -30,7 +30,7 @@ console.log(
 console.log(`playwright installed: ${playwrightOk}`)
 
 const hardMissing = statusHits.missing
-// Public-first budget: drizzle + better-auth may remain missing (Owner gate)
+// Missing plugins must stay at zero now that DB/auth are wired.
 if (!playwrightOk || hardMissing > 2) {
   console.error("\nwiring:check FAIL — too many missing plugins or no Playwright.")
   process.exit(1)

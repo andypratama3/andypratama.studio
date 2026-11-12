@@ -169,14 +169,3 @@ export async function importAllCsv() {
   console.log("✅ All CSV imports completed.")
 }
 
-if (
-  process.argv[1]?.endsWith("import-csv.ts") ||
-  process.argv[1]?.endsWith("import-csv.mjs")
-) {
-  importAllCsv()
-    .then(() => process.exit(0))
-    .catch((err) => {
-      console.error("❌ CSV import failed:", err)
-      process.exit(1)
-    })
-}

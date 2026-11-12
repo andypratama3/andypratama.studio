@@ -481,5 +481,15 @@
     "problemEmpty": "First problem landing soon",
     "subscribeCta": "Subscribe for updates",
     "homeCta": "Back to home"
+  },
+  "newsletterStatus": {
+    "title": "Newsletter status",
+    "confirmed": "Subscription confirmed",
+    "confirmedNote": "You are on the list. You can unsubscribe from any email we send.",
+    "unsubscribed": "You have been unsubscribed",
+    "unsubscribedNote": "You will not receive further newsletter emails.",
+    "invalid": "This link is no longer valid",
+    "invalidNote": "The link may have expired or already been used.",
+    "backHome": "Back to home"
   }
 }

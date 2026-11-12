@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { toast } from "sonner"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -19,6 +19,7 @@ export function NewsletterForm({
   privacyNote: string
 }) {
   const t = useTranslations("newsletterForm")
+  const locale = useLocale()
   const [pending, setPending] = React.useState(false)
   const startedAtRef = React.useRef(0)
 
@@ -69,6 +70,7 @@ export function NewsletterForm({
         <Label className="sr-only" htmlFor="newsletter-email">
           {placeholder}
         </Label>
+        <input type="hidden" name="locale" value={locale} />
         <Input
           id="newsletter-email"
           type="email"

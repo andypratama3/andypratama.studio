@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
-import { mkdir, appendFile } from "node:fs/promises"
-import path from "node:path"
+import { db } from "@/db"
+import { leads } from "@/db/schema"
 import { sendMail, hasMailTransport } from "@/lib/mail"
 import { isAllowedBrowserOrigin } from "@/lib/request-security"
 import { rateLimit } from "@/lib/rate-limit"
+import { buildLeadNotes, contactTopicToSegment } from "@/lib/contact-lead"
 import { contactServerSchema } from "@/lib/schemas/contact"
 
 export async function POST(request: Request) {
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
     )
   }
 
-  // In production, require a real mail transport so leads aren't silently lost.
+  // In production, require a real mail transport so notifications aren't silently lost.
   if (process.env.NODE_ENV === "production" && !hasMailTransport()) {
     return NextResponse.json(
       {
@@ -68,17 +69,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid" }, { status: 400 })
   }
 
-  const dir = path.join(process.cwd(), "tmp")
-  await mkdir(dir, { recursive: true })
-  await appendFile(
-    path.join(dir, "leads.jsonl"),
-    `${JSON.stringify({ ...parsed.data, at: new Date().toISOString() })}\n`,
-    "utf8"
-  )
+  let stored = true
+  try {
+    await db.insert(leads).values({
+      name: parsed.data.name,
+      platform: "email",
+      segment: contactTopicToSegment(parsed.data.topic),
+      stage: "baru",
+      notes: buildLeadNotes(parsed.data.topic, parsed.data.message),
+    })
+  } catch (error) {
+    stored = false
+    console.error("[contact] failed to store lead:", error)
+  }
 
   await sendMail({
     to: process.env.LEAD_NOTIFY_TO ?? "owner@localhost",
-    subject: `[Lead] ${parsed.data.topic} — ${parsed.data.name}`,
+    subject: `${stored ? "[Lead]" : "[Lead · DB error]"} ${parsed.data.topic} — ${parsed.data.name}`,
     text: `${parsed.data.name} <${parsed.data.email}>\nTopic: ${parsed.data.topic}\n\n${parsed.data.message}`,
   })
 
