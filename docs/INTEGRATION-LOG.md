@@ -87,6 +87,15 @@ pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
 - Redirect legacy ada di `next.config.ts`; CSP + header keamanan aktif.
 - Belum: build image Docker (Docker tidak terpasang di mesin ini), email/analitik/anti-spam produksi (D-01…D-04), deploy/DNS.
 
+## I7 — Intro first paint & copy deck
+
+- `src/lib/intro-boot-script.ts`: skrip inline pra-paint di awal `<body>`; first visit → `data-studio-intro="on"` sebelum paint, returning visitor / reduced-motion / tanpa JS → overlay tetap tersembunyi.
+- `src/components/brand/studio-intro.tsx`: monogram A·P dengan class animasi (`studio-intro__mark/letter/diamond/progress`).
+- `src/app/globals.css`: satu sequence 1,1 dtk—letters rise, diamond settle lalu breathe, halo, hairline progress; blok reduced-motion mematikan semuanya.
+- `scripts/export-copy-deck.ts` + `pnpm copy:deck`: menghasilkan `docs/COPY-DECK.md` (397 kunci en/id + 20 item FAQ + tabel fakta).
+- Bukti intro: JS chunk diblokir → `attr=on`, `display=flex`; return/reduced/no-JS → hidden; 23 rute disapu, hanya `/` dan `/id` punya overlay, 0 console error.
+- `pnpm typecheck` 0, `pnpm lint` 0, `pnpm test` 55, `pnpm test:e2e` 61 passed terhadap server standalone.
+
 ## Verifikasi kumulatif I3–I6
 
 ```text

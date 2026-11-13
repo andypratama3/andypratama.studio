@@ -9,6 +9,7 @@ import { AppToaster } from "@/components/providers/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { routing } from "@/i18n/routing"
+import { introBootScript } from "@/lib/intro-boot-script"
 import { cn } from "@/lib/utils"
 
 const inter = Inter({
@@ -90,6 +91,10 @@ export default async function LocaleLayout({
       className={cn("antialiased", inter.variable)}
     >
       <body>
+        <script
+          // Pre-paint: first visit shows the intro instead of flashing content.
+          dangerouslySetInnerHTML={{ __html: introBootScript }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
