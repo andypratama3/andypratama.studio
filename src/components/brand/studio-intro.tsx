@@ -25,7 +25,7 @@ export async function StudioIntro() {
           <span className="studio-intro__letter">A</span>
           <span
             aria-hidden
-            className="studio-intro__diamond inline-block size-[0.38em] rotate-45 border-2"
+            className="studio-intro__diamond inline-block size-[0.38em] border-2"
           />
           <span className="studio-intro__letter studio-intro__letter--p">P</span>
         </p>

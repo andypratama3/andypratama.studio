@@ -1099,6 +1099,7 @@ html[data-studio-intro="closing"] .studio-intro {
 
 .studio-intro__diamond {
   border-color: var(--brand-on-dark);
+  transform: rotate(45deg);
 }
 
 .studio-intro__progress {
