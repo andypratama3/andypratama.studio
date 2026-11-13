@@ -23,7 +23,8 @@
     "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed.mjs",
     "db:import-csv": "tsx --env-file-if-exists=.env.local scripts/import-csv.mjs",
     "agent:key": "tsx scripts/agent-key.ts",
-    "db:backup": "bash scripts/backup.sh"
+    "db:backup": "bash scripts/backup.sh",
+    "start:standalone": "node scripts/start-standalone.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

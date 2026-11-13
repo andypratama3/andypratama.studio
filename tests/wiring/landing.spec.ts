@@ -14,8 +14,12 @@ test.describe("Landing surface regressions", () => {
   test("brand link has a 44px tap target", async ({ page }) => {
     await page.goto("/en")
     const brand = page.locator("header a[href='/']").first()
-    const box = await brand.boundingBox()
-    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44)
+    await expect(brand).toBeVisible()
+    await expect
+      .poll(async () => (await brand.boundingBox())?.height ?? 0, {
+        timeout: 5000,
+      })
+      .toBeGreaterThanOrEqual(44)
   })
 
   test("links page prefetches no /go route and logs no CSP errors", async ({

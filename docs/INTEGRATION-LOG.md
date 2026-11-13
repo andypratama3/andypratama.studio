@@ -77,6 +77,7 @@ pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
 ## I6 — Operasional
 
 - `next.config.ts`: `output: "standalone"`; build menghasilkan `.next/standalone/server.js`.
+- `pnpm start:standalone` (`scripts/start-standalone.mjs`) menyalin `public` + `.next/static` lalu menjalankan server standalone; dipakai Playwright.
 - `Dockerfile` multi-stage (deps → builder → runner non-root; target `migrator`).
 - `docker/docker-compose.prod.yml`: db + migrate (sekali jalan) + app, healthcheck, env dari `.env.production`.
 - `.dockerignore` ditambahkan.
@@ -93,4 +94,5 @@ pnpm typecheck → 0 error
 pnpm lint → 0 error
 pnpm test → 19 files / 55 tests passed
 pnpm build → sukses, .next/standalone/server.js ada
+pnpm test:e2e → 61 passed (PORT=3001, standalone server), dijalankan 2×
 ```
