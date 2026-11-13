@@ -1,7 +1,7 @@
 {
   "common": {
     "brand": "Andy Pratama Studio",
-    "siteDescription": "Andy Pratama Studio — day-to-day operations software from Samarinda, Indonesia.",
+    "siteDescription": "Andy Pratama Studio builds billing, payments, and WhatsApp tools for schools and teams from Samarinda, Indonesia.",
     "comingSoon": "Coming soon",
     "stubStatus": "In progress",
     "stubNote": "This page is being prepared. Content will appear here when it is ready.",
@@ -9,8 +9,8 @@
     "scrollHint": "Scroll down",
     "pause": "Pause",
     "play": "Play",
-    "marqueePause": "Pause wordmark marquee",
-    "marqueePlay": "Play wordmark marquee"
+    "marqueePause": "Pause scrolling text",
+    "marqueePlay": "Play scrolling text"
   },
   "productsPage": {
     "title": "Ready-made products",
@@ -18,7 +18,7 @@
     "dualbrandTitle": "DualBrand",
     "dualbrandDesc": "A website for one parent brand and two child brands. Live demo included.",
     "dualbrandCta": "See DualBrand",
-    "moreSoon": "Four more packages are being prepared. They stay unlabeled as live until checkout is ready.",
+    "moreSoon": "Four more packages are in preparation. Each one is marked available once checkout is ready.",
     "availabilityNote": "Checkout and the live demo open here when the listing is ready.",
     "layerParent": "Parent brand",
     "layerChildA": "Child brand A",
@@ -56,7 +56,7 @@
     "pkg1Label": "01",
     "pkg1Title": "Payments + WhatsApp for Laravel",
     "pkg1Desc": "Connect Midtrans payment gateway and WhatsApp Business API to your existing Laravel application. Invoices are created, matched to incoming transfers, and the right person gets a WhatsApp message automatically.",
-    "pkg1Scope": "Scope: Midtrans webhook, payment matching, WhatsApp template message send.",
+    "pkg1Scope": "Scope: Midtrans webhook, payment matching, and sending WhatsApp template messages.",
     "pkg1Prereq": "Prerequisite: running Laravel application with database access.",
     "pkg2Label": "02",
     "pkg2Title": "Custom software",
@@ -66,11 +66,11 @@
     "cta": "Tell me what you need"
   },
   "workPage": {
-    "description": "Selected work — school systems, operations tools, and client projects."
+    "description": "Selected work—school systems, operations tools, and client projects."
   },
   "licensePage": {
     "description": "How DualBrand may be used. The binding terms are shown at checkout.",
-    "body": "DualBrand is sold as a template package. What you can and cannot do — including client work — is defined by the license you accept when you buy.",
+    "body": "DualBrand is sold as a template package. What you can and cannot do—including client work—is defined by the license you accept when you buy.",
     "pointCheckout": "Full license text appears on Gumroad before payment.",
     "pointFaq": "Common license questions are answered on the FAQ page.",
     "pointContact": "For a clarification before you buy, use Start here.",
@@ -172,7 +172,7 @@
   "home": {
     "hero": {
       "title": "Clearer day-to-day operations—without you needing the tech talk.",
-      "description": "I help schools, agencies, and companies tidy billing, payments, notifications, and how teams work each day. This studio is open to see.",
+      "description": "I help schools, agencies, and companies tidy billing, payments, notifications, and how teams work each day. You can watch this studio take shape in the open.",
       "primaryCta": "See the work",
       "secondaryCta": "Tell me what you need",
       "pathBuild": "I need something built",
@@ -180,7 +180,7 @@
       "pathHiring": "I'm hiring",
       "mark": "A·P",
       "discipline": "Day-to-day operations",
-      "cubeCaption": "Scroll to turn — six sides of the practice",
+      "cubeCaption": "Scroll to turn—six sides of what I do",
       "surface": "Surface",
       "depth": "Depth",
       "skipIntro": "Skip intro",
@@ -193,7 +193,7 @@
     },
     "introVideo": {
       "title": "A quick hello, 45 seconds",
-      "summary": "I help real operations—from schools to businesses—from Samarinda, Indonesia.",
+      "summary": "I help schools and businesses run day-to-day operations more clearly, from Samarinda, Indonesia.",
       "placeholder": "Video coming soon"
     },
     "whatIDo": {
@@ -207,7 +207,7 @@
     },
     "sakolentra": {
       "title": "SAKOLENTRA at SD Muhammadiyah 3 Samarinda",
-      "description": "Helps school admin and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents.",
+      "description": "SAKOLENTRA helps with school administration and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents.",
       "pilotCta": "Try it at your school",
       "caseStudyCta": "Read the story",
       "flowTitle": "How SAKOLENTRA flows",
@@ -217,7 +217,7 @@
       "step1Title": "Billing",
       "step1Desc": "Tuition & school fee schedule",
       "step2Title": "Pay via bank",
-      "step2Desc": "A unique pay number per student",
+      "step2Desc": "A unique payment number per student",
       "step3Title": "Matched",
       "step3Desc": "Incoming transfers are spotted",
       "step4Title": "WhatsApp",
@@ -225,7 +225,7 @@
     },
     "otherProjects": {
       "title": "Other projects",
-      "description": "Other projects—general descriptions.",
+      "description": "A few more projects, described in general terms because client details stay private.",
       "colName": "Project",
       "colType": "Type",
       "colBuilt": "Outcome for the client",
@@ -262,7 +262,7 @@
       "techList": "Midtrans · WhatsApp · Laravel · dashboards · portals · attendance · data migration",
       "habitsTitle": "Working together",
       "habit1": "We clarify the need first—then I build and hand over something ready to use.",
-      "habit2": "Before people rely on it, the flow is checked so common mistakes are caught early.",
+      "habit2": "Before your team relies on it, I check the flow so common mistakes surface early.",
       "habit3": "The setup stays simple so your team can keep it going after launch.",
       "habit4": "After it goes live, I watch that it keeps running smoothly."
     },
@@ -273,8 +273,8 @@
       "emptyState": "First notes coming soon",
       "builtLabel": "Win",
       "brokenLabel": "Problem",
-      "builtEmpty": "First win landing soon",
-      "brokenEmpty": "First problem landing soon"
+      "builtEmpty": "First win coming soon",
+      "brokenEmpty": "First problem coming soon"
     },
     "socialProof": {
       "title": "From partners"
@@ -294,7 +294,7 @@
       "title": "Ready to start?",
       "hireMe": "Hire me",
       "getTemplate": "Get the template",
-      "workWithMe": "Book a project",
+      "workWithMe": "Tell me what you need",
       "downloadCv": "Download CV",
       "cvEn": "English CV (PDF)",
       "cvId": "Indonesian CV (PDF)"
@@ -309,37 +309,37 @@
   },
   "privacyPage": {
     "title": "Privacy",
-    "draftDisclaimer": "Draft — full policy in preparation.",
+    "draftDisclaimer": "Draft—full policy in preparation.",
     "intro": "This site collects personal data only when you take an action:",
     "contactForm": "Contact form: name, email address, and message content.",
     "newsletter": "Newsletter: email address (when you subscribe).",
-    "shortLinks": "Short-link clicks through /go/* routes — destination only, no IP address or user-agent stored.",
+    "shortLinks": "Clicks on short links (addresses that start with /go/): only the destination is recorded. No IP address or browser details are stored.",
     "contact": "Questions? Email contact@andypratama.studio."
   },
   "termsPage": {
     "title": "Terms",
-    "draftDisclaimer": "Draft — full terms in preparation.",
+    "draftDisclaimer": "Draft—full terms in preparation.",
     "intro": "By using this site you agree to these terms.",
     "products": "Product purchases are governed by the license shown at checkout.",
     "contact": "Questions? Email contact@andypratama.studio."
   },
   "cvPage": {
     "title": "CV",
-    "intro": "Andy Pratama — software engineer based in Samarinda, Indonesia.",
+    "intro": "Andy Pratama—software engineer based in Samarinda, Indonesia.",
     "skills": "Full-stack web development, payment integration, WhatsApp automation, and school management systems.",
     "requestNote": "The full CV is available on request. Use the link below.",
     "requestCta": "Request CV"
   },
   "linksPage": {
     "title": "Links",
-    "dualbrandLabel": "DualBrand — website template",
-    "dualbrandDemoLabel": "DualBrand — live demo",
-    "mediaKitLabel": "Media kit — for TikTok, Threads, Instagram, LinkedIn",
+    "dualbrandLabel": "DualBrand—website template",
+    "dualbrandDemoLabel": "DualBrand—live demo",
+    "mediaKitLabel": "Media kit—for TikTok, Threads, Instagram, LinkedIn",
     "pendingNote": "pending confirmation"
   },
   "mediaKitPage": {
     "title": "Media kit",
-    "description": "One source for TikTok, Threads, Instagram, and LinkedIn — same facts, same offers, no invented numbers.",
+    "description": "One source for TikTok, Threads, Instagram, and LinkedIn: the same facts and the same offers everywhere.",
     "kicker": "Media kit · Andy Pratama Studio",
     "role": "Software engineer · day-to-day operations",
     "location": "Samarinda, Indonesia",
@@ -358,17 +358,17 @@
       "linkedin": "LinkedIn"
     },
     "bioTitle": "Ready-to-paste bios",
-    "bioLead": "Same studio story, trimmed per platform. Numbers only from facts.ts.",
+    "bioLead": "The same studio story, trimmed for each platform. The only numbers are the ones listed on this page.",
     "bio": {
-      "tiktok": "Andy Pratama Studio · Samarinda. Day-to-day ops software for schools & teams — billing, payments, WhatsApp. Start: andypratama.studio/start",
-      "threads": "I build day-to-day operations software from Samarinda — billing, payments, WhatsApp updates, portals. Scope first, then a handoff your team can keep. andypratama.studio/media-kit",
-      "instagram": "Andy Pratama Studio · Samarinda\nDay-to-day ops for schools & companies\nBilling · payments · WhatsApp · portals\n↓ Media kit & start",
-      "linkedin": "Software engineer based in Samarinda, Indonesia. I help schools, agencies, and companies tidy billing, payments, WhatsApp updates, portals, and attendance — with clear scope and a handoff teams can keep running. Creator of SAKOLENTRA (school ops). Open for projects and roles."
+      "tiktok": "Billing, payments & WhatsApp for schools and teams. Samarinda, Indonesia.",
+      "threads": "Software engineer in Samarinda. Billing, payments, WhatsApp updates, and portals for schools and teams. Scope first, then a handoff you can keep.",
+      "instagram": "Andy Pratama Studio · Samarinda\nDay-to-day ops for schools & companies\nBilling · payments · WhatsApp · portals\n↓ Start here",
+      "linkedin": "Software engineer based in Samarinda, Indonesia. I help schools, agencies, and companies tidy billing, payments, WhatsApp updates, portals, and attendance—with clear scope and a handoff teams can keep running. Creator of SAKOLENTRA (school ops). Open for projects and roles."
     },
     "pinTitle": "Suggested bio link",
     "pinUrl": "andypratama.studio/media-kit",
     "pinAlt": "Or send people to /start for a brief.",
-    "numbersTitle": "Numbers I can stand behind",
+    "numbersTitle": "Numbers, and how they were checked",
     "studentsLabel": "students served at SD Muhammadiyah 3 Samarinda",
     "yearsLabel": "years helping day-to-day operations",
     "modulesLabel": "active features in SAKOLENTRA",
@@ -385,14 +385,14 @@
     "formatsTitle": "Ways to work together",
     "format1Name": "Payments + WhatsApp for Laravel",
     "format1Note": "Fixed scope → fixed quote after we confirm the app and flow.",
-    "format1Price": "Quote after brief",
+    "format1Price": "Quote after you share the problem",
     "format2Name": "Custom software",
-    "format2Note": "Portals, attendance, dashboards, migrations — scope agreed first.",
-    "format2Price": "Quote after brief",
+    "format2Note": "Portals, attendance, dashboards, migrations—scope agreed first.",
+    "format2Price": "Quote after you share the problem",
     "format3Name": "DualBrand template",
     "format3Note": "Ready-made site for one parent brand and two child brands.",
     "format3Price": "Listed when checkout is ready",
-    "formatsNote": "No public price list yet — so social captions and this kit stay aligned. Details in the FAQ.",
+    "formatsNote": "No public price list yet—so social captions and this kit stay aligned. Details in the FAQ.",
     "formatsFaq": "Pricing FAQ",
     "assetsTitle": "Link destinations for captions",
     "assetStart": "Start / brief",
@@ -403,8 +403,8 @@
     "ctaTitle": "Want a scope and quote?",
     "ctaBody": "Send the problem, who will use it, and any deadline. Same contact for every platform.",
     "ctaMail": "Email contact@andypratama.studio",
-    "ctaBrief": "Send a brief",
-    "ctaDisclaimer": "Use this kit as the single source for TikTok, Threads, Instagram, and LinkedIn. Do not invent follower counts, rates, or client logos in posts.",
+    "ctaBrief": "Tell me what you need",
+    "ctaDisclaimer": "These are the official descriptions for TikTok, Threads, Instagram, and LinkedIn. Follower counts, rates, and client logos are not part of this kit.",
     "footnoteTitle": "About these numbers",
     "statedLabel": "Stated here, not rechecked",
     "verifiedLabel": "Verified",
@@ -419,10 +419,10 @@
     "timezone": "WITA (UTC+8)",
     "availability": "Open for projects",
     "intro": "Andy Pratama is a software engineer based in Samarinda, Indonesia.",
-    "bio": "I build web systems for schools, agencies, and companies — focused on billing, payments, and day-to-day operations.",
+    "bio": "I build web systems for schools, agencies, and companies—focused on billing, payments, and day-to-day operations.",
     "school": "Creator of SAKOLENTRA, a school administration system running at SD Muhammadiyah 3 Samarinda.",
     "positioning": "Clearer day-to-day operations—without you needing the tech talk. Scope first, then a handoff your team can keep running.",
-    "numbersTitle": "Numbers I can stand behind",
+    "numbersTitle": "Numbers, and how they were checked",
     "studentsLabel": "students served at SD Muhammadiyah 3 Samarinda",
     "yearsLabel": "years helping day-to-day operations",
     "modulesLabel": "active features in SAKOLENTRA",
@@ -443,14 +443,14 @@
     "formatsTitle": "Ways to work together",
     "format1Name": "Payments + WhatsApp for Laravel",
     "format1Note": "Fixed scope → fixed quote after we confirm the app and flow.",
-    "format1Price": "Quote after brief",
+    "format1Price": "Quote after you share the problem",
     "format2Name": "Custom software",
-    "format2Note": "Portals, attendance, dashboards, migrations — scope agreed first.",
-    "format2Price": "Quote after brief",
+    "format2Note": "Portals, attendance, dashboards, migrations—scope agreed first.",
+    "format2Price": "Quote after you share the problem",
     "format3Name": "DualBrand template",
     "format3Note": "Ready-made site for one parent brand and two child brands.",
     "format3Price": "Listed when checkout is ready",
-    "formatsNote": "There is no public price list yet. Full terms follow the FAQ and the license at checkout for products.",
+    "formatsNote": "There is no public price list yet. Full terms are in the FAQ; for products, the license at checkout applies.",
     "formatsFaq": "Read the pricing FAQ",
     "quickLinksTitle": "On this site",
     "linkWork": "Work",
@@ -460,8 +460,8 @@
     "ctaTitle": "Want a clear scope and quote?",
     "ctaBody": "Send the problem, who will use it, and any deadline that matters. I reply with questions or a simple plan.",
     "ctaMail": "Email contact@andypratama.studio",
-    "ctaBrief": "Send a brief",
-    "ctaDisclaimer": "Numbers on this page come from facts.ts. Rates stay private until we agree scope — so social posts and this page stay aligned.",
+    "ctaBrief": "Tell me what you need",
+    "ctaDisclaimer": "Rates are shared once we agree on scope. Numbers on this page are labeled as stated or checked.",
     "startCta": "Start here",
     "workCta": "See the work",
     "cvCta": "Request CV",
@@ -472,20 +472,20 @@
   },
   "journalPage": {
     "title": "Journal",
-    "subtitle": "One win, one problem — plain language, no fluff.",
+    "subtitle": "One win, one problem—plain language, no fluff.",
     "emptyTitle": "No entries yet",
-    "emptyDescription": "Weekly notes will appear here — one thing that worked, one problem found.",
+    "emptyDescription": "Weekly notes will appear here—one thing that worked, one problem found.",
     "winLabel": "Win",
     "problemLabel": "Problem",
-    "winEmpty": "First win landing soon",
-    "problemEmpty": "First problem landing soon",
+    "winEmpty": "First win coming soon",
+    "problemEmpty": "First problem coming soon",
     "subscribeCta": "Subscribe for updates",
     "homeCta": "Back to home"
   },
   "newsletterStatus": {
     "title": "Newsletter status",
     "confirmed": "Subscription confirmed",
-    "confirmedNote": "You are on the list. You can unsubscribe from any email we send.",
+    "confirmedNote": "You are on the list. You can unsubscribe from any email I send.",
     "unsubscribed": "You have been unsubscribed",
     "unsubscribedNote": "You will not receive further newsletter emails.",
     "invalid": "This link is no longer valid",
