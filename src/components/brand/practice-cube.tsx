@@ -56,8 +56,11 @@ export function PracticeCube({
   const scrollYaw = useSpring(useTransform(scrollYProgress, [0, 1], [-18, 300]), motionSprings.soft)
   const dragYaw = useMotionValue(0)
   const scrollEnabled = useMotionValue(1)
-  const baseYawRef = useRef(0)
-  const yaw = useTransform([scrollYaw, dragYaw, scrollEnabled], ([scroll, drag, enabled]) => Number(scroll) * Number(enabled) + Number(drag))
+  const baseYaw = useMotionValue(0)
+  const yaw = useTransform(
+    [scrollYaw, dragYaw, scrollEnabled, baseYaw],
+    ([scroll, drag, enabled, base]) => (Number(enabled) === 1 ? Number(scroll) : Number(base) + Number(drag)),
+  )
   const gesture = useRef({ x: 0, yaw: 0, moved: false, id: -1 })
 
   useMotionValueEvent(yaw, "change", (value) => {
@@ -98,9 +101,11 @@ export function PracticeCube({
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!motionOk || event.button !== 0) return
+    const currentYaw = scrollEnabled.get() === 0 ? yaw.get() : scrollYaw.get()
+    baseYaw.set(currentYaw)
+    dragYaw.set(0)
     scrollEnabled.set(0)
-    baseYawRef.current = scrollYaw.get()
-    gesture.current = { x: event.clientX, yaw: dragYaw.get(), moved: false, id: event.pointerId }
+    gesture.current = { x: event.clientX, yaw: 0, moved: false, id: event.pointerId }
   }
 
   const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -130,7 +135,7 @@ export function PracticeCube({
       click.stopPropagation()
     }
     event.currentTarget.addEventListener("click", stopClick, { capture: true, once: true })
-    const total = baseYawRef.current + dragYaw.get()
+    const total = baseYaw.get() + dragYaw.get()
     const adjust = yawAdjustToFace(total)
     if (adjust !== 0) {
       animate(dragYaw, dragYaw.get() + adjust, {
