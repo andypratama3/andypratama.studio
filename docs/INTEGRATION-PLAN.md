@@ -1,9 +1,11 @@
 # INTEGRATION-PLAN — Frontend ⇄ Backend sampai selesai
 
-> **Update 13 November 2026 (J0-02).** Dokumen ini **arsip rencana** (baseline 12 Nov: 17 file/47 tes,
+> **Update 14 November 2026 (J7).** Dokumen ini **arsip rencana** (baseline 12 Nov: 17 file/47 tes,
 > MySQL mati). Eksekusi sebenarnya ada di `docs/INTEGRATION-LOG.md`; status tunggal di `docs/STATUS.md`.
-> Angka baseline terkini: `pnpm test` 21 file / 62 tes, `pnpm test:e2e` 63 passed.
-> `EXECUTION-PLAN.md` **tidak ada** di repo — rujukan ke berkas itu hanya historis.
+> Angka terkini: `pnpm test` 23 file / 68 tes, `pnpm test:e2e` 65 passed, `pnpm build` sukses
+> tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`.
+> `EXECUTION-PLAN.md` ada di root repo (dipulihkan lewat `origin/main`); rujukan ke arsip
+> fase di bawah tetap historis.
 
 Tanggal: 12 November 2026. Cabang: `motion/polish` (tree bersih, 3 commit terakhir).
 Dokumen ini menggantikan status Fase 3–6 di `EXECUTION-PLAN.md` (masih menyebut DB/auth "belum", padahal sudah ada).

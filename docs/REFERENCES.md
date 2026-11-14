@@ -1,6 +1,6 @@
 # REFERENCES — Sumber referensi Owner untuk UI landing
 
-> **Update 13 November 2026 (J0-02).** Dokumen ini adalah **arsip referensi desain**, bukan status
+> **Update 14 November 2026 (J7).** Dokumen ini adalah **arsip referensi desain**, bukan status
 > implementasi. Status terkini: `docs/STATUS.md`. Angka/e2e di dokumen lain sudah tidak berlaku.
 
 Dokumen ini adalah **daftar referensi yang Anda berikan**. Bukan pilihan agen.

@@ -148,3 +148,45 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 - **Alasan**: Next 16 + Turbopack gagal me-resolve `@vercel/turbopack-next/internal/font/google/font` ketika pengambilan `fonts.gstatic.com` gagal (proxy/TLS, URL gstatic yang dirotasi). Gejalanya error overlay di setiap muat halaman dev dan build yang bisa gagal acak. Self-host menghapus ketergantungan jaringan saat dev/build dan menyelaraskan `font-src 'self'`.
 - **Bukti**: log `pnpm dev` baru → 0 baris `internal/font/google`/`fonts.gstatic.com`; HTML memuat `/_next/static/media/inter_latin-*.woff2`; `pnpm build` tanpa permintaan Google; e2e `Inter is self-hosted, not fetched from Google Fonts` lulus.
 - **Tanggal**: 13 November 2026.
+
+## 25. Klien DB lazy — build jalan tanpa `DATABASE_URL` (J7) — 14 Nov 2026
+- **Keputusan**: `src/db/index.ts` tidak lagi melempar saat di-import. Pool MySQL dan instans Drizzle dibuat saat pertama kali diakses (proxy), sehingga `next build` (collect page data) dan CI tetap lulus di environment tanpa kredensial DB. Error `DATABASE_URL is not set` hanya muncul pada kode jalur yang benar-benar melakukan query.
+- **Alasan**: `origin/main` membuat modul DB fail-fast saat import; itu mematikan build produksi dan CI (blokir 2 CI job) sebelum fitur DB dipakai. Fail-fast tetap ada, hanya dipindah ke titik pakai.
+- **Bukti**: `tests/db-lazy.test.ts` (import tanpa throw, query tanpa `DATABASE_URL` → throw); `pnpm build` tanpa env sukses 73/73 halaman; `pnpm typecheck` 0.
+- **Tanggal**: 14 November 2026.
+
+## 26. Auth fail-closed saat runtime, bukan saat import (J7) — 14 Nov 2026
+- **Keputusan**: Validasi `BETTER_AUTH_SECRET` + `OWNER_EMAIL` dipindah dari module scope ke waktu pakai lewat `isAuthConfigured()`. `getOwnerSession()` mengembalikan `null` bila tidak terkonfigurasi (tidak ada sesi = tidak ada akses), `requireOwner()` tetap melempar, dan `/api/auth/*` membalas 503 dengan pesan jelas.
+- **Alasan**: Versi sebelumnya membuat prerender `/id/sign-in` gagal di build tanpa secret. Fail-closed tetap terjaga: tanpa kredensial tidak ada yang bisa masuk dashboard.
+- **Bukti**: `pnpm build` tanpa secret sukses; `/dashboard` tanpa sesi → 307 `/sign-in`; e2e 65 passed.
+- **Tanggal**: 14 November 2026.
+
+## 27. `/go` punya fallback statis terverifikasi untuk slug bio sosial (J7) — 14 Nov 2026
+- **Keputusan**: Revisi #23.Slug bio sosial (`threads-start`, `tiktok-start`, `instagram-start`, `linkedin-start`, `youtube-start`) — yang URL-nya sudah tercantum di `src/db/seed.ts` — ditambahkan ke `OUTBOUND_LINKS` dengan `verified: true` sebagai fallback saat tabel `links` tidak dapat dibaca. Baris DB tetap menang; `dualbrand`/`dualbrand-demo` tetap `verified: false` → 404.
+- **Alasan**: E2E `/go/threads-start` bergantung pada MySQL dan gagal di CI tanpa database. Fallback memakai URL yang sudah ada di repo, bukan URL baru.
+- **Bukti**: `curl /go/threads-start` → 302 ke `https://andypratama.studio/start?utm_source=threads…`; `tests/wiring/go.spec.ts` hijau tanpa DB.
+- **Tanggal**: 14 November 2026.
+
+## 28. Pemeriksaan origin menerima same-origin (J7) — 14 Nov 2026
+- **Keputusan**: `isAllowedBrowserOrigin` menerima tiga origin: canonical (`NEXT_PUBLIC_SITE_URL`), origin dari `request.url`, dan origin yang cocok dengan host request (`host`/`x-forwarded-host`). Origin lintas situs tetap ditolak.
+- **Alasan**: Versi sebelumnya hanya menerima canonical URL, sehingga preview/staging dan localhost membalas 403 pada pengiriman form. Browser tidak dapat memalsukan `Origin`, jadi daftar putih ini tidak melemahkan proteksi CSRF.
+- **Bukti**: `tests/request-security.test.ts` (5 kasus: tanpa origin, canonical, same-origin, host, lintas situs); POST kontak → 200 dan baris `leads` tersimpan.
+- **Tanggal**: 14 November 2026.
+
+## 29. Redirect newsletter mengikuti locale pelanggan (J7) — 14 Nov 2026
+- **Keputusan**: `confirmNewsletterSubscription` dan `unsubscribeNewsletter` mengembalikan email **+ locale**; route `confirm`/`unsubscribe` mengarahkan ke `/id/newsletter` untuk pelanggan Indonesia dan `/newsletter` untuk EN.
+- **Alasan**: Pelanggan ID sebelumnya diarahkan ke halaman status berbahasa Inggris.
+- **Bukti**: subscribe locale `id` → confirm → 307 `/id/newsletter?state=confirmed`; unsubscribe → 307 `/id/newsletter?state=unsubscribed`.
+- **Tanggal**: 14 November 2026.
+
+## 30. Satu helper metadata publik (J7) — 14 Nov 2026
+- **Keputusan**: `src/lib/page-metadata.ts` menjadi satu-satunya helper metadata (`buildPageMetadata`) dengan canonical, hreflang en/id/x-default, OG image 1280×720, Twitter card, dan robots. Helper duplikat `src/lib/seo.ts` dihapus; 17 halaman publik memakainya.
+- **Alasan**: Setelah merge `origin/main` ada dua helper dengan tujuan sama; metadata per halaman wajib konsisten (canonical absolut, OG image, robots).
+- **Bukti**: sweep 36 route → canonical + hreflang + OG + Twitter benar di semua halaman publik; `/dev/*` dan auth/dashboard `noindex`.
+- **Tanggal**: 14 November 2026.
+
+## 31. `DASHBOARD_DEV_BYPASS` dihormati proxy; `/dev/*` noindex (J7) — 14 Nov 2026
+- **Keputusan**: `src/proxy.ts` hanya redirect `/dashboard` bila bypass dev tidak aktif; `DASHBOARD_DEV_BYPASS=1` berlaku di luar produksi seperti didokumentasikan di `.env.example`. Layout `/dev/*` memakai `robots: noindex, nofollow`.
+- **Alasan**: Bypass sebelumnya tidak pernah bisa dipakai (proxy selalu redirect), sedangkan halaman diagnostik ikut terindeks.
+- **Bukti**: `DASHBOARD_DEV_BYPASS=1` → `/dashboard` 200 dengan banner DB down (tanpa MySQL) dan 200 dengan data (MySQL aktif); test wiring "diagnostic routes stay out of the index" lulus.
+- **Tanggal**: 14 November 2026.

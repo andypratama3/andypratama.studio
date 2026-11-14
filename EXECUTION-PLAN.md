@@ -1,22 +1,24 @@
 # andypratama.studio — Rencana Eksekusi
 
-> **Update 13 November 2026.** Fase 3 (DB/auth/dashboard) dan operasional dasar sudah
-> dieksekusi. Cross-check menyeluruh (175 file, semua komponen, 397 key i18n, semua route) selesai
-> 13 Nov 2026: `typecheck` 0, `lint` 0, `test` 62/62 (21 file), `build` 73/73 halaman.
-> Status ringkas: I0–I6 selesai kecuali butir yang butuh persetujuan pemilik (email D-01,
+> **Update 14 November 2026 (Audit J7).** `origin/main` (7 commit: DB/auth/dashboard tulis,
+> copy deck, compose, Dockerfile) sudah di-merge ke `rebuild/studio`; 4 konflik diresolusi dan
+> fix Batch 1 dipertahankan. Cross-check 14 Nov 2026: `typecheck` 0, `lint` 0,
+> `test` 68/68 (23 file), `build` 73/73 halaman **tanpa** `DATABASE_URL`/`BETTER_AUTH_SECRET`,
+> `test:e2e` 65 passed, axe 0 pelanggaran di 22 route × 2 tema, sweep 252 pengukuran tanpa
+> overflow/duplicate id/heading skip/input tanpa label. Rincian: `docs/AUDIT-2026-11-12.md`.
+> Status ringkas: I0–I6 selesai; sisanya butir yang butuh persetujuan pemilik (email D-01,
 > analitik D-02, anti-spam D-03, rate-limit persisten D-04, CV A-03, deploy/DNS). Tabel di bawah
-> adalah status per 13 Nov 2026 dan disimpan sebagai riwayat eksekusi.
+> adalah status per 14 Nov 2026 dan disimpan sebagai riwayat eksekusi.
 
+**Status (diperbarui 14 Nov 2026, Audit J7):** **bukan HOLD.**
 
-**Status (diperbarui 9 Nov 2026, Batch 0 rekonsiliasi):** **bukan HOLD.**
-
-| Fase | Status nyata | Catatan (bukti Batch 0) |
+| Fase | Status nyata | Catatan (bukti 14 Nov 2026) |
 |---|---|---|
-| Fase 0 (gate/aset) | **selesai** | Repo fondasi, token, DB lokal, inventaris lama; `pnpm typecheck/lint/test/build` lulus |
+| Fase 0 (gate/aset) | **selesai** | Repo fondasi, token, DB lokal (docker MySQL 8.4, 21 tabel), inventaris lama; `pnpm typecheck/lint/test/build` lulus |
 | Fase 1 (foundation publik) | **selesai** | Next 16 + React 19 + next-intl + tokens + brand layout; Inter vendored; 0 hex di komponen publik |
-| Fase 2 (konten MVP + wiring) | **selesai** | Home, `/start`, DualBrand, `/go`, API contact/newsletter, privacy/cv/links; e2e 63 passed |
-| Fase 3 (DB/auth/dashboard) | **selesai** | MySQL 21 tabel, migrasi 1–3, better-auth, dashboard 11 halaman ber-`requireOwner`; validasi Zod |
-| Fase 4–6 | **belum** | Lead DB, CI, Docker, deploy belum dijalankan; menunggu Owner (D-01, D-02, D-03, D-04, deploy/DNS) |
+| Fase 2 (konten MVP + wiring) | **selesai** | Home, `/start`, DualBrand, `/go`, API contact/newsletter, privacy/cv/links; e2e 65 passed |
+| Fase 3 (DB/auth/dashboard) | **selesai** | MySQL 21 tabel (migrasi `0000`–`0002`), better-auth fail-closed, dashboard 11 halaman ber-`requireOwner`; DB lazy → build tanpa env tetap lulus |
+| Fase 4–6 | **sebagian** | Lead DB, newsletter double opt-in, `/go` → `link_clicks`, CI, Docker/compose sudah ada dan teruji lokal; newsletter+kontak produksi masih butuh SMTP (D-01); image Docker belum di-build; deploy/DNS menunggu Owner |
 
 Dokumen ini hanya menyusun ulang spesifikasi agar bisa dieksekusi berurutan tanpa salah urutan.
 
@@ -157,7 +159,6 @@ Bukan blocking untuk mulai Fase 0, tapi harus ditutup sebelum fase yang disebut.
 ## Cross-check menyeluruh — 13 November 2026
 
 Cakupan: 175 file `src/`, semua komponen brand/dashboard/ui, 397 key i18n en+id, route vs seluruh `href`, aset `public/media`, token motion, auth tiap API route.
-
 Perbaikan yang diterapkan:
 - `ScrollParallax`: root layer `absolute inset-0` berukuran penuh (hero + wordmark tidak lagi 0px/terklip); gradient `color-mix(in_oklab,var(--brand)_18%,transparent)` valid.
 - `/faq`: pakai `getResolvedFaqItems` + `getFaqSettings`; item `pendingOwner` dan token `{fact}`/`{setting}` yang gagal teratasi tidak tampil. `reply_time` dikonsumsi per locale.
@@ -174,6 +175,48 @@ Perbaikan yang diterapkan:
 - `FactProps.id`: menyempit ke `FactId`. Root `not-found`: bilingual + inline style.
 
 Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman.
+
+---
+
+## Audit J7 — 14 November 2026 (merge `origin/main` + audit seluruh app)
+
+Lingkup: 36 route (publik EN/ID + dev + dashboard + auth) × 7 viewport (320–1440),
+axe WCAG 2.x AA light/dark, integritas link, interaksi, API, dan alur tulis ke MySQL.
+Rincian per temuan: `docs/AUDIT-2026-11-12.md`. Ledger eksekusi: `docs/INTEGRATION-LOG.md` (I8).
+
+Perbaikan utama:
+
+| Area | Temuan | Perbaikan |
+|---|---|---|
+| Build | `pnpm build` gagal tanpa `DATABASE_URL` (error saat import) | `src/db/index.ts` lazy (proxy); regresi `tests/db-lazy.test.ts` |
+| Build | Prerender `/sign-in` gagal tanpa `BETTER_AUTH_SECRET`/`OWNER_EMAIL` | validasi saat pakai (`isAuthConfigured()`), fail-closed 503/redirect |
+| E2E | `/go/threads-start` 404 tanpa MySQL | fallback statis terverifikasi (slug yang sama dengan `db/seed.ts`) |
+| Auth/dev | `DASHBOARD_DEV_BYPASS` tak pernah aktif | proxy menghormati bypass di luar produksi |
+| SEO | `/dev/*` bisa terindeks | layout dev `noindex, nofollow` + test regresi |
+| Form | pesan galat API dibuang | pesan API ditampilkan; fallback menyebut email |
+| Keamanan | origin check menolak preview/lokal (403) | canonical + origin request + host cocok; lintas situs tetap ditolak |
+| i18n | redirect newsletter selalu EN | `confirm`/`unsubscribe` ikut locale pelanggan |
+| UI | nav tak bisa diklik, overflow 320px, tap target kecil | stacking context header, `w-full sm:w-auto`, `min-h-7` |
+| SEO | metadata duplikat (dua helper) | satu `src/lib/page-metadata.ts` + OG image 1280×720 |
+
+Verifikasi (perintah nyata):
+
+```text
+pnpm typecheck → 0 error
+pnpm lint → 0 error
+pnpm test → 23 file / 68 tes lulus
+pnpm build → sukses 73/73 halaman (tanpa DATABASE_URL/BETTER_AUTH_SECRET)
+PORT=3010 PLAYWRIGHT_BASE_URL=http://127.0.0.1:3010 PLAYWRIGHT_CHANNEL=chrome pnpm test:e2e → 65 passed
+pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
+sweep 36 route × 7 viewport → 0 overflow, 0 duplicate id, 0 heading skip, 0 input tanpa label
+axe WCAG AA 22 route × light/dark → 0 pelanggaran
+DB: db:up → db:migrate → db:seed → 21 tabel; dashboard 11 halaman 200 (DB aktif & DB mati)
+Tulis: kontak → leads; newsletter pending → confirmed → unsubscribed; /go → 302 + link_clicks
+```
+
+Menunggu Owner (tidak dieksekusi otomatis): `NEXT_PUBLIC_SITE_URL` produksi, verifikasi
+`OUTBOUND_LINKS.dualbrand*` (DNS demo belum resolve), SMTP (D-01), image Docker, deploy/DNS,
+`facts.ts`, harga, publish, hapus data.
 
 ---
 
@@ -335,11 +378,19 @@ Setiap butir §15 dipetakan. Tanda fase = fase yang membuktikannya.
 
 ## 10. Hold list — tidak dikerjakan sekarang
 
-- Tidak ada `pnpm init`, `shadcn init`, atau instalasi dependency.
-- Tidak ada file di `src/`, `drizzle/`, `docker/`, `tests/`.
-- Tidak ada migrasi, seed, atau koneksi database.
-- Tidak ada perubahan DNS, Cloudflare, atau VPS.
-- Tidak ada deploy, tidak ada commit, tidak ada PR.
-- Tidak ada pengiriman email, DM, atau lamaran.
+> Status arsip Batch 0 (12 Nov 2026). Butir ini **sudah lewat**: repo, migrasi, seed, docker/,
+> dan tests/ kini ada; commit lokal sudah dibuat. Yang masih ditahan adalah butir gerbang
+> persetujuan di bawah.
 
-**Satu-satunya langkah berikutnya:** isi §3.1 (D-01..D-09) dan serahkan §3.2 (A-01..A-08). Setelah itu Fase 0 boleh dimulai.
+- Tidak ada `pnpm init`, `shadcn init`, atau instalasi dependency. — _arsip; dependency dev
+  `tsx@4.23.15` sudah ditambahkan lewat `origin/main`._
+- Tidak ada file di `src/`, `drizzle/`, `docker/`, `tests/`. — _arsip; sudah ada._
+- Tidak ada migrasi, seed, atau koneksi database. — _arsip; `db:up/migrate/seed` sudah teruji 14 Nov._
+- Tidak ada perubahan DNS, Cloudflare, atau VPS. — **masih berlaku**.
+- Tidak ada deploy, tidak ada commit, tidak ada PR. — commit lokal boleh; deploy & push ke
+  default branch menunggu persetujuan Owner.
+- Tidak ada pengiriman email, DM, atau lamaran. — **masih berlaku** (menunggu D-01).
+
+**Langkah berikutnya (14 Nov 2026):** Owner memutuskan `NEXT_PUBLIC_SITE_URL` produksi, verifikasi
+`OUTBOUND_LINKS.dualbrand*`, pilih provider email (D-01), lalu pergi build image Docker dan
+deploy sesuai Fase 6. Detail audit: `docs/AUDIT-2026-11-12.md`; status tunggal: `docs/STATUS.md`.

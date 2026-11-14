@@ -163,3 +163,32 @@ Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/
 
 ## Perbaikan rotasi cube — 14 November 2026
 - `practice-cube.tsx`: `scrollYaw` (rotasi driven scroll) terus berubah saat discroll dan bentrok dengan drag. Ditambahkan `scrollEnabled` motion value: saat pointer down, `scrollEnabled.set(0)` mencegah scroll mempengaruhi rotasi selama dan setelah drag. `baseYawRef` menangkap scrollYaw saat drag mulai agar snap-to-90 hitung dari base yang frozen, bukan nilai scroll yang berubah-ubah. Cube sekarang bisa dirotasi ke 0/90/180/-90 dan tetap di posisi tersebut.
+
+## Audit J7 — 14 November 2026 (merge `origin/main` + audit seluruh app)
+
+Cakupan: 36 route (publik EN/ID + dev + dashboard + auth) × 7 viewport (320–1440),
+axe WCAG 2.x AA light/dark, integritas 39 link internal, interaksi UI, 6 endpoint API,
+serta alur tulis ke MySQL (docker, 21 tabel). Rincian: `docs/AUDIT-2026-11-12.md`;
+ledger: `docs/INTEGRATION-LOG.md` (I8); keputusan: `docs/DECISIONS.md` (#25–#31).
+
+Perbaikan yang diterapkan:
+- `src/db/index.ts` lazy (proxy): build/CI jalan tanpa `DATABASE_URL`; error hanya saat query.
+- `src/lib/auth.ts` + `api/auth/[...all]`: validasi secret saat pakai, fail-closed (null/503), bukan crash saat import.
+- `src/content/outbound-links.ts`: slug bio sosial (dari `db/seed.ts`) sebagai fallback statis terverifikasi → `/go/threads-start` 302 tanpa MySQL.
+- `src/proxy.ts`: `DASHBOARD_DEV_BYPASS=1` dihormati di luar produksi.
+- `/dev/*`: `noindex, nofollow` (layout dev).
+- `contact-form.tsx`: pesan galat API ditampilkan apa adanya; fallback EN/ID menyebut email.
+- `src/lib/request-security.ts`: canonical + same-origin + host cocok diterima; lintas situs tetap ditolak.
+- `src/lib/newsletter.ts` + `api/newsletter/{confirm,unsubscribe}`: redirect mengikuti locale pelanggan.
+- `src/lib/page-metadata.ts` jadi satu helper metadata (duplikat `src/lib/seo.ts` dihapus) + OG image 1280×720.
+- UI Batch 1 dipertahankan setelah merge: nav bisa diklik (`z-[var(--z-nav)]`), overflow 320px, tap target ≥24px.
+- `playwright.config.ts`: escape hatch `PLAYWRIGHT_CHANNEL` untuk mesin tanpa browser Playwright.
+
+Verifikasi: `pnpm typecheck` 0 · `pnpm lint` 0 · `pnpm test` 23 file / 68 tes · `pnpm build` sukses
+73/73 halaman tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET` · `pnpm test:e2e` 65 passed (standalone, port 3010) ·
+`pnpm wiring:check` ok=13 partial=1 missing=0 skipped=2 · axe 0 pelanggaran (22 route × 2 tema) ·
+sweep 252 pengukuran tanpa overflow/duplicate id/heading skip/input tanpa label · DB `db:up`→`migrate`→`seed`
+21 tabel · tulis: kontak→`leads`, newsletter pending→confirmed→unsubscribed, `/go`→302+`link_clicks`.
+
+Produksi tidak disentuh: `next-server v16.3.3` di port 3001 tetap berjalan (200). Commit lokal di
+`rebuild/studio` (3 commit), belum push/deploy.

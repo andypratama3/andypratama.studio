@@ -105,3 +105,70 @@ pnpm test → 19 files / 55 tests passed
 pnpm build → sukses, .next/standalone/server.js ada
 pnpm test:e2e → 61 passed (PORT=3001, standalone server), dijalankan 2×
 ```
+
+## I8 — Audit J7 + integrasi `origin/main` (14 November 2026)
+
+Rombak: `origin/main` (7 commit: DB/auth/dashboard tulis, copy deck, compose, Dockerfile)
+di-merge ke `rebuild/studio`; 4 konflik diresolusi dengan mempertahankan fix audit
+Batch 1 di atas basis `main`.
+
+Perbaikan yang diterapkan:
+- `src/db/index.ts`: pool + drizzle dibuat **lazy** (proxy). Imp impor tidak lagi
+  melempar `DATABASE_URL is not set`; error hanya saat query benar-benar jalan.
+  Build/CI tanpa env DB kini lulus. Regresi: `tests/db-lazy.test.ts`.
+- `src/lib/auth.ts`: validasi secret dipindah dari import ke waktu pakai
+  (`isAuthConfigured()`). `getOwnerSession()` → `null` (fail-closed),
+  `requireOwner()` tetap melempar; `src/app/api/auth/[...all]/route.ts` membalas
+  503 + pesan jelas saat produksi belum punya kredensial.
+- `src/content/outbound-links.ts`: slug bio sosial (sudah tercantum di
+  `src/db/seed.ts`) ditambah sebagai fallback statis terverifikasi →
+  `/go/threads-start` tetap 302 tanpa MySQL; baris tabel `links` tetap menang.
+- `src/proxy.ts`: `DASHBOARD_DEV_BYPASS=1` kini dihormati di luar produksi
+  (sebelumnya proxy selalu redirect, jadi bypass didokumentasikan tak pernah aktif).
+- `src/app/[locale]/dev/layout.tsx`: `noindex, nofollow` untuk `/dev/*`.
+- `src/components/brand/contact-form.tsx`: pesan galat API ditampilkan apa adanya
+  (mis. "email contact@andypratama.studio"); teks fallback EN/ID diperbarui.
+- `src/lib/request-security.ts`: origin yang diterima = canonical
+  (`NEXT_PUBLIC_SITE_URL`), origin request, dan origin yang cocok dengan host
+  request. Origin lintas situs tetap ditolak. Regresi: `tests/request-security.test.ts`.
+- `src/lib/newsletter.ts` + `api/newsletter/{confirm,unsubscribe}`: redirect
+  mengikuti locale pelanggan (`/id/newsletter` untuk subscriber ID).
+- `src/lib/page-metadata.ts`: satu helper metadata (duplikat `src/lib/seo.ts`
+  dihapus) + OG image 1280×720 + Twitter image untuk semua halaman publik.
+- `src/app/[locale]/(site)/links/page.tsx`: metadata halaman (`buildPageMetadata`).
+- `src/app/[locale]/(site)/newsletter/page.tsx`: target "Kembali ke beranda" ≥ 24px.
+- `playwright.config.ts`: escape hatch `PLAYWRIGHT_CHANNEL` untuk mesin tanpa
+  browser Playwright terunduh (CI tetap memakai browser bawaan).
+- `src/app/[locale]/(site)/about/page.tsx`, `media-kit`, `products/dualbrand`,
+  `src/components/brand/product-strip.tsx`: fix overflow 320px + tap target
+  dari Batch 1 dipertahankan setelah merge.
+
+Bukti:
+- `pnpm typecheck` 0 · `pnpm lint` 0 · `pnpm test` → 23 file / 68 tes lulus.
+- `pnpm build` sukses **tanpa** `DATABASE_URL`/`BETTER_AUTH_SECRET` (73/73 halaman statis).
+- `PORT=3010 PLAYWRIGHT_BASE_URL=http://127.0.0.1:3010 PLAYWRIGHT_CHANNEL=chrome
+  BETTER_AUTH_SECRET=… pnpm test:e2e` → **65 passed** (server standalone, jalur CI).
+- DB: `pnpm db:up` → `db:migrate` → `db:seed` sukses (21 tabel, 5 agen, 5 tautan,
+  4 proyek, 2 pengaturan); 11 halaman dashboard 200 dengan DB aktif dan tanpa DB
+  (banner DB down).
+- Alur tulis end-to-end: kontak → baris `leads`; newsletter pending → confirmed →
+  unsubscribed dengan redirect sesuai locale; `/go` → 302 + `link_clicks`.
+- Sweep 36 route × 7 viewport (252 pengukuran): 0 overflow (320–1440), 0 duplicate
+  `id`, 0 heading skip, semua input berlabel, 0 console error.
+- Axe WCAG 2.x AA: 0 pelanggaran di 22 route × light + dark (390px).
+- Integritas link: 39 tautan internal → 0 rusak.
+
+Belum (butuh Owner): `NEXT_PUBLIC_SITE_URL` produksi, verifikasi `OUTBOUND_LINKS.dualbrand*`,
+SMTP (D-01), image Docker, deploy/DNS. Produksi tidak disentuh: `next-server v16.3.3`
+di port 3001 tetap berjalan.
+
+## Verifikasi kumulatif I0–I8 (14 November 2026)
+
+```text
+pnpm typecheck → 0 error
+pnpm lint → 0 error
+pnpm test → 23 files / 68 tests passed
+pnpm build → sukses tanpa DATABASE_URL/BETTER_AUTH_SECRET, .next/standalone/server.js ada
+pnpm test:e2e → 65 passed (PORT=3010, standalone server)
+pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
+```

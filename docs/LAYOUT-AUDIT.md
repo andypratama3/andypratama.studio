@@ -1,8 +1,11 @@
 # LAYOUT-AUDIT — Home (revisi v2, 9 Nov 2026)
 
-> **Update 13 November 2026 (J0-02).** Sumber status tunggal: `docs/STATUS.md`.
+> **Update 14 November 2026 (J7).** Sumber status tunggal: `docs/STATUS.md`.
 > Butir 4: video intro **tidak ada**; yang tersisa hanya poster statis di seksi `#proof`
 > (`src/app/[locale]/(site)/page.tsx`). Angka tes di bawah adalah arsip 9 Nov 2026.
+> Catatan J7: `<header>` kini `relative z-[var(--z-nav)]` (nav pill sempat tidak bisa diklik
+> karena stacking context `view-transition-name`); overflow 320px pada `/about`, `/media-kit`,
+> `/id/products/dualbrand` sudah diperbaiki; sweep 36 route × 7 viewport (320–1440) → 0 overflow.
 
 Viewport acuan: 375 / 768 / 1280 / 1440. Sumber: Norvane + Velto + Apple (pola saja).
 Audit ulang setelah pass FloatingNav / StatsGrid / StickySteps.
