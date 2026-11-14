@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Container } from "@/components/brand/container"
 import { PageTransition } from "@/components/brand/page-transition"
 import { SakolentraDiagram } from "@/components/brand/sakolentra-diagram"
@@ -25,7 +25,7 @@ export async function generateMetadata({
     return {}
   }
   const t = await getTranslations({ locale, namespace: "home.sakolentra" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: `/work/${slug}`,
     title: t("title"),

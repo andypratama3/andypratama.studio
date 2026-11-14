@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Container } from "@/components/brand/container"
 import { HairlineTable } from "@/components/brand/hairline-table"
 import { PublicPageShell } from "@/components/brand/public-page"
@@ -19,7 +19,7 @@ export async function generateMetadata({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "workPage" })
   const tNav = await getTranslations({ locale, namespace: "nav" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/work",
     title: tNav("work"),

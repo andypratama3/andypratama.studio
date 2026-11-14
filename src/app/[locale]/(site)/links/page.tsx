@@ -1,11 +1,12 @@
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
 import { ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/brand/container"
 import { PublicPageShell } from "@/components/brand/public-page"
 import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
+import { OUTBOUND_LINKS } from "@/content/outbound-links"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Link } from "@/lib/navigation"
 
 export async function generateMetadata({
@@ -15,16 +16,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "linksPage" })
-  return pageMetadata({ locale, path: "/links", title: t("title") })
+  return buildPageMetadata({
+    locale,
+    path: "/links",
+    title: t("title"),
+    description: t("description"),
+  })
 }
 
 export default async function LinksPage() {
   const t = await getTranslations("linksPage")
 
-  const outbound = [
-    { slug: "dualbrand", label: t("dualbrandLabel") },
-    { slug: "dualbrand-demo", label: t("dualbrandDemoLabel") },
-  ] as const
+  const outbound = (
+    [
+      { slug: "dualbrand", label: t("dualbrandLabel") },
+      { slug: "dualbrand-demo", label: t("dualbrandDemoLabel") },
+    ] as const
+  ).map((item) => ({
+    ...item,
+    verified: OUTBOUND_LINKS[item.slug].verified,
+  }))
 
   return (
     <PublicPageShell title={t("title")} showStub={false}>
@@ -56,12 +67,19 @@ export default async function LinksPage() {
                     <span className="text-sm font-medium text-foreground">{item.label}</span>
                     <span className="text-xs text-muted-foreground">/go/{item.slug}</span>
                   </div>
-                  <a
-                    href={`/go/${item.slug}`}
-                    className="inline-flex min-h-7 shrink-0 items-center text-xs text-muted-foreground underline-offset-4 hover:text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                  >
-                    {t("pendingNote")}
-                  </a>
+                  {item.verified ? (
+                    <a
+                      href={`/go/${item.slug}`}
+                      aria-label={item.label}
+                      className="shrink-0 text-xs text-muted-foreground underline-offset-4 hover:text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    >
+                      <ArrowUpRight aria-hidden className="size-4" />
+                    </a>
+                  ) : (
+                    <span className="shrink-0 text-xs text-muted-foreground">
+                      {t("pendingNote")}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

@@ -4,9 +4,14 @@ import { db } from "@/db"
 import * as schema from "@/db/schema"
 import { headers } from "next/headers"
 
-const ownerEmail = (
-  process.env.OWNER_EMAIL ?? "andypratamaworkspace@gmail.com"
-).toLowerCase()
+const ownerEmail = (process.env.OWNER_EMAIL ?? "").trim().toLowerCase()
+const authSecret = process.env.BETTER_AUTH_SECRET
+
+if (process.env.NODE_ENV === "production" && (!ownerEmail || !authSecret)) {
+  throw new Error(
+    "BETTER_AUTH_SECRET and OWNER_EMAIL must be set in production."
+  )
+}
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -18,8 +23,15 @@ export const auth = betterAuth({
       verification: schema.verification,
     },
   }),
-  secret: process.env.BETTER_AUTH_SECRET ?? "dev_secret_must_be_32_characters_long_min_12345",
+  secret: authSecret,
   baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
+  trustedOrigins: [
+    process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+    ...(process.env.NODE_ENV !== "production"
+      ? ["http://localhost:3000", "http://127.0.0.1:3000"]
+      : []),
+  ].filter((value, index, all) => all.indexOf(value) === index),
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
@@ -39,7 +51,7 @@ export const auth = betterAuth({
       create: {
         before: async (userData) => {
           const email = userData.email?.toLowerCase()
-          if (email !== ownerEmail) {
+          if (!ownerEmail || email !== ownerEmail) {
             throw new Error(
               "Akses ditolak: Pendaftaran publik dinonaktifkan. Hanya pemilik yang diizinkan."
             )

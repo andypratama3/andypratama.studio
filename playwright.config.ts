@@ -17,7 +17,7 @@ export default defineConfig({
   },
   webServer: {
     // Production server — stale next-dev HMR breaks client hydration in e2e.
-    command: process.env.PLAYWRIGHT_WEB_SERVER ?? "pnpm start",
+    command: process.env.PLAYWRIGHT_WEB_SERVER ?? "pnpm start:standalone",
     url: baseURL,
     reuseExistingServer: false,
     timeout: 120_000,

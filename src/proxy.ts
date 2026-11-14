@@ -5,23 +5,30 @@ import { routing } from "@/i18n/routing"
 
 const intlMiddleware = createIntlMiddleware(routing)
 
-// Dashboard is protected in Phase 3 when auth exists.
-// Until then, we do NOT redirect to a non-existent /auth/sign-in.
-// See DECISIONS.md §13 for the rationale.
-const protectedPaths: string[] = []
-
 function isProtectedPath(pathname: string): boolean {
-  return protectedPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
-  )
+  const normalized = pathname.replace(/^\/(en|id)(?=\/|$)/, "") || "/"
+  return normalized === "/dashboard" || normalized.startsWith("/dashboard/")
+}
+
+function hasSessionCookie(request: NextRequest): boolean {
+  return request.cookies
+    .getAll()
+    .some((cookie) => cookie.name.replace(/^__Secure-/, "") === "better-auth.session_token")
+}
+
+function signInPath(pathname: string): string {
+  return pathname.startsWith("/id") ? "/id/sign-in" : "/sign-in"
 }
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
 
-  if (isProtectedPath(pathname)) {
-    // Phase 3 placeholder: return 404 until auth is wired.
-    return new NextResponse(null, { status: 404 })
+  if (isProtectedPath(pathname) && !hasSessionCookie(request)) {
+    const url = request.nextUrl.clone()
+    const target = signInPath(pathname)
+    url.pathname = target
+    url.search = ""
+    return NextResponse.redirect(url)
   }
 
   return intlMiddleware(request) as NextResponse

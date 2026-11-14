@@ -1,11 +1,12 @@
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Container } from "@/components/brand/container"
 import { FaqAccordion } from "@/components/brand/faq-accordion"
 import { PublicPageShell } from "@/components/brand/public-page"
 import { Section } from "@/components/brand/section"
-import { faq } from "@/content/faq"
+import { getResolvedFaqItems } from "@/lib/resolve-faq-tokens"
+import { getFaqSettings } from "@/lib/site-settings"
 
 export async function generateMetadata({
   params,
@@ -14,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "faqPage" })
-  return pageMetadata({ locale, path: "/faq", title: t("title"), description: t("description") })
+  return buildPageMetadata({ locale, path: "/faq", title: t("title"), description: t("description") })
 }
 
 export default async function FaqPage({
@@ -26,13 +27,12 @@ export default async function FaqPage({
   const currentLocale = locale === "id" ? "id" : "en"
   const t = await getTranslations("faqPage")
 
-  const items = faq
-    .filter((item) => !item.requiresSetting)
-    .map((item) => ({
-      id: item.id,
-      question: item.q[currentLocale],
-      answer: item.a[currentLocale],
-    }))
+  const settings = await getFaqSettings(currentLocale)
+  const items = getResolvedFaqItems(currentLocale, settings).map((item) => ({
+    id: item.id,
+    question: item.q[currentLocale],
+    answer: item.resolvedAnswer,
+  }))
 
   return (
     <PublicPageShell title={t("title")} description={t("description")} showStub={false}>

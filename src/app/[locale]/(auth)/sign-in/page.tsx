@@ -15,6 +15,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const githubEnabled = process.env.NEXT_PUBLIC_GITHUB_ENABLED === "1"
 
   async function handleEmailSignIn(e: React.FormEvent) {
     e.preventDefault()
@@ -23,7 +24,7 @@ export default function SignInPage() {
 
     try {
       const res = await signIn.email({
-        email,
+        email: email.trim(),
         password,
       })
 
@@ -124,22 +125,26 @@ export default function SignInPage() {
           </Button>
         </form>
 
-        <div className="relative my-6 text-center text-xs text-muted-foreground">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-border" />
-          </div>
-          <span className="relative bg-card px-2">atau</span>
-        </div>
+        {githubEnabled ? (
+          <>
+            <div className="relative my-6 text-center text-xs text-muted-foreground">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border" />
+              </div>
+              <span className="relative bg-card px-2">atau</span>
+            </div>
 
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleGitHubSignIn}
-          disabled={isLoading}
-          className="h-11 w-full rounded-full text-xs"
-        >
-          Masuk dengan GitHub
-        </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleGitHubSignIn}
+              disabled={isLoading}
+              className="h-11 w-full rounded-full text-xs"
+            >
+              Masuk dengan GitHub
+            </Button>
+          </>
+        ) : null}
 
         <p className="mt-6 text-center text-[11px] text-muted-foreground">
           Pendaftaran publik dinonaktifkan. Akses dibatasi pada kredensial pemilik terdaftar.

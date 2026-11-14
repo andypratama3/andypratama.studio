@@ -1,9 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { randomUUID } from "node:crypto"
 import { db } from "@/db"
-import { agents, agentTasks } from "@/db/schema"
-import { eq, desc } from "drizzle-orm"
+import { agentMessages, agentTasks } from "@/db/schema"
+import { desc } from "drizzle-orm"
 import { z } from "zod"
-import crypto from "crypto"
+
+import { authenticateAgent, agentCanWrite } from "@/lib/agent-auth"
+import { rateLimit } from "@/lib/rate-limit"
 
 const agentTaskSchema = z.object({
   agentSlug: z.string().min(2),
@@ -22,30 +25,24 @@ const agentTaskSchema = z.object({
     .optional(),
 })
 
-function verifyAgentAuth(request: NextRequest): boolean {
-  const authHeader = request.headers.get("authorization")
-  const token = authHeader?.replace(/^Bearer\s+/i, "")
-
-  const masterSecret =
-    process.env.AGENT_SECRET_KEY ?? "dev_agent_secret_key_studio_12345"
-
-  if (token && token === masterSecret) {
-    return true
-  }
-
-  // Development fallback for local harness testing
-  if (process.env.NODE_ENV !== "production") {
-    return true
-  }
-
-  return false
+function unauthorized(message: string) {
+  return NextResponse.json({ error: message }, { status: 401 })
 }
 
 export async function GET(request: NextRequest) {
-  if (!verifyAgentAuth(request)) {
+  const agent = await authenticateAgent(request)
+  if (!agent) {
+    return unauthorized("Akses ditolak: API key agen tidak valid.")
+  }
+
+  const limited = rateLimit(`agent-get:${agent.id}`, 60, 60_000)
+  if (!limited.ok) {
     return NextResponse.json(
-      { error: "Akses ditolak: API key agen tidak valid." },
-      { status: 401 }
+      { error: "Terlalu banyak permintaan." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      }
     )
   }
 
@@ -56,7 +53,7 @@ export async function GET(request: NextRequest) {
       .orderBy(desc(agentTasks.createdAt))
       .limit(50)
 
-    return NextResponse.json({ tasks: list })
+    return NextResponse.json({ tasks: list, agent: agent.slug })
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Gagal mengambil tugas agen."
     return NextResponse.json({ error: msg }, { status: 500 })
@@ -64,10 +61,26 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!verifyAgentAuth(request)) {
+  const agent = await authenticateAgent(request)
+  if (!agent) {
+    return unauthorized("Akses ditolak: API key agen tidak valid.")
+  }
+
+  if (!agentCanWrite(agent, "tasks")) {
     return NextResponse.json(
-      { error: "Akses ditolak: API key agen tidak valid." },
-      { status: 401 }
+      { error: `Agen '${agent.slug}' tidak memiliki izin menulis tugas.` },
+      { status: 403 }
+    )
+  }
+
+  const limited = rateLimit(`agent-post:${agent.id}`, 30, 60_000)
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Terlalu banyak permintaan." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      }
     )
   }
 
@@ -84,32 +97,17 @@ export async function POST(request: NextRequest) {
 
     const { agentSlug, taskId, summary, evidence, approvalGate } = parsed.data
 
-    // 1. Check agent existence
-    const agentRows = await db
-      .select()
-      .from(agents)
-      .where(eq(agents.slug, agentSlug))
-      .limit(1)
-
-    if (agentRows.length === 0) {
+    if (agentSlug !== agent.slug) {
       return NextResponse.json(
-        { error: `Agen dengan slug '${agentSlug}' tidak ditemukan.` },
-        { status: 404 }
+        { error: "API key tidak cocok dengan agen yang diklaim." },
+        { status: 403 }
       )
     }
 
-    const agent = agentRows[0]
-    const requiresApprovalGates = (agent.requiresApproval as string[]) || []
-
-    // 2. Determine initial status: if approvalGate requested or required, hold at 'butuh_persetujuan'
-    const needsApproval =
-      !!approvalGate ||
-      (approvalGate && requiresApprovalGates.includes(approvalGate))
-
+    const needsApproval = Boolean(approvalGate)
     const status = needsApproval ? "butuh_persetujuan" : "selesai"
 
-    // 3. Insert agent task
-    const id = crypto.randomUUID()
+    const id = randomUUID()
     await db.insert(agentTasks).values({
       id,
       agentId: agent.id,
@@ -121,10 +119,16 @@ export async function POST(request: NextRequest) {
       approvedAt: status === "selesai" ? new Date() : null,
     })
 
+    await db.insert(agentMessages).values({
+      fromAgentId: agent.id,
+      agentTaskId: id,
+      body: `Task logged: ${summary}`,
+    })
+
     return NextResponse.json(
       {
         id,
-        agent: agentSlug,
+        agent: agent.slug,
         status,
         message: needsApproval
           ? "Tindakan tertahan di gerbang persetujuan. Menunggu konfirmasi pemilik."

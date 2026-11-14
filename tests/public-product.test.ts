@@ -44,15 +44,15 @@ describe("presentDualBrand", () => {
     ).toBe(false)
   })
 
-  it("keeps a verified link when the database is down", () => {
+  it("hides verified links when the database is down (fail closed)", () => {
     const view = presentDualBrand({
       contentPriceUsd: null,
       buyVerified: true,
-      demoVerified: false,
+      demoVerified: true,
       row: null,
     })
 
-    expect(view.showBuy).toBe(true)
+    expect(view.showBuy).toBe(false)
     expect(view.showDemo).toBe(false)
     expect(view.priceUsd).toBeNull()
   })

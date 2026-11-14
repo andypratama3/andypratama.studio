@@ -1,6 +1,6 @@
 # REDIRECTS — inventaris URL situs lama
 
-Status: **diimplementasikan 9 Nov 2026 (Batch 4, default O-09 / B-26).**  
+Status: **diimplementasikan 9 Nov 2026 (Batch 4, default O-09b / B-26).**  
 Studi kasus lama yang belum punya halaman → **301 `/work`**.  
 `productschool` dan `sdmuhammadiyah3new` → **301 `/work/sakolentra`**.  
 `sdmuhammadiyah3` (v1) ikut `/work` sampai ada studi kasus terpisah.  

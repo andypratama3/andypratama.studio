@@ -1,7 +1,7 @@
 import { db } from "@/db"
 import { leads, outreachEvents } from "@/db/schema"
 import { desc } from "drizzle-orm"
-import { createLead, updateLeadStage, addOutreachEvent } from "../../actions"
+import { createLead, updateLeadDetails, addOutreachEvent } from "../../actions"
 import { Users, Plus, MessageSquare, Send } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -14,6 +14,15 @@ const stages = [
   { id: "penawaran", label: "Penawaran" },
   { id: "menang", label: "Menang" },
   { id: "kalah", label: "Kalah" },
+] as const
+
+const segments = [
+  { id: "freelancer", label: "Freelancer" },
+  { id: "agency", label: "Agency" },
+  { id: "multi_brand", label: "Multi-brand" },
+  { id: "sekolah", label: "Sekolah" },
+  { id: "perekrut", label: "Perekrut" },
+  { id: "lainnya", label: "Lainnya" },
 ] as const
 
 export default async function LeadsPage() {
@@ -57,6 +66,16 @@ export default async function LeadsPage() {
               type="text"
               required
               placeholder="Contoh: Agensi Studio Kreatif"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-brand"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-muted-foreground">Email (opsional)</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="nama@perusahaan.com"
               className="mt-1 w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-brand"
             />
           </div>
@@ -163,6 +182,9 @@ export default async function LeadsPage() {
                       >
                         <div>
                           <div className="font-medium text-foreground">{lead.name}</div>
+                          {lead.email && (
+                            <div className="text-[11px] text-muted-foreground">{lead.email}</div>
+                          )}
                           {lead.handle && (
                             <div className="text-[11px] text-muted-foreground">
                               {lead.handle} ({lead.platform})
@@ -179,19 +201,17 @@ export default async function LeadsPage() {
                           </p>
                         )}
 
-                        {/* Quick Action: Log Outreach or Change Stage */}
+                        {/* Quick Action: Change Stage, Segment, Source UTM */}
                         <div className="border-t border-border pt-2">
                           <form
-                            action={async (fd: FormData) => {
-                              "use server"
-                              const nextStage = fd.get("nextStage") as (typeof stages)[number]["id"]
-                              await updateLeadStage(lead.id, nextStage)
-                            }}
-                            className="flex items-center gap-1"
+                            action={updateLeadDetails}
+                            className="flex flex-wrap items-center gap-1"
                           >
+                            <input type="hidden" name="leadId" value={lead.id} />
                             <select
-                              name="nextStage"
+                              name="stage"
                               defaultValue={lead.stage}
+                              aria-label="Stage"
                               className="rounded border border-border bg-background px-1.5 py-0.5 text-[10px]"
                             >
                               {stages.map((s) => (
@@ -200,11 +220,30 @@ export default async function LeadsPage() {
                                 </option>
                               ))}
                             </select>
+                            <select
+                              name="segment"
+                              defaultValue={lead.segment}
+                              aria-label="Segment"
+                              className="rounded border border-border bg-background px-1.5 py-0.5 text-[10px]"
+                            >
+                              {segments.map((s) => (
+                                <option key={s.id} value={s.id}>
+                                  {s.label}
+                                </option>
+                              ))}
+                            </select>
+                            <input
+                              name="sourceUtm"
+                              defaultValue={lead.sourceUtm ?? ""}
+                              placeholder="UTM"
+                              aria-label="Source UTM"
+                              className="w-20 rounded border border-border bg-background px-1.5 py-0.5 text-[10px]"
+                            />
                             <button
                               type="submit"
                               className="rounded bg-muted px-2 py-0.5 text-[10px] font-medium hover:bg-muted/80"
                             >
-                              Pindah
+                              Simpan
                             </button>
                           </form>
                         </div>

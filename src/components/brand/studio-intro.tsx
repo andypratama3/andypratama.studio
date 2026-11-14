@@ -20,12 +20,16 @@ export async function StudioIntro() {
       >
         <p
           id="studio-intro-title"
-          className="flex items-center gap-[0.14em] text-[clamp(4rem,12vw,7rem)] font-semibold tracking-[-0.06em] text-surface-contrast-foreground"
+          className="studio-intro__mark flex items-center gap-[0.14em] text-[clamp(4rem,12vw,7rem)] font-semibold tracking-[-0.06em] text-surface-contrast-foreground"
         >
-          <span>A</span>
-          <span aria-hidden className="inline-block size-[0.38em] rotate-45 border-2 border-brand-on-dark" />
-          <span>P</span>
+          <span className="studio-intro__letter">A</span>
+          <span
+            aria-hidden
+            className="studio-intro__diamond inline-block size-[0.38em] border-2"
+          />
+          <span className="studio-intro__letter studio-intro__letter--p">P</span>
         </p>
+        <span aria-hidden className="studio-intro__progress" />
         <button
           type="button"
           data-studio-intro-skip=""

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { BrandToggle } from "@/components/brand/brand-toggle"
 import { Container } from "@/components/brand/container"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "home.dualbrand" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/products/dualbrand",
     title: t("title"),

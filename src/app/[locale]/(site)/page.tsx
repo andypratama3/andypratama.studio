@@ -2,7 +2,7 @@ import { AppWindow, ArrowRight, Code2, CreditCard, Database, FileText, LayoutDas
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { publicEnv } from "@/lib/env"
 import { Container, ContainerWide } from "@/components/brand/container"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
@@ -24,6 +24,7 @@ import { Fact } from "@/components/brand/fact"
 import { MediaReveal, PanelReveal, Reveal, TextReveal } from "@/components/brand/reveal"
 import { ScrollBridge } from "@/components/brand/scroll-bridge"
 import { ScrollDepth } from "@/components/brand/scroll-media"
+import { ScrollParallax } from "@/components/brand/scroll-parallax"
 import { StickySteps } from "@/components/brand/sticky-steps"
 import { NewsletterForm } from "@/components/brand/newsletter-form"
 import { PageTransition } from "@/components/brand/page-transition"
@@ -41,7 +42,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  return pageMetadata({ locale, path: "/" })
+  return buildPageMetadata({ locale, path: "/" })
 }
 
 export default async function HomePage({
@@ -132,6 +133,11 @@ export default async function HomePage({
         data-decor=""
         className="fluid-hero relative flex min-h-dvh flex-col border-b border-border"
       >
+        <ScrollParallax speed={0.12} className="pointer-events-none inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,color-mix(in_oklab,var(--brand)_18%,transparent),transparent_70%)]"
+          />
+        </ScrollParallax>
         <DepthGauge surface={tHero("surface")} depth={tHero("depth")} />
         <ContainerWide className="relative flex flex-1 flex-col justify-end pt-28 pr-0 pb-10 md:pr-20 md:pb-14">
           <h1 id="home-hero-heading" className="fluid-word max-w-[16ch]">
@@ -234,9 +240,16 @@ export default async function HomePage({
           title: tProducts(`catalog.${item.id}.title`),
           blurb: tProducts(`catalog.${item.id}.blurb`),
         }))}
+        scrollReveal
+        scrollRevealDelayMs={60}
       />
 
-      <PracticeCube faces={cubeFaces} caption={tHero("cubeCaption")} />
+      <PracticeCube
+        faces={cubeFaces}
+        caption={tHero("cubeCaption")}
+        scrollReveal
+        scrollRevealDelayMs={100}
+      />
 
       <ChapterRail
         label={tHero("stripLabel")}
@@ -252,7 +265,13 @@ export default async function HomePage({
         ]}
       />
 
-      <Section id="proof" navTheme="light" className="border-b border-border">
+      <Section
+        id="proof"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={60}
+      >
         <Container className="flex min-h-[72vh] items-center">
           <ChapterCard
             index="I"
@@ -296,7 +315,13 @@ export default async function HomePage({
         </Container>
       </Section>
 
-      <Section id="services" navTheme="light" className="border-b border-border">
+      <Section
+        id="services"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={80}
+      >
         <Container>
           <div className="space-y-10">
             <ChapterCard
@@ -336,7 +361,13 @@ export default async function HomePage({
       </Section>
 
       {/* 6. SAKOLENTRA bento */}
-      <Section id="work" navTheme="light" className="border-b border-border">
+      <Section
+        id="work"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={100}
+      >
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12">
             <TextReveal delayMs={0} className="flex flex-col gap-6 lg:col-span-5 lg:col-start-8">
@@ -408,7 +439,13 @@ export default async function HomePage({
 
 
       {/* 7. Other projects */}
-      <Section id="projects" navTheme="light" className="border-b border-border">
+      <Section
+        id="projects"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={120}
+      >
         <Container>
           <div className="space-y-10">
             <ChapterCard
@@ -430,7 +467,13 @@ export default async function HomePage({
       </Section>
 
       {/* 8. DualBrand */}
-      <Section id="products" navTheme="light" className="border-b border-border">
+      <Section
+        id="products"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={140}
+      >
         <Container>
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-12">
             <TextReveal className="flex flex-col gap-5 lg:col-span-5 lg:col-start-8">
@@ -504,7 +547,13 @@ export default async function HomePage({
       </Section>
 
       {/* 9. Stack — tech list + Velto StickySteps */}
-      <Section id="practice" navTheme="light" className="border-b border-border">
+      <Section
+        id="practice"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={160}
+      >
         <Container>
           <div className="space-y-12">
             <TextReveal>
@@ -547,7 +596,13 @@ export default async function HomePage({
       </Section>
 
       {/* 10. Journal */}
-      <Section id="journal" navTheme="light" className="border-b border-border">
+      <Section
+        id="journal"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={180}
+      >
         <Container>
           <Reveal className="space-y-10">
             <ChapterCard
@@ -600,12 +655,21 @@ export default async function HomePage({
       ) : null}
 
       {/* Scroll transition 3 — horizontal wordmark scrub into CTA */}
-      <div data-nav-theme="light" className="scroll-anchor border-b border-border">
+      <div data-nav-theme="light" className="scroll-anchor relative border-b border-border">
+        <ScrollParallax speed={0.1} className="z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_50%,color-mix(in_oklab,var(--brand)_12%,transparent),transparent_75%)]" />
+        </ScrollParallax>
         <ScrollBridge text="ANDY PRATAMA STUDIO" />
       </div>
 
       {/* 12. FAQ 4+8 */}
-      <Section id="faq" navTheme="light" className="border-b border-border">
+      <Section
+        id="faq"
+        navTheme="light"
+        className="border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={200}
+      >
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
             <TextReveal className="space-y-5 lg:col-span-4">
@@ -668,6 +732,8 @@ export default async function HomePage({
         emphasis
         navTheme="dark"
         className="surface-invert surface-glow border-b border-border"
+        scrollReveal
+        scrollRevealDelayMs={220}
       >
         <Container>
           <PanelReveal className="flex flex-col items-start gap-8 py-6 text-surface-contrast-foreground sm:items-center sm:py-4 sm:text-center">

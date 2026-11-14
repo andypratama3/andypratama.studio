@@ -1,0 +1,1 @@
+ALTER TABLE `leads` ADD `email` varchar(254);

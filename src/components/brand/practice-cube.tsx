@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react"
 import { animate, m, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react"
+import { Reveal } from "@/components/brand/reveal"
 
 import { Link } from "@/lib/navigation"
 import { yawAdjustToFace } from "@/lib/cube-yaw"
@@ -35,9 +36,13 @@ function frontFace(yaw: number) {
 export function PracticeCube({
   faces,
   caption,
+  scrollReveal = false,
+  scrollRevealDelayMs = 0,
 }: {
   faces: PracticeFace[]
   caption: string
+  scrollReveal?: boolean
+  scrollRevealDelayMs?: number
 }) {
   const motionOk = useMotionOk()
   const ref = useRef<HTMLElement>(null)
@@ -50,7 +55,9 @@ export function PracticeCube({
   })
   const scrollYaw = useSpring(useTransform(scrollYProgress, [0, 1], [-18, 300]), motionSprings.soft)
   const dragYaw = useMotionValue(0)
-  const yaw = useTransform([scrollYaw, dragYaw], ([scroll, drag]) => Number(scroll) + Number(drag))
+  const scrollEnabled = useMotionValue(1)
+  const baseYawRef = useRef(0)
+  const yaw = useTransform([scrollYaw, dragYaw, scrollEnabled], ([scroll, drag, enabled]) => Number(scroll) * Number(enabled) + Number(drag))
   const gesture = useRef({ x: 0, yaw: 0, moved: false, id: -1 })
 
   useMotionValueEvent(yaw, "change", (value) => {
@@ -91,6 +98,8 @@ export function PracticeCube({
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!motionOk || event.button !== 0) return
+    scrollEnabled.set(0)
+    baseYawRef.current = scrollYaw.get()
     gesture.current = { x: event.clientX, yaw: dragYaw.get(), moved: false, id: event.pointerId }
   }
 
@@ -121,7 +130,8 @@ export function PracticeCube({
       click.stopPropagation()
     }
     event.currentTarget.addEventListener("click", stopClick, { capture: true, once: true })
-    const adjust = yawAdjustToFace(scrollYaw.get() + dragYaw.get())
+    const total = baseYawRef.current + dragYaw.get()
+    const adjust = yawAdjustToFace(total)
     if (adjust !== 0) {
       animate(dragYaw, dragYaw.get() + adjust, {
         duration: motionTokens.base,
@@ -130,7 +140,7 @@ export function PracticeCube({
     }
   }
 
-  return (
+  const cubeContent = (
     <section
       ref={ref}
       aria-label={caption}
@@ -138,7 +148,7 @@ export function PracticeCube({
       className="relative border-b border-border bg-background"
     >
       <div className="flex min-h-[70vh] flex-col items-center justify-center gap-8 px-6 py-20">
-        <p className="practice-caption text-sm text-muted-foreground">{caption}</p>
+        <p className="practice-caption text-sm text-muted-foreground mb-30">{caption}</p>
         <div
           className={motionOk ? "practice-scene practice-scene-drag" : "practice-scene"}
           onPointerDown={onPointerDown}
@@ -165,6 +175,12 @@ export function PracticeCube({
         </div>
       </div>
     </section>
+  )
+
+  return scrollReveal ? (
+    <Reveal delayMs={scrollRevealDelayMs}>{cubeContent}</Reveal>
+  ) : (
+    cubeContent
   )
 }
 

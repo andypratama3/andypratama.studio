@@ -1,8 +1,7 @@
 import Image from "next/image"
+import type { Metadata } from "next"
 import { ArrowUpRight, MapPin } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { Fact } from "@/components/brand/fact"
 import { FootnoteList } from "@/components/brand/footnote-list"
@@ -11,6 +10,8 @@ import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 import { footnoteIdsFromStats } from "@/components/brand/stats-grid"
 import { buttonVariants } from "@/components/ui/button"
+import { buildPageMetadata } from "@/lib/page-metadata"
+import { getAvailabilityNote } from "@/lib/site-settings"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
 
@@ -21,7 +22,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "aboutPage" })
-  return pageMetadata({ locale, path: "/about", title: t("title"), description: t("intro") })
+  return buildPageMetadata({
+    locale,
+    path: "/about",
+    title: t("title"),
+    description: t("intro"),
+  })
 }
 
 export default async function AboutPage({
@@ -30,6 +36,7 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const availabilityNote = await getAvailabilityNote(locale)
   const currentLocale = locale === "id" ? "id" : "en"
   const t = await getTranslations("aboutPage")
   const tOther = await getTranslations("home.otherProjects")
@@ -138,7 +145,7 @@ export default async function AboutPage({
                         {t("location")}
                       </span>
                       <span>{t("timezone")}</span>
-                      <span className="text-foreground">{t("availability")}</span>
+                      <span className="text-foreground">{availabilityNote ?? t("availability")}</span>
                     </p>
                   </div>
                 </div>

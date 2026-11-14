@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Container } from "@/components/brand/container"
 import { ContactForm } from "@/components/brand/contact-form"
 import { PublicPageShell } from "@/components/brand/public-page"
@@ -17,7 +17,7 @@ export async function generateMetadata({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "contactPage" })
   const tNav = await getTranslations({ locale, namespace: "nav" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/start",
     title: tNav("start"),

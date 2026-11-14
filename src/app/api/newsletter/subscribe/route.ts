@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import { confirmationEmail, hasMailTransport, sendMail } from "@/lib/mail"
-import { createNewsletterConfirmation } from "@/lib/newsletter-confirmation"
+import { createNewsletterSubscription } from "@/lib/newsletter"
 import { isAllowedBrowserOrigin } from "@/lib/request-security"
 import { rateLimit } from "@/lib/rate-limit"
+
 const bodySchema = z.object({
   email: z.string().email().max(254),
+  locale: z.enum(["en", "id"]).default("en"),
+  utmSource: z.string().max(120).optional(),
   website: z.string().max(0).optional(), // honeypot — must be empty
   startedAt: z.coerce.number().optional(),
 })
@@ -55,6 +58,8 @@ export async function POST(request: Request) {
       const form = await request.formData()
       raw = {
         email: form.get("email"),
+        locale: form.get("locale") ?? undefined,
+        utmSource: form.get("utmSource") ?? undefined,
         website: form.get("website") ?? "",
         startedAt: form.get("startedAt"),
       }
@@ -84,10 +89,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 })
   }
 
-  const token = await createNewsletterConfirmation(parsed.data.email)
-  const confirmUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/api/newsletter/confirm?token=${encodeURIComponent(token)}`
+  const { confirmToken, unsubscribeToken } = await createNewsletterSubscription({
+    email: parsed.data.email,
+    locale: parsed.data.locale,
+    sourceUtm: parsed.data.utmSource ?? null,
+  })
 
-  await sendMail(confirmationEmail(parsed.data.email, confirmUrl))
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  const confirmUrl = `${siteUrl}/api/newsletter/confirm?token=${encodeURIComponent(confirmToken)}`
+  const unsubscribeUrl = `${siteUrl}/api/newsletter/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}`
+
+  await sendMail(
+    confirmationEmail(parsed.data.email, confirmUrl, unsubscribeUrl)
+  )
 
   return NextResponse.json({ ok: true, pending: true })
 }

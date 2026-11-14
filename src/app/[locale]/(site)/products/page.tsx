@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { ArrowUpRight } from "lucide-react"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
 import { Reveal } from "@/components/brand/reveal"
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "productsPage" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/products",
     title: t("title"),

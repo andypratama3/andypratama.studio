@@ -61,6 +61,7 @@ const contentSecurityPolicy = [
 ].join("; ")
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   async redirects() {
     return legacyRedirects()
   },

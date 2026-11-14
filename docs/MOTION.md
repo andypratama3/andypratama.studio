@@ -38,7 +38,7 @@ Spring: `stiff` 140/28/0.3 untuk progres gulir bersama, `soft` 80/24/0.4 untuk k
 2. Pilih satu mesin: CSS `view()` untuk bagian tanpa urutan, atau `Reveal` untuk urutan dan mask. Jangan keduanya pada elemen yang sama.
 3. Tandai loop dekoratif dengan `data-decor` supaya jeda offscreen dan tab berlaku.
 4. Jangan menganimasikan `top`, `left`, `width`, atau `height` pada elemen yang berulang.
-5. Jalankan `pnpm test` (kontrak token) dan dump teks reduced-motion. Diff `docs/baseline/before` lawan `docs/baseline/after` harus kosong untuk berkas teks.
+5. Jalankan `pnpm test` (kontrak token) dan dump teks reduced-motion. Rekaman uji menulis ke `test-results/baseline` (gitignored); untuk membandingkan arsip, jalankan `BASELINE_DIR=docs/baseline/before pnpm test:e2e` dan diff terhadap `docs/baseline/after` — harus kosong untuk berkas teks.
 
 ## Komponen
 
@@ -62,13 +62,13 @@ Spring: `stiff` 140/28/0.3 untuk progres gulir bersama, `soft` 80/24/0.4 untuk k
 
 `useScroll` bertarget tetap di `practice-cube`, `scroll-bridge`, dan `scroll-media`. Itu bukan pendengar progres dokumen kedua.
 
-## Tidak dihapus
+## Dihapus (14 Nov 2026, dead code)
 
-`HeroEntrance`, `HeroBeat`, `HeroScene`, `HeroVisual`, `ScrollMedia`, `MediaFrame`, kelas `.reveal-block`, `.reveal-enter`, `.js-reveal`, `.hero-parallax`, `.hero-fade`. Tidak ada impor rute untuk komponen itu. `WordmarkMarquee` hanya di `/dev/components`.
+`HeroEntrance`, `HeroScene`, `HeroVisual`, `MediaFrame`, `Prose`, `ArrowButton`, `DualBrandPreview`, `HighlightsTabs` sudah dihapus — tidak ada impor rute. Tetap ada: kelas `.reveal-block`, `.reveal-enter`, `.js-reveal`, `.hero-parallax`, `.hero-fade`. `ScrollMedia` tidak terpasang di rute. `WordmarkMarquee` hanya di `/dev/components`.
 
 ## Intro
 
-Intro dipasang oleh `StudioIntroBoot` setelah mount, tanpa tag `script`. Dialog tetap `display: none` sampai `data-studio-intro="on"`. Reduced-motion, tanpa JS, atau kunjungan kedua (`studio-intro-seen`) tidak memasang atribut itu, jadi halaman tidak tertutup. Huruf tetap `A ◇ P`. Tombol lewati memakai string `home.hero.skipIntro` yang sudah ada. Navigasi dari halaman lain tidak mengulang intro.
+Intro memakai **skrip inline pra-paint** `introBootScript` (`src/lib/intro-boot-script.ts`) yang disisipkan `<script dangerouslySetInnerHTML>` di `src/app/[locale]/layout.tsx` sebelum konten, sehingga kunjungan pertama memasang `data-studio-intro="on"` **sebelum paint** dan halaman tidak berkedip. `StudioIntroBoot` (client) menangani sisa setelah mount. Dialog tetap `display: none` sampai `data-studio-intro="on"`. Reduced-motion, tanpa JS, atau kunjungan kedua (`studio-intro-seen`) tidak memasang atribut itu, jadi halaman tidak tertutup. Huruf tetap `A ◇ P`. Tombol lewati memakai string `home.hero.skipIntro` yang sudah ada. Navigasi dari halaman lain tidak mengulang intro.
 
 ## Kubus
 

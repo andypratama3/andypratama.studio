@@ -38,9 +38,9 @@ export function getWiringInventory(): WiringRow[] {
     },
     {
       id: "forms",
-      label: "react-hook-form ready / fetch forms",
-      status: "partial",
-      detail: "Newsletter + contact use fetch + zod server; RHF available",
+      label: "react-hook-form + zod",
+      status: "ok",
+      detail: "Contact uses RHF + zod resolver; newsletter posts FormData to zod routes",
     },
     {
       id: "mail",
@@ -70,7 +70,7 @@ export function getWiringInventory(): WiringRow[] {
       id: "unicorn",
       label: "unicornstudio-react",
       status: "partial",
-      detail: "HeroScene slot + static fallback; SDK not loaded",
+      detail: "Hero slot + static fallback; SDK not loaded",
     },
     {
       id: "view-transition",
@@ -85,6 +85,12 @@ export function getWiringInventory(): WiringRow[] {
       detail: "Allow-list + no-op without analytics bridge",
     },
     {
+      id: "newsletter-db",
+      label: "newsletter double opt-in",
+      status: "ok",
+      detail: "subscribers table: pending → confirmed → unsubscribed, token hashes, single-use confirm",
+    },
+    {
       id: "playwright",
       label: "@playwright/test",
       status: "ok",
@@ -93,14 +99,14 @@ export function getWiringInventory(): WiringRow[] {
     {
       id: "drizzle",
       label: "drizzle-orm",
-      status: "partial",
-      detail: "Schema + migration + dashboard queries wired; needs DATABASE_URL/MySQL at runtime",
+      status: "ok",
+      detail: "20 tables migrated; seed idempotent; dashboard + contact/newsletter/links write to MySQL",
     },
     {
       id: "better-auth",
       label: "better-auth",
-      status: "partial",
-      detail: "Owner-only auth wired in dashboard layout/actions; needs BETTER_AUTH_SECRET + OWNER_EMAIL",
+      status: "ok",
+      detail: "Owner-only auth; proxy + layout redirect unauthenticated /dashboard; bootstrap route disabled without token",
     },
   ]
 }

@@ -2,7 +2,9 @@ import { getLocale } from "next-intl/server"
 import type { Metadata } from "next"
 import { redirect } from "@/i18n/routing"
 import { getOwnerSession } from "@/lib/auth"
+import { isDatabaseUp } from "@/lib/db-health"
 import { DashboardNav } from "@/components/dashboard/dashboard-nav"
+import { DbDownBanner } from "@/components/dashboard/db-down-banner"
 import { ThemeSwitcher } from "@/components/site/theme-switcher"
 import { SignOutButton } from "@/components/dashboard/sign-out-button"
 import { ShieldCheck, User } from "lucide-react"
@@ -18,11 +20,15 @@ export default async function DashboardLayout({
 }>) {
   const session = await getOwnerSession()
 
-  // Protect dashboard in production. In development without DB/OAuth, display dev banner if unauthenticated.
-  const isProd = process.env.NODE_ENV === "production"
-  if (isProd && !session) {
+  const devBypass =
+    process.env.NODE_ENV !== "production" &&
+    process.env.DASHBOARD_DEV_BYPASS === "1"
+
+  if (!session && !devBypass) {
     redirect({ href: "/sign-in", locale: await getLocale() })
   }
+
+  const dbUp = await isDatabaseUp()
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
@@ -58,7 +64,10 @@ export default async function DashboardLayout({
         </header>
 
         {/* Dashboard page content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          {!dbUp ? <DbDownBanner /> : null}
+          {children}
+        </main>
       </div>
     </div>
   )

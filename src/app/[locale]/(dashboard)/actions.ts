@@ -12,11 +12,27 @@ import {
   outreachEvents,
   products,
   projects,
+  sales,
   siteSettings,
+  subscribers,
   tasks,
 } from "@/db/schema"
 import { requireOwner } from "@/lib/auth"
-import { eq } from "drizzle-orm"
+import { createLinkSchema } from "@/lib/link-validation"
+import { availabilitySchema } from "@/lib/site-settings"
+import { and, eq } from "drizzle-orm"
+import { z } from "zod"
+
+const siteSettingSchema = z.discriminatedUnion("key", [
+  z.object({ key: z.literal("availability"), value: availabilitySchema }),
+  z.object({
+    key: z.literal("reply_time"),
+    value: z.object({
+      en: z.string().trim().max(280),
+      id: z.string().trim().max(280),
+    }),
+  }),
+])
 
 // ==========================================
 // Tasks Actions
@@ -98,6 +114,7 @@ export async function updateLeadStage(
 export async function createLead(formData: FormData): Promise<void> {
   await requireOwner()
   const name = String(formData.get("name") || "").trim()
+  const email = String(formData.get("email") || "").trim() || null
   const handle = String(formData.get("handle") || "").trim() || null
   const platform = (formData.get("platform") || "linkedin") as
     | "linkedin"
@@ -120,6 +137,7 @@ export async function createLead(formData: FormData): Promise<void> {
 
   await db.insert(leads).values({
     name,
+    email,
     handle,
     platform,
     segment,
@@ -135,7 +153,11 @@ export async function addOutreachEvent(formData: FormData): Promise<void> {
   await requireOwner()
   const leadId = String(formData.get("leadId") || "")
   const channel = String(formData.get("channel") || "linkedin").trim()
-  const direction = (formData.get("direction") || "keluar") as "keluar" | "masuk"
+  const parsedDirection = z
+    .enum(["keluar", "masuk"])
+    .safeParse(formData.get("direction") ?? "keluar")
+  if (!parsedDirection.success) throw new Error("Arah kontak tidak valid.")
+  const direction = parsedDirection.data
   const body = String(formData.get("body") || "").trim() || null
 
   if (!leadId) throw new Error("Lead ID diperlukan")
@@ -304,6 +326,17 @@ export async function resolveAgentTask(
   action: "setujui" | "tolak"
 ): Promise<void> {
   await requireOwner()
+
+  const rows = await db
+    .select({ status: agentTasks.status })
+    .from(agentTasks)
+    .where(eq(agentTasks.id, agentTaskId))
+    .limit(1)
+
+  if (rows[0]?.status !== "butuh_persetujuan") {
+    throw new Error("Hanya tugas di gerbang persetujuan yang bisa diputuskan.")
+  }
+
   const status = action === "setujui" ? "selesai" : "ditolak"
   await db
     .update(agentTasks)
@@ -322,18 +355,22 @@ export async function resolveAgentTask(
 // ==========================================
 export async function createLink(formData: FormData): Promise<void> {
   await requireOwner()
-  const slug = String(formData.get("slug") || "").trim()
-  const destination = String(formData.get("destination") || "").trim()
-  const platform = String(formData.get("platform") || "").trim() || null
-  const campaign = String(formData.get("campaign") || "").trim() || null
+  const parsed = createLinkSchema.safeParse({
+    slug: formData.get("slug"),
+    destination: formData.get("destination"),
+    platform: String(formData.get("platform") || "").trim() || undefined,
+    campaign: String(formData.get("campaign") || "").trim() || undefined,
+  })
 
-  if (!slug || !destination) throw new Error("Slug dan URL tujuan wajib diisi")
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Data tautan tidak valid.")
+  }
 
   await db.insert(links).values({
-    slug,
-    destination,
-    platform,
-    campaign,
+    slug: parsed.data.slug,
+    destination: parsed.data.destination,
+    platform: parsed.data.platform ?? null,
+    campaign: parsed.data.campaign ?? null,
     medium: "organic",
   })
 
@@ -342,16 +379,117 @@ export async function createLink(formData: FormData): Promise<void> {
 
 export async function updateSiteSetting(key: string, value: unknown): Promise<void> {
   await requireOwner()
+  const parsed = siteSettingSchema.safeParse({ key, value })
+  if (!parsed.success) throw new Error("Setelan tidak valid.")
+
   await db
     .insert(siteSettings)
     .values({
-      key,
-      value,
+      key: parsed.data.key,
+      value: parsed.data.value,
     })
     .onDuplicateKeyUpdate({
-      set: { value },
+      set: { value: parsed.data.value },
     })
 
+  revalidatePath("/dashboard/settings")
+  revalidatePath("/", "layout")
+}
+
+// ==========================================
+// Links: toggle, sales, subscribers, leads
+// ==========================================
+export async function setLinkActive(linkId: string, active: boolean): Promise<void> {
+  await requireOwner()
+  await db.update(links).set({ active }).where(eq(links.id, linkId))
+  revalidatePath("/dashboard/links")
+}
+
+export async function createSale(formData: FormData): Promise<void> {
+  await requireOwner()
+
+  const productId = String(formData.get("productId") || "").trim()
+  const platform = String(formData.get("platform") || "").trim()
+  const gross = String(formData.get("grossUsd") || "").trim()
+  const externalIdRaw = String(formData.get("externalId") || "").trim()
+  const referrerUtm = String(formData.get("referrerUtm") || "").trim() || null
+
+  const platforms = ["gumroad", "lynk", "etsy", "payhip", "direct"] as const
+  if (!productId || !platforms.includes(platform as (typeof platforms)[number])) {
+    throw new Error("Produk dan platform penjualan wajib valid.")
+  }
+  if (gross && !/^\d+(\.\d{1,2})?$/.test(gross)) {
+    throw new Error("Nominal penjualan tidak valid.")
+  }
+
+  await db.insert(sales).values({
+    productId,
+    platform: platform as (typeof platforms)[number],
+    occurredAt: new Date(),
+    grossUsd: gross || null,
+    externalId: externalIdRaw || `manual-${crypto.randomUUID()}`,
+    referrerUtm,
+    source: "manual",
+  })
+
+  revalidatePath("/dashboard/products")
+  revalidatePath("/dashboard")
+}
+
+export async function updateLeadDetails(formData: FormData): Promise<void> {
+  await requireOwner()
+
+  const leadId = String(formData.get("leadId") || "").trim()
+  const stage = String(formData.get("stage") || "").trim()
+  const segment = String(formData.get("segment") || "").trim()
+  const sourceUtm = String(formData.get("sourceUtm") || "").trim() || null
+
+  const stages = ["baru", "dihubungi", "balas", "diskusi", "penawaran", "menang", "kalah"] as const
+  const segments = [
+    "freelancer",
+    "agency",
+    "multi_brand",
+    "sekolah",
+    "perekrut",
+    "lainnya",
+  ] as const
+
+  if (
+    !leadId ||
+    !stages.includes(stage as (typeof stages)[number]) ||
+    !segments.includes(segment as (typeof segments)[number])
+  ) {
+    throw new Error("Data lead tidak valid.")
+  }
+
+  await db
+    .update(leads)
+    .set({
+      stage: stage as (typeof stages)[number],
+      segment: segment as (typeof segments)[number],
+      sourceUtm,
+    })
+    .where(eq(leads.id, leadId))
+
+  revalidatePath("/dashboard/leads")
+  revalidatePath("/dashboard")
+}
+
+export async function unsubscribeSubscriber(subscriberId: string): Promise<void> {
+  await requireOwner()
+  await db
+    .update(subscribers)
+    .set({ status: "unsubscribed", confirmTokenHash: null })
+    .where(eq(subscribers.id, subscriberId))
+  revalidatePath("/dashboard/settings")
+}
+
+export async function approveSubscriber(subscriberId: string): Promise<void> {
+  await requireOwner()
+  await db
+    .update(subscribers)
+    .set({ status: "confirmed", confirmedAt: new Date(), confirmTokenHash: null })
+    .where(and(eq(subscribers.id, subscriberId), eq(subscribers.status, "pending")))
   revalidatePath("/dashboard/settings")
 }
 
@@ -363,9 +501,15 @@ export async function updateProductPrice(
   priceUsd: string
 ): Promise<void> {
   await requireOwner()
+  const normalized = priceUsd.trim()
+  if (normalized && !/^\d+(\.\d{1,2})?$/.test(normalized)) {
+    throw new Error("Harga harus berupa angka non-negatif dengan maksimal 2 desimal.")
+  }
+  if (!productId) throw new Error("Produk tidak valid.")
+
   await db
     .update(products)
-    .set({ priceUsd })
+    .set({ priceUsd: normalized || null })
     .where(eq(products.id, productId))
   revalidatePath("/dashboard/products")
 }

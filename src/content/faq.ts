@@ -21,7 +21,7 @@ export const faq: FaqItem[] = [
     },
     a: {
       en: "Day-to-day operations your team actually uses: billing and payments, matching bank transfers, WhatsApp updates, dashboards, and connecting the tools you already have. I handle the work from first conversation to launch.",
-      id: "Operasional harian yang benar-benar dipakai tim Anda: tagihan dan pembayaran, pencocokan transfer bank, kabar WhatsApp, dasbor, dan menyambungkan alat yang sudah ada. Saya kerjakan dari percakapan pertama sampai siap dipakai.",
+      id: "Operasional harian yang benar-benar dipakai tim Anda: tagihan dan pembayaran, pencocokan transfer bank, kabar WhatsApp, dasbor, dan menyambungkan alat yang sudah ada. Saya mengerjakannya dari percakapan pertama sampai siap dipakai.",
     },
   },
   {
@@ -111,8 +111,8 @@ export const faq: FaqItem[] = [
       id: "Apa itu SAKOLENTRA?",
     },
     a: {
-      en: "Helps school admin and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. It runs at SD Muhammadiyah 3 Samarinda with {fact:students} students. I built it and I own it.",
-      id: "Membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. Berjalan di SD Muhammadiyah 3 Samarinda dengan {fact:students} siswa. Saya yang membangunnya dan saya pemiliknya.",
+      en: "SAKOLENTRA helps with school administration and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. It runs at SD Muhammadiyah 3 Samarinda with {fact:students} students. I built it and I own it.",
+      id: "SAKOLENTRA membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. Berjalan di SD Muhammadiyah 3 Samarinda dengan {fact:students} siswa. Saya yang membangunnya dan saya pemiliknya.",
     },
   },
   {

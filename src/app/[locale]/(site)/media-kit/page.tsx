@@ -2,7 +2,7 @@ import Image from "next/image"
 import { ArrowUpRight, MapPin } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { Container } from "@/components/brand/container"
 import { Fact } from "@/components/brand/fact"
 import { FootnoteList } from "@/components/brand/footnote-list"
@@ -12,6 +12,7 @@ import { Section } from "@/components/brand/section"
 import { footnoteIdsFromStats } from "@/components/brand/stats-grid"
 import { buttonVariants } from "@/components/ui/button"
 import { socialProfiles, type SocialPlatformId } from "@/content/social-profiles"
+import { getAvailabilityNote } from "@/lib/site-settings"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
 
@@ -22,7 +23,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "mediaKitPage" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/media-kit",
     title: t("title"),
@@ -36,6 +37,7 @@ export default async function MediaKitPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  const availabilityNote = await getAvailabilityNote(locale)
   const currentLocale = locale === "id" ? "id" : "en"
   const t = await getTranslations("mediaKitPage")
   const tOther = await getTranslations("home.otherProjects")
@@ -148,7 +150,7 @@ export default async function MediaKitPage({
                         {t("location")}
                       </span>
                       <span>{t("timezone")}</span>
-                      <span className="text-foreground">{t("availability")}</span>
+                      <span className="text-foreground">{availabilityNote ?? t("availability")}</span>
                     </p>
                   </div>
                 </div>

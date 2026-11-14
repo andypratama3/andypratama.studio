@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import type { Metadata } from "next"
-import { pageMetadata } from "@/lib/seo"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { ArrowRight } from "lucide-react"
 import { Container } from "@/components/brand/container"
 import { EmptyPanel } from "@/components/brand/empty-panel"
@@ -19,7 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "journalPage" })
-  return pageMetadata({
+  return buildPageMetadata({
     locale,
     path: "/journal",
     title: t("title"),
@@ -77,7 +77,7 @@ export default async function JournalPage() {
               action={
                 <>
                   <Link
-                    href="/start?topic=newsletter"
+                    href="/start?topic=other"
                     className={cn(
                       buttonVariants({ size: "default" }),
                       "h-11 min-h-11 rounded-full bg-primary px-4 font-medium text-primary-foreground cta-lift"

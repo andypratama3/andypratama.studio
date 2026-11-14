@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { Reveal } from "@/components/brand/reveal"
 
 export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType
@@ -7,6 +8,12 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   emphasis?: boolean
   /** FloatingNav surface adaptation (Velto). */
   navTheme?: "light" | "dark"
+  /** Wrap children in a scroll Reveal so they entrance on first enter. */
+  scrollReveal?: boolean
+  /** Delay ms before the reveal starts. */
+  scrollRevealDelayMs?: number
+  /** Reveal kind: rise | mask | scale. */
+  scrollRevealKind?: "rise" | "mask" | "scale"
 }
 
 export function Section({
@@ -14,9 +21,18 @@ export function Section({
   className,
   emphasis = false,
   navTheme,
+  scrollReveal = false,
+  scrollRevealDelayMs = 0,
+  scrollRevealKind = "rise",
   children,
   ...props
 }: SectionProps) {
+  const content = (
+    <>
+      {children}
+    </>
+  )
+
   return (
     <Component
       className={cn(
@@ -27,7 +43,13 @@ export function Section({
       data-nav-theme={navTheme}
       {...props}
     >
-      {children}
+      {scrollReveal ? (
+        <Reveal kind={scrollRevealKind} delayMs={scrollRevealDelayMs}>
+          {content}
+        </Reveal>
+      ) : (
+        content
+      )}
     </Component>
   )
 }

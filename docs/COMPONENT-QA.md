@@ -1,5 +1,9 @@
 # COMPONENT-QA — D.3 × D.6 (10 titik)
 
+> **Update 13 November 2026 (J0-02).** Sumber status tunggal: `docs/STATUS.md`.
+> Dashboard **ada** (11 halaman, 21 server action ber-`requireOwner`); Drizzle + Better Auth terpasang.
+> `pnpm test:e2e` → **63 passed** (bukan 21). Matriks D.6 di bawah adalah arsip 9 Nov 2026.
+
 Tanggal: 9 November 2026 (setelah eksekusi penuh).  
 Legenda: ✅ lulus · ⚠️ sebagian · ❌ gagal · — tidak relevan · ⏳ e2e/manual
 
@@ -19,7 +23,7 @@ Titik D.6: (1) token (2) dua tema AA (3) 375/768/1280 (4) keyboard (5) SR/axe (6
 
 | Komponen | Ada? | Catatan |
 |---|---|---|
-| HeroScene | ✅ | Fallback SVG; Unicorn SDK partial |
+| HeroVisual | — | dihapus 14 Nov 2026 (dead code); hero pakai poster statis + `ScrollParallax` |
 | WordmarkMarquee | ✅ | Pause + reduced-motion static |
 | AudienceRoutes | ✅ | path-card di Home |
 | AvailabilityBadge | — | kosong = tidak render |
@@ -50,7 +54,7 @@ Titik D.6: (1) token (2) dua tema AA (3) 375/768/1280 (4) keyboard (5) SR/axe (6
 
 ## D.3.5 Dashboard
 
-Belum — drizzle + better-auth **missing** (Owner gate).
+**Ada** (11 halaman, 21 server action ber-`requireOwner`) — dikoreksi 13 Nov 2026; Drizzle + Better Auth terpasang.
 
 ## Galeri & e2e
 
@@ -70,6 +74,6 @@ Belum — drizzle + better-auth **missing** (Owner gate).
 | `/work` + `/work/sakolentra` stub | HIGH | Diisi dari messages Home |
 | `/license` kosong di jalur DualBrand | MEDIUM | Overview + Gumroad/FAQ (tanpa klausul dikarang) |
 
-Verifier: `pnpm test:e2e` → **21 passed**.
+Verifier: `pnpm test:e2e` → **63 passed** (13 Nov 2026; arsip mencatat 21 passed pada 9 Nov).
 
 Owner: tambah profil sosial di `src/content/outbound-links.ts` bila URL sudah diverifikasi.

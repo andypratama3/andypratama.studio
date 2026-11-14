@@ -1,4 +1,26 @@
-# INTEGRATIONS — Matriks alat vs bukti (Batch 0 / v4.1 §1)
+# INTEGRATIONS — Matriks alat vs bukti
+
+> **Update 13 November 2026 (J0-02).** Angka tes: `pnpm test` → 21 file / 62 tes; `pnpm test:e2e` → 63 passed.
+> Sumber status tunggal: `docs/STATUS.md`. `react-hook-form` **dipakai** di `src/components/brand/contact-form.tsx`.
+> Motion final `domAnimation` (`src/components/providers/motion-provider.tsx`), bukan `domMax`.
+>
+> **Update 12 November 2026.** Status terkini (bukan Batch 0):
+>
+> | Alat | Status | Bukti |
+> |---|---|---|
+> | drizzle-orm + drizzle-kit + mysql2 | ok | 20 tabel aplikasi, migrasi `0000`–`0002`, seed idempoten |
+> | better-auth | ok | owner-only, proxy + layout guard, bootstrap token |
+> | react-hook-form + zod | ok | contact form RHF; route zod (contact/newsletter/agent) |
+> | nodemailer | sebagian | file transport dev; SMTP produksi menunggu D-01 |
+> | vitest | ok | 21 file / 62 test |
+> | Playwright + axe | ok | `pnpm test:e2e` (Chromium terpasang) |
+> | Docker | sebagian | Dockerfile + compose produksi ada; image belum dibangun (Docker tidak terpasang) |
+> | Backup | ok | `scripts/backup.sh`; dump + restore DB bersih teruji; enkripsi GPG teruji |
+> | Analytics (Umami) | menunggu D-02 | env + `track()` no-op; tidak ada script dimuat |
+> | Unicorn Studio | menunggu A-08 | slot + fallback statis |
+>
+> Matriks di bawah adalah arsip Batch 0 (9 Nov 2026).
+
 
 Tanggal: 9 November 2026.  
 Sumber: `package.json`, `pnpm list`, `ls`, `grep`, output Batch 0 (`pnpm typecheck|lint|test|build|test:e2e`).  
@@ -8,12 +30,12 @@ Aturan: baris tanpa bukti = **tidak terbukti**. Dilarang menulis "terintegrasi" 
 |---|---|---|---|---|
 | Next 16.4 + React 19.3 + TS | ya (`next@16.4.4`, `react@19.3.1`) | ya | terbukti | `pnpm build` → Next.js 16.4.4; `pnpm typecheck` exit 0 |
 | Tailwind v4 + postcss + tw-animate | ya | ya (`globals.css` @import) | terbukti | `pnpm build` exit 0; file `postcss.config.mjs` |
-| shadcn CLI + Base UI base-nova | ya (`shadcn@4.23.0`, `@base-ui/react@1.9.0`) | **11** komponen di `src/components/ui/` | sebagian | `ls src/components/ui` = accordion, button, dropdown-menu, scroll-area, sheet, skeleton, table, tabs, toggle, toggle-group, tooltip |
+| shadcn CLI + Base UI base-nova | ya (`shadcn@4.23.0`, `@base-ui/react@1.9.0`) | **14** komponen di `src/components/ui/` | sebagian | `ls src/components/ui` = accordion, button, form, input, label, select, sheet, skeleton, sonner, table, tabs, textarea, toggle, tooltip |
 | lucide-react, cva, cn | ya (`cn@0.5.2`) | ya | terbukti | `pnpm list cn`; `src/lib/utils.ts` re-export; B-12 koreksi: cn sah |
 | next-themes, next-intl | ya | ya | terbukti | locale layout + ThemeProvider; e2e theme toggle lulus |
-| motion 14 | ya (`motion@14.11.1`) | `LazyMotion` `domMax`; reveal, scroll bridge, nav progress | terpasang | paket yang sama, bukan dependency baru |
+| motion 14 | ya (`motion@14.11.1`) | `LazyMotion` `domAnimation`; reveal, scroll bridge, nav progress | terpasang | `src/components/providers/motion-provider.tsx`; `domMax` tidak dipakai |
 | sonner | ya | langsung `toast` di form (bukan wrapper shadcn sonner) | sebagian | `contact-form.tsx` / `newsletter-form.tsx` import `sonner` |
-| react-hook-form + resolvers | ya | **tidak** (form pakai fetch + FormData) | terpasang, tidak terpakai | `grep -rn useForm\\|react-hook-form src` → kosong (kecuali dep) |
+| react-hook-form + resolvers | ya | ya — `useForm` di `src/components/brand/contact-form.tsx` (+ `src/components/ui/form.tsx`) | terpakai | `grep -rn useForm\\|react-hook-form src` → kosong (kecuali dep) |
 | zod 4 | ya | API route | sebagian | `api/contact`, newsletter |
 | nodemailer | ya | `lib/mail.ts` | di luar spec §4; menunggu D-01 | dep + file ada; SMTP produksi belum |
 | vitest + RTL + jsdom | ya | `vitest.config.ts` ada; 7 file unit test | sebagian (bukan "kosong") | `pnpm test` → 7 files / 17 tests; config **ada** di repo (klaim arsip "tidak ada config" = salah untuk repo ini) |
