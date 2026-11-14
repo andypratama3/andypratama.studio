@@ -1,7 +1,8 @@
 # STATUS — sumber tunggal status proyek
 
 Update: **14 November 2026**. Cabang `rebuild/studio` (merge `origin/main` `bff4c7e` +
-audit J7 + perbaikan J8 drag cube). Rincian audit: `docs/AUDIT-2026-11-12.md`.
+audit J7 + perbaikan J8 drag cube), sudah sama dengan `origin/main` di commit `eb525ac`.
+Rincian audit: `docs/AUDIT-2026-11-12.md`.
 Dokumen lain (`PLUGIN-AUDIT`, `COMPONENT-QA`, `LAYOUT-AUDIT`, `REFERENCES`, `INTEGRATIONS`, `MOTION`)
 menunjuk ke halaman ini untuk status; isi mereka adalah arsip bertanggal.
 
@@ -212,5 +213,5 @@ Verifikasi: `pnpm typecheck` 0 · `pnpm lint` 0 · `pnpm test` 23 file / 68 tes 
 sweep 252 pengukuran tanpa overflow/duplicate id/heading skip/input tanpa label · DB `db:up`→`migrate`→`seed`
 21 tabel · tulis: kontak→`leads`, newsletter pending→confirmed→unsubscribed, `/go`→302+`link_clicks`.
 
-Produksi tidak disentuh: `next-server v16.3.3` di port 3001 tetap berjalan (200). Commit sudah
-dipush ke `origin/rebuild/studio` dengan target merge ke `origin/main`; deploy produksi tidak dilakukan.
+Produksi tidak disentuh: `next-server v16.3.3` di port 3001 tetap berjalan (200). Commit merge
+`eb525ac` sudah dipush ke `origin/main` dan `origin/rebuild/studio`; deploy produksi tidak dilakukan.
