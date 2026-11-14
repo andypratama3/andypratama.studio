@@ -1,4 +1,6 @@
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { BrandToggle } from "@/components/brand/brand-toggle"
 import { Container } from "@/components/brand/container"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
@@ -11,6 +13,21 @@ import { getDualBrandView } from "@/lib/public-product"
 import { Link } from "@/lib/navigation"
 import { LocalNav } from "@/components/brand/local-nav"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "home.dualbrand" })
+  return pageMetadata({
+    locale,
+    path: "/products/dualbrand",
+    title: t("title"),
+    description: t("description"),
+  })
+}
 
 export default async function DualBrandPage() {
   const tDual = await getTranslations("home.dualbrand")
@@ -152,7 +169,7 @@ export default async function DualBrandPage() {
                 href="/license"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "default" }),
-                  "cta-lift h-11 min-h-11 rounded-full px-4"
+                  "cta-lift h-11 min-h-11 w-full rounded-full px-4 text-center whitespace-normal sm:w-auto"
                 )}
               >
                 {tDual("licenseNote")}
@@ -161,7 +178,7 @@ export default async function DualBrandPage() {
                 href="/start"
                 className={cn(
                   buttonVariants({ size: "default" }),
-                  "cta-lift h-11 min-h-11 rounded-full bg-primary px-4 font-medium text-primary-foreground hover:bg-primary/90"
+                  "cta-lift h-11 min-h-11 w-full rounded-full bg-primary px-4 font-medium text-primary-foreground hover:bg-primary/90 sm:w-auto"
                 )}
               >
                 {tDual("askCta")}

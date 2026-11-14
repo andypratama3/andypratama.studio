@@ -1,5 +1,7 @@
 import { Suspense } from "react"
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { ContactForm } from "@/components/brand/contact-form"
 import { PublicPageShell } from "@/components/brand/public-page"
@@ -7,6 +9,22 @@ import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 
 /** Primary CTA target — same intake form as /contact. */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "contactPage" })
+  const tNav = await getTranslations({ locale, namespace: "nav" })
+  return pageMetadata({
+    locale,
+    path: "/start",
+    title: tNav("start"),
+    description: t("description"),
+  })
+}
+
 export default async function StartPage() {
   const tNav = await getTranslations("nav")
   const t = await getTranslations("contactPage")

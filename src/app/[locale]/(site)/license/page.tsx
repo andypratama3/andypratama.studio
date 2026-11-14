@@ -1,4 +1,6 @@
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { PublicPageShell } from "@/components/brand/public-page"
 import { Reveal } from "@/components/brand/reveal"
@@ -12,6 +14,22 @@ import { cn } from "@/lib/utils"
  * DualBrand license overview — full legal text lives at Gumroad checkout.
  * Do not invent clauses beyond messages / FAQ.
  */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "licensePage" })
+  const tFooter = await getTranslations({ locale, namespace: "footer" })
+  return pageMetadata({
+    locale,
+    path: "/license",
+    title: tFooter("license"),
+    description: t("description"),
+  })
+}
+
 export default async function LicensePage() {
   const tFooter = await getTranslations("footer")
   const t = await getTranslations("licensePage")

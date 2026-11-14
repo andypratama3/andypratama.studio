@@ -7,11 +7,23 @@ import { track } from "@/lib/events"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
+const subscribeToClient = () => () => {}
+
+function useIsMounted() {
+  return React.useSyncExternalStore(
+    subscribeToClient,
+    () => true,
+    () => false
+  )
+}
+
 export function WiringClientPanel() {
   const { theme, setTheme, resolvedTheme } = useTheme()
   const locale = useLocale()
+  const mounted = useIsMounted()
   const [probe, setProbe] = React.useState<string>("(not read)")
-  const ready = resolvedTheme != null
+
+  const activeTheme = mounted ? (resolvedTheme ?? theme ?? "—") : "—"
 
   function readProbe() {
     setProbe(JSON.stringify(window.__wiring ?? {}, null, 2))
@@ -24,8 +36,8 @@ export function WiringClientPanel() {
       </h2>
       <p className="text-sm text-muted-foreground">
         Locale: <span className="text-foreground">{locale}</span> · Theme:{" "}
-        <span className="text-foreground">{resolvedTheme ?? theme ?? "—"}</span>
-        {ready ? null : " (hydrating…)"}
+        <span className="text-foreground">{activeTheme}</span>
+        {mounted ? null : " (hydrating…)"}
       </p>
       <div className="flex flex-wrap gap-2">
         <button

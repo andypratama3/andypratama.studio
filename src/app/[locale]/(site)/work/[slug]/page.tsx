@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { PageTransition } from "@/components/brand/page-transition"
 import { SakolentraDiagram } from "@/components/brand/sakolentra-diagram"
@@ -12,6 +14,24 @@ import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
 
 const CASE_STUDIES = new Set(["sakolentra"])
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}): Promise<Metadata> {
+  const { locale, slug } = await params
+  if (!CASE_STUDIES.has(slug)) {
+    return {}
+  }
+  const t = await getTranslations({ locale, namespace: "home.sakolentra" })
+  return pageMetadata({
+    locale,
+    path: `/work/${slug}`,
+    title: t("title"),
+    description: t("description"),
+  })
+}
 
 export default async function WorkSlugPage({
   params,

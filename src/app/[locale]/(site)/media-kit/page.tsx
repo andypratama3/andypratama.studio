@@ -1,6 +1,8 @@
 import Image from "next/image"
 import { ArrowUpRight, MapPin } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { Fact } from "@/components/brand/fact"
 import { FootnoteList } from "@/components/brand/footnote-list"
@@ -12,6 +14,21 @@ import { buttonVariants } from "@/components/ui/button"
 import { socialProfiles, type SocialPlatformId } from "@/content/social-profiles"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "mediaKitPage" })
+  return pageMetadata({
+    locale,
+    path: "/media-kit",
+    title: t("title"),
+    description: t("description"),
+  })
+}
 
 export default async function MediaKitPage({
   params,
@@ -344,7 +361,7 @@ export default async function MediaKitPage({
                     >
                       <div className="flex items-baseline justify-between gap-3">
                         <p className="font-medium text-foreground">{item.name}</p>
-                        <p className="shrink-0 text-sm font-semibold text-brand">{item.price}</p>
+                        <p className="text-right text-sm font-semibold text-brand">{item.price}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-muted-foreground">{item.note}</p>
                     </li>
@@ -392,12 +409,12 @@ export default async function MediaKitPage({
                   </h3>
                   <p className="mt-2 max-w-lg text-pretty text-muted-foreground">{t("ctaBody")}</p>
                 </div>
-                <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <a
                     href="mailto:contact@andypratama.studio?subject=Media%20kit%20brief"
                     className={cn(
                       buttonVariants({ size: "lg" }),
-                      "inline-flex h-11 rounded-full bg-primary px-6 font-medium text-primary-foreground hover:bg-primary/90 cta-lift"
+                      "inline-flex h-11 w-full rounded-full bg-primary px-6 text-center font-medium whitespace-normal text-primary-foreground hover:bg-primary/90 cta-lift sm:w-auto"
                     )}
                   >
                     {t("ctaMail")}
@@ -406,7 +423,7 @@ export default async function MediaKitPage({
                     href="/start"
                     className={cn(
                       buttonVariants({ variant: "outline", size: "lg" }),
-                      "inline-flex h-11 rounded-full px-6 cta-lift"
+                      "inline-flex h-11 w-full rounded-full px-6 cta-lift sm:w-auto"
                     )}
                   >
                     {t("ctaBrief")}

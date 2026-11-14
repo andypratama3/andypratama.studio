@@ -1,6 +1,8 @@
 import { AppWindow, ArrowRight, Code2, CreditCard, Database, FileText, LayoutDashboard, MessageCircle, UserCheck } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { publicEnv } from "@/lib/env"
 import { Container, ContainerWide } from "@/components/brand/container"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
@@ -32,6 +34,15 @@ import { TrackedAnchor, TrackedLink } from "@/components/brand/tracked-link"
 import { Link } from "@/lib/navigation"
 import { motionTokens } from "@/lib/motion"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  return pageMetadata({ locale, path: "/" })
+}
 
 export default async function HomePage({
   params,

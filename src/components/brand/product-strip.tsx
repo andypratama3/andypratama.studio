@@ -109,7 +109,7 @@ export function ProductStrip({
       <div className="mt-5 flex justify-center px-[clamp(20px,4vw,40px)]">
         <Link
           href="/products"
-          className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          className="inline-flex min-h-7 items-center text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         >
           {browseLabel}
         </Link>

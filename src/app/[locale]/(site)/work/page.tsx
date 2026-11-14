@@ -1,4 +1,6 @@
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { Container } from "@/components/brand/container"
 import { HairlineTable } from "@/components/brand/hairline-table"
 import { PublicPageShell } from "@/components/brand/public-page"
@@ -8,6 +10,22 @@ import { Section } from "@/components/brand/section"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "workPage" })
+  const tNav = await getTranslations({ locale, namespace: "nav" })
+  return pageMetadata({
+    locale,
+    path: "/work",
+    title: tNav("work"),
+    description: t("description"),
+  })
+}
 
 export default async function WorkPage() {
   const tNav = await getTranslations("nav")

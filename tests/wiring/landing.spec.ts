@@ -39,6 +39,43 @@ test.describe("Landing surface regressions", () => {
     expect(errors.filter((text) => text.includes("Content Security Policy"))).toEqual([])
   })
 
+  test("floating nav stays above the page and remains clickable", async ({
+    page,
+  }) => {
+    // Skip the studio intro overlay; it intentionally blocks clicks for ~1.3s.
+    await page.addInitScript(() => {
+      try {
+        sessionStorage.setItem("studio-intro-seen", "1")
+      } catch {
+        /* storage unavailable */
+      }
+    })
+    await page.goto("/en")
+
+    // Regression: `view-transition-name` on <header> created a stacking context
+    // below <main>, so the floating pill rendered but could not be clicked.
+    const themeToggle = page.getByRole("button", { name: /toggle theme/i }).first()
+    const box = await themeToggle.boundingBox()
+    expect(box).not.toBeNull()
+    const topmost = await page.evaluate(
+      ({ x, y }) => {
+        const el = document.elementFromPoint(x, y)
+        return el?.closest("header") !== null
+      },
+      { x: (box?.x ?? 0) + (box?.width ?? 0) / 2, y: (box?.y ?? 0) + (box?.height ?? 0) / 2 }
+    )
+    expect(topmost).toBe(true)
+
+    const before = await themeToggle.getAttribute("aria-label")
+    await themeToggle.click()
+    await expect
+      .poll(() => themeToggle.getAttribute("aria-label"))
+      .not.toBe(before)
+
+    await page.locator("header nav a[href='/work']").first().click()
+    await expect(page).toHaveURL(/\/work$/)
+  })
+
   test("dashboard sends unauthenticated users to the real sign-in route", async ({
     request,
   }) => {

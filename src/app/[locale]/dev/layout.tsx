@@ -3,6 +3,8 @@ import { SkipLink } from "@/components/brand/skip-link"
 import { WiringProbe } from "@/components/providers/wiring-probe"
 import { Link } from "@/lib/navigation"
 
+export const dynamic = "force-dynamic"
+
 export default function DevLayout({
   children,
 }: Readonly<{
@@ -26,19 +28,19 @@ export default function DevLayout({
           <nav aria-label="Diagnostics" className="flex gap-3 text-sm">
             <Link
               href="/dev/wiring"
-              className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              className="inline-flex min-h-7 items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Wiring
             </Link>
             <Link
               href="/dev/components"
-              className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              className="inline-flex min-h-7 items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Components
             </Link>
             <Link
               href="/"
-              className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              className="inline-flex min-h-7 items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Site
             </Link>

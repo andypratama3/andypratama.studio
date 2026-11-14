@@ -1,10 +1,15 @@
 import { getLocale } from "next-intl/server"
+import type { Metadata } from "next"
 import { redirect } from "@/i18n/routing"
 import { getOwnerSession } from "@/lib/auth"
 import { DashboardNav } from "@/components/dashboard/dashboard-nav"
 import { ThemeSwitcher } from "@/components/site/theme-switcher"
 import { SignOutButton } from "@/components/dashboard/sign-out-button"
 import { ShieldCheck, User } from "lucide-react"
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default async function DashboardLayout({
   children,

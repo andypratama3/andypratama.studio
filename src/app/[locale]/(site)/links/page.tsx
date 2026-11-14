@@ -1,10 +1,22 @@
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/brand/container"
 import { PublicPageShell } from "@/components/brand/public-page"
 import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 import { Link } from "@/lib/navigation"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "linksPage" })
+  return pageMetadata({ locale, path: "/links", title: t("title") })
+}
 
 export default async function LinksPage() {
   const t = await getTranslations("linksPage")
@@ -46,7 +58,7 @@ export default async function LinksPage() {
                   </div>
                   <a
                     href={`/go/${item.slug}`}
-                    className="shrink-0 text-xs text-muted-foreground underline-offset-4 hover:text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="inline-flex min-h-7 shrink-0 items-center text-xs text-muted-foreground underline-offset-4 hover:text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     {t("pendingNote")}
                   </a>

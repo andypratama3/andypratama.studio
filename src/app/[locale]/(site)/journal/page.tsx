@@ -1,5 +1,7 @@
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { ArrowRight } from "lucide-react"
 import { Container } from "@/components/brand/container"
 import { EmptyPanel } from "@/components/brand/empty-panel"
@@ -9,6 +11,21 @@ import { Section } from "@/components/brand/section"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "journalPage" })
+  return pageMetadata({
+    locale,
+    path: "/journal",
+    title: t("title"),
+    description: t("subtitle"),
+  })
+}
 
 export default async function JournalPage() {
   const t = await getTranslations("journalPage")

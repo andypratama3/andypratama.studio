@@ -1,5 +1,7 @@
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import { ArrowUpRight } from "lucide-react"
 import { DualBrandStage } from "@/components/brand/dualbrand-stage"
 import { Reveal } from "@/components/brand/reveal"
@@ -11,6 +13,21 @@ import { productCatalog } from "@/content/product-catalog"
 import { getDualBrandView } from "@/lib/public-product"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "productsPage" })
+  return pageMetadata({
+    locale,
+    path: "/products",
+    title: t("title"),
+    description: t("description"),
+  })
+}
 
 export default async function ProductsPage() {
   const t = await getTranslations("productsPage")
