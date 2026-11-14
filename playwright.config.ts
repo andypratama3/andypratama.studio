@@ -13,6 +13,9 @@ export default defineConfig({
   reporter: "list",
   use: {
     baseURL,
+    // Escape hatch for machines without the bundled browser download.
+    // CI installs Playwright browsers, so the default stays unset there.
+    channel: process.env.PLAYWRIGHT_CHANNEL || undefined,
     trace: "on-first-retry",
   },
   webServer: {

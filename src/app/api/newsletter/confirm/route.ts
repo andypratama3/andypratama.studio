@@ -22,10 +22,15 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/newsletter?state=invalid", base))
   }
 
-  const email = await confirmNewsletterSubscription(parsed.data.token)
-  if (!email) {
+  const result = await confirmNewsletterSubscription(parsed.data.token)
+  if (!result) {
     return NextResponse.redirect(new URL("/newsletter?state=invalid", base))
   }
 
-  return NextResponse.redirect(new URL("/newsletter?state=confirmed", base))
+  const target = new URL(
+    result.locale === "id" ? "/id/newsletter" : "/newsletter",
+    base
+  )
+  target.searchParams.set("state", "confirmed")
+  return NextResponse.redirect(target)
 }

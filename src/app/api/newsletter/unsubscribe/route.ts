@@ -15,10 +15,15 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/newsletter?state=invalid", base))
   }
 
-  const email = await unsubscribeNewsletter(parsed.data.token)
-  if (!email) {
+  const result = await unsubscribeNewsletter(parsed.data.token)
+  if (!result) {
     return NextResponse.redirect(new URL("/newsletter?state=invalid", base))
   }
 
-  return NextResponse.redirect(new URL("/newsletter?state=unsubscribed", base))
+  const target = new URL(
+    result.locale === "id" ? "/id/newsletter" : "/newsletter",
+    base
+  )
+  target.searchParams.set("state", "unsubscribed")
+  return NextResponse.redirect(target)
 }

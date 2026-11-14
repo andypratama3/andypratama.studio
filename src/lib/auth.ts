@@ -7,10 +7,22 @@ import { headers } from "next/headers"
 const ownerEmail = (process.env.OWNER_EMAIL ?? "").trim().toLowerCase()
 const authSecret = process.env.BETTER_AUTH_SECRET
 
-if (process.env.NODE_ENV === "production" && (!ownerEmail || !authSecret)) {
-  throw new Error(
-    "BETTER_AUTH_SECRET and OWNER_EMAIL must be set in production."
-  )
+/**
+ * Production credentials are validated when auth is actually used, not on
+ * import: `next build` imports route modules to collect page data and must
+ * not fail on an environment without secrets.
+ */
+export function isAuthConfigured() {
+  if (process.env.NODE_ENV !== "production") return true
+  return Boolean(ownerEmail && authSecret)
+}
+
+function assertAuthConfigured() {
+  if (!isAuthConfigured()) {
+    throw new Error(
+      "BETTER_AUTH_SECRET and OWNER_EMAIL must be set in production."
+    )
+  }
 }
 
 export const auth = betterAuth({
@@ -75,6 +87,8 @@ export type Session = typeof auth.$Infer.Session
  * Returns null if not authenticated or not the owner.
  */
 export async function getOwnerSession() {
+  // Fail closed: without production credentials there is no owner session.
+  if (!isAuthConfigured()) return null
   const reqHeaders = await headers()
   const session = await auth.api.getSession({
     headers: reqHeaders,
@@ -97,6 +111,7 @@ export async function getOwnerSession() {
  * Throws error if caller is not authenticated owner.
  */
 export async function requireOwner() {
+  assertAuthConfigured()
   const session = await getOwnerSession()
   if (!session) {
     throw new Error("Tidak diizinkan: Hanya pemilik yang dapat melakukan tindakan ini.")

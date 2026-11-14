@@ -67,13 +67,17 @@ export async function createNewsletterSubscription(input: {
   return { confirmToken, unsubscribeToken }
 }
 
-/** Confirms a pending subscription. Returns the email, or null when invalid. */
+/** Confirms a pending subscription. Returns email + locale, or null when invalid. */
 export async function confirmNewsletterSubscription(
   token: string
-): Promise<string | null> {
+): Promise<{ email: string; locale: NewsletterLocale } | null> {
   const hash = hashNewsletterToken(token)
   const rows = await db
-    .select({ id: subscribers.id, email: subscribers.email })
+    .select({
+      id: subscribers.id,
+      email: subscribers.email,
+      locale: subscribers.locale,
+    })
     .from(subscribers)
     .where(eq(subscribers.confirmTokenHash, hash))
     .limit(1)
@@ -90,16 +94,20 @@ export async function confirmNewsletterSubscription(
     })
     .where(eq(subscribers.id, row.id))
 
-  return row.email
+  return { email: row.email, locale: row.locale }
 }
 
-/** Unsubscribes by token. Returns the email, or null when invalid. */
+/** Unsubscribes by token. Returns email + locale, or null when invalid. */
 export async function unsubscribeNewsletter(
   token: string
-): Promise<string | null> {
+): Promise<{ email: string; locale: NewsletterLocale } | null> {
   const hash = hashNewsletterToken(token)
   const rows = await db
-    .select({ id: subscribers.id, email: subscribers.email })
+    .select({
+      id: subscribers.id,
+      email: subscribers.email,
+      locale: subscribers.locale,
+    })
     .from(subscribers)
     .where(eq(subscribers.unsubscribeTokenHash, hash))
     .limit(1)
@@ -117,5 +125,5 @@ export async function unsubscribeNewsletter(
     })
     .where(eq(subscribers.id, row.id))
 
-  return row.email
+  return { email: row.email, locale: row.locale }
 }

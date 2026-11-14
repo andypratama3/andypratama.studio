@@ -20,10 +20,25 @@ function signInPath(pathname: string): string {
   return pathname.startsWith("/id") ? "/id/sign-in" : "/sign-in"
 }
 
+/**
+ * Development-only escape hatch so the dashboard can be inspected without a
+ * session. Never active in production.
+ */
+function devBypassEnabled(): boolean {
+  return (
+    process.env.NODE_ENV !== "production" &&
+    process.env.DASHBOARD_DEV_BYPASS === "1"
+  )
+}
+
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
 
-  if (isProtectedPath(pathname) && !hasSessionCookie(request)) {
+  if (
+    isProtectedPath(pathname) &&
+    !devBypassEnabled() &&
+    !hasSessionCookie(request)
+  ) {
     const url = request.nextUrl.clone()
     const target = signInPath(pathname)
     url.pathname = target

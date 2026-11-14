@@ -80,6 +80,17 @@ test.describe("Landing surface regressions", () => {
     await expect(page).toHaveURL(/\/work$/)
   })
 
+  test("diagnostic routes stay out of the index", async ({ page }) => {
+    for (const route of ["/dev/components", "/dev/wiring"]) {
+      await page.goto(route)
+      const robots = await page
+        .locator('meta[name="robots"]')
+        .getAttribute("content")
+      expect(robots).toContain("noindex")
+      expect(robots).toContain("nofollow")
+    }
+  })
+
   test("dashboard sends unauthenticated users to the real sign-in route", async ({
     request,
   }) => {

@@ -160,7 +160,7 @@
   },
   "contactForm": {
     "errorRateLimit": "Terlalu banyak percobaan. Coba lagi sebentar.",
-    "errorServer": "Pesan gagal terkirim. Periksa isian formulir.",
+    "errorServer": "Pesan gagal terkirim. Kirim email ke contact@andypratama.studio sebagai gantinya.",
     "errorNetwork": "Kesalahan jaringan. Coba lagi.",
     "successSent": "Pesan diterima. Saya akan membalas lewat email.",
     "fieldRequired": "Kolom ini wajib diisi.",

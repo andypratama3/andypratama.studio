@@ -1,9 +1,14 @@
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
 import { SkipLink } from "@/components/brand/skip-link"
 import { WiringProbe } from "@/components/providers/wiring-probe"
 import { Link } from "@/lib/navigation"
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default function DevLayout({
   children,

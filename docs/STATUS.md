@@ -1,6 +1,7 @@
 # STATUS — sumber tunggal status proyek
 
-Update: **13 November 2026**. Cabang `main`, commit `2749615` + perubahan J0.
+Update: **14 November 2026**. Cabang `rebuild/studio` (merge `origin/main` `e28bdd2` +
+audit J7). Rincian audit: `docs/AUDIT-2026-11-12.md`.
 Dokumen lain (`PLUGIN-AUDIT`, `COMPONENT-QA`, `LAYOUT-AUDIT`, `REFERENCES`, `INTEGRATIONS`, `MOTION`)
 menunjuk ke halaman ini untuk status; isi mereka adalah arsip bertanggal.
 
@@ -8,21 +9,21 @@ menunjuk ke halaman ini untuk status; isi mereka adalah arsip bertanggal.
 
 | Area | Status | Bukti | Tanggal |
 |---|---|---|---|
-| Typecheck & lint | ok | `pnpm typecheck` 0 error, `pnpm lint` 0 error | 13 Nov 2026 |
-| Unit test | ok | `pnpm test` → 21 file / 62 tes lulus | 13 Nov 2026 |
-| Build | ok | `pnpm build` sukses; `.next/standalone/server.js` ada | 13 Nov 2026 |
-| E2E + axe | ok | `PORT=3001 … pnpm test:e2e` → 63 passed | 13 Nov 2026 |
-| Wiring | sebagian | `ok=13 partial=1 missing=0 skipped=2`; partial `unicornstudio-react` (A-08), skipped `lenis`/`gsap` | 13 Nov 2026 |
-| Database | ok | MySQL lokal 21 tabel, migrasi `0000`–`0002`, seed idempoten | 13 Nov 2026 |
-| Auth owner | ok | `/dashboard` tanpa sesi → 307 `/sign-in`; login browser + `scripts/set-owner-password.mjs` teruji | 13 Nov 2026 |
-| Tulis publik → DB | sebagian | kontak → `leads` (dengan `email`), newsletter double opt-in, `/go` → `link_clicks`; email masih transport `file` (D-01) | 13 Nov 2026 |
+| Typecheck & lint | ok | `pnpm typecheck` 0 error, `pnpm lint` 0 error | 14 Nov 2026 |
+| Unit test | ok | `pnpm test` → 23 file / 68 tes lulus | 14 Nov 2026 |
+| Build | ok | `pnpm build` sukses tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`; `.next/standalone/server.js` ada | 14 Nov 2026 |
+| E2E + axe | ok | 65 passed (wiring + motion + axe) | 14 Nov 2026 |
+| Wiring | sebagian | `ok=13 partial=1 missing=0 skipped=2`; partial `unicornstudio-react` (A-08), skipped `lenis`/`gsap` | 14 Nov 2026 |
+| Database | ok | MySQL 8.4 (docker) 21 tabel, migrasi `0000`–`0002`, seed idempoten, `pnpm db:up` → `migrate` → `seed` sukses | 14 Nov 2026 |
+| Auth owner | ok | `/dashboard` tanpa sesi → 307 `/sign-in`; build & runtime tanpa secret → fail-closed (503/redirect), bukan crash | 14 Nov 2026 |
+| Tulis publik → DB | ok | kontak → `leads` terverifikasi (baris tersimpan), newsletter double opt-in (pending → confirmed → unsubscribed), `/go` → 302 + `link_clicks`; email masih transport `file` (D-01) | 14 Nov 2026 |
 | Baca publik dari DB | sebagian | availability (`site_settings`) + gate produk; sisanya konten statis (by design) | 12 Nov 2026 |
-| Dashboard | sebagian | 11 halaman, server action ber-`requireOwner`; validasi link/harga/lead (Zod), banner DB down, export CSV aman formula | 13 Nov 2026 |
-| API agen | ok | per-key SHA-256, scope, gate `butuh_persetujuan` | 12 Nov 2026 |
+| Dashboard | ok | 11 halaman 200 dengan DB aktif dan tanpa DB (banner DB down), server action ber-`requireOwner`; dev bypass `DASHBOARD_DEV_BYPASS=1` kini dihormati proxy | 14 Nov 2026 |
+| API agen | ok | per-key SHA-256, scope, gate `butuh_persetujuan`; tanpa key → 401 | 14 Nov 2026 |
 | Operasional | sebagian | Dockerfile + compose ada (image belum di-build), backup + restore teruji, CI ada | 12 Nov 2026 |
-| SEO / metadata | belum diaudit | J6 belum dijalankan; sitemap/robots dasar ada | 13 Nov 2026 |
-| Aksesibilitas | sebagian | 63 tes e2e memuat axe public routes; dashboard axe & matriks viewport ada di J2/J5 | 13 Nov 2026 |
-| Dokumen | ok | 13 dokumen tersisa; 5 audit motion + 2 rencana superpowers dihapus, rujukan nol | 13 Nov 2026 |
+| SEO / metadata | ok | 16 halaman publik + `/newsletter`: canonical, hreflang en/id/x-default, OG image 1280×720, Twitter card, robots; `/dev/*` dan auth/dashboard `noindex` | 14 Nov 2026 |
+| Aksesibilitas | ok | axe WCAG 2.x AA: 0 pelanggaran di 22 route × light/dark; sweep 252 pengukuran (7 viewport) tanpa overflow ≥320, tanpa duplicate id, heading berurutan, semua input berlabel | 14 Nov 2026 |
+| Dokumen | ok | 14 dokumen; `docs/AUDIT-2026-11-12.md` mencatat temuan + bukti audit terbaru | 14 Nov 2026 |
 | Font | ok | Inter di-vendor `src/fonts/inter-latin.woff2` (48.432 B, OFL); `next/font/local`; 0 permintaan `fonts.gstatic.com` | 13 Nov 2026 |
 
 ## Menunggu Owner

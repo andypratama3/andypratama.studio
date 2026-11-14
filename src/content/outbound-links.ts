@@ -2,6 +2,9 @@
  * Outbound destinations for /go/[slug].
  * Only URLs already cited in the repo — do not invent profiles.
  * Owner: add github / linkedin / youtube / twitter when verified.
+ *
+ * The social-bio links mirror `src/db/seed.ts` so `/go/*` keeps working when
+ * the database is unavailable; a seeded row always wins over the static copy.
  */
 export type OutboundLink = {
   href: string
@@ -21,6 +24,31 @@ export const OUTBOUND_LINKS = {
     href: "https://dualbrand.andypratama.studio",
     utmSource: "website",
     verified: false,
+  },
+  "threads-start": {
+    href: "https://andypratama.studio/start?utm_source=threads&utm_medium=organic&utm_campaign=bio",
+    utmSource: "threads",
+    verified: true,
+  },
+  "tiktok-start": {
+    href: "https://andypratama.studio/start?utm_source=tiktok&utm_medium=organic&utm_campaign=bio",
+    utmSource: "tiktok",
+    verified: true,
+  },
+  "instagram-start": {
+    href: "https://andypratama.studio/start?utm_source=instagram&utm_medium=organic&utm_campaign=bio",
+    utmSource: "instagram",
+    verified: true,
+  },
+  "linkedin-start": {
+    href: "https://andypratama.studio/start?utm_source=linkedin&utm_medium=organic&utm_campaign=featured",
+    utmSource: "linkedin",
+    verified: true,
+  },
+  "youtube-start": {
+    href: "https://andypratama.studio/start?utm_source=youtube&utm_medium=organic&utm_campaign=description",
+    utmSource: "youtube",
+    verified: true,
   },
 } as const satisfies Record<string, OutboundLink>
 

@@ -32,7 +32,7 @@ export default async function NewsletterStatusPage({
           <Reveal delayMs={80}>
             <Link
               href="/"
-              className="text-sm font-medium text-brand underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              className="inline-flex min-h-7 items-center text-sm font-medium text-brand underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             >
               {t("backHome")}
             </Link>

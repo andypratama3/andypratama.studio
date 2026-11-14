@@ -110,7 +110,13 @@ export function ContactForm({ labels }: { labels: Labels }) {
           return
         }
         if (!res.ok) {
-          setServerError(t("errorServer"))
+          // The API explains what to do next (for example when mail transport
+          // is unavailable). Prefer that message over a generic error.
+          const detail = await res
+            .json()
+            .then((body: { error?: string }) => body?.error)
+            .catch(() => undefined)
+          setServerError(detail?.trim() ? detail : t("errorServer"))
           return
         }
         track("contact_submit", { topic: values.topic })

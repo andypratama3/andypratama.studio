@@ -160,7 +160,7 @@
   },
   "contactForm": {
     "errorRateLimit": "Too many requests. Try again shortly.",
-    "errorServer": "Could not send. Check the fields.",
+    "errorServer": "Could not send. Email contact@andypratama.studio instead.",
     "errorNetwork": "Network error. Try again.",
     "successSent": "Message received. I will reply by email.",
     "fieldRequired": "This field is required.",
