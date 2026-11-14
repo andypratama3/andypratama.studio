@@ -6,6 +6,21 @@ type Bucket = { count: number; resetAt: number }
 
 const buckets = new Map<string, Bucket>()
 
+/** Keeps memory bounded on a long-running single VPS. */
+const MAX_BUCKETS = 10_000
+
+function makeRoom(now: number) {
+  if (buckets.size < MAX_BUCKETS) return
+  for (const [key, bucket] of buckets) {
+    if (bucket.resetAt <= now) buckets.delete(key)
+  }
+  while (buckets.size >= MAX_BUCKETS) {
+    const oldest = buckets.keys().next()
+    if (oldest.done) break
+    buckets.delete(oldest.value)
+  }
+}
+
 export type RateLimitResult = {
   ok: boolean
   remaining: number
@@ -21,6 +36,7 @@ export function rateLimit(
   const current = buckets.get(key)
 
   if (!current || current.resetAt <= now) {
+    makeRoom(now)
     buckets.set(key, { count: 1, resetAt: now + windowMs })
     return { ok: true, remaining: limit - 1, retryAfterSec: 0 }
   }

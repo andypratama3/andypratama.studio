@@ -71,6 +71,16 @@ export default async function LeadsPage() {
           </div>
 
           <div>
+            <label className="text-xs font-medium text-muted-foreground">Email (opsional)</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="nama@perusahaan.com"
+              className="mt-1 w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-brand"
+            />
+          </div>
+
+          <div>
             <label className="text-xs font-medium text-muted-foreground">Handle / Username</label>
             <input
               name="handle"
@@ -172,6 +182,9 @@ export default async function LeadsPage() {
                       >
                         <div>
                           <div className="font-medium text-foreground">{lead.name}</div>
+                          {lead.email && (
+                            <div className="text-[11px] text-muted-foreground">{lead.email}</div>
+                          )}
                           {lead.handle && (
                             <div className="text-[11px] text-muted-foreground">
                               {lead.handle} ({lead.platform})

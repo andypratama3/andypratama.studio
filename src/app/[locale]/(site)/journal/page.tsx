@@ -60,7 +60,7 @@ export default async function JournalPage() {
               action={
                 <>
                   <Link
-                    href="/start?topic=newsletter"
+                    href="/start?topic=other"
                     className={cn(
                       buttonVariants({ size: "default" }),
                       "h-11 min-h-11 rounded-full bg-primary px-4 font-medium text-primary-foreground cta-lift"

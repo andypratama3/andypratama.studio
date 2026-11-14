@@ -20,7 +20,7 @@ const routes = [
   "/terms",
   "/license",
 ]
-const outDir = process.env.BASELINE_DIR ?? "docs/baseline/before"
+const outDir = process.env.BASELINE_DIR ?? "test-results/baseline"
 
 for (const route of routes) {
   test(`teks ${route}`, async ({ page }) => {

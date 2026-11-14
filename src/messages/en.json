@@ -80,6 +80,13 @@
     "title": "FAQ",
     "description": "Straight answers about projects, hiring, DualBrand, and school pilots."
   },
+  "errorPage": {
+    "kicker": "500",
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Try again, or head back home.",
+    "retryCta": "Try again",
+    "homeCta": "Back home"
+  },
   "notFound": {
     "kicker": "404",
     "title": "This page is not here",

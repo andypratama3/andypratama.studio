@@ -32,12 +32,12 @@ export function presentDualBrand(input: {
   demoVerified: boolean
   row: DualBrandRow | null
 }): DualBrandView {
-  const blocked = input.row?.status === "draft" || input.row?.status === "arsip"
+  const live = input.row?.status === "live"
   const price = input.contentPriceUsd
   return {
     priceUsd: price == null ? null : price.toFixed(2),
-    showBuy: input.buyVerified && !blocked,
-    showDemo: input.demoVerified && !blocked,
+    showBuy: input.buyVerified && live,
+    showDemo: input.demoVerified && live,
   }
 }
 

@@ -170,6 +170,7 @@ export const leads = mysqlTable(
   {
     id: id(),
     name: varchar("name", { length: 120 }).notNull(),
+    email: varchar("email", { length: 254 }),
     handle: varchar("handle", { length: 120 }),
     platform: mysqlEnum("platform", [
       "linkedin",

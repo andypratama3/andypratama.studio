@@ -1,17 +1,21 @@
 import { test, expect } from "@playwright/test"
 
 test.describe("/go outbound", () => {
-  test("dualbrand returns 302 to Gumroad", async ({ request }) => {
-    const res = await request.get("/go/dualbrand", { maxRedirects: 0 })
+  test("seeded slug returns 302 with its UTM source", async ({ request }) => {
+    const res = await request.get("/go/threads-start", { maxRedirects: 0 })
     expect(res.status()).toBe(302)
     const location = res.headers().location ?? ""
-    expect(location).toMatch(/gumroad\.com\/l\/dualbrand/)
+    expect(location).toMatch(/^https:\/\//)
+    expect(location).toContain("utm_source=threads")
   })
 
-  test("unknown slug redirects home", async ({ request }) => {
+  test("unknown slug returns 404", async ({ request }) => {
     const res = await request.get("/go/not-a-real-profile", { maxRedirects: 0 })
-    expect(res.status()).toBe(302)
-    const location = res.headers().location ?? ""
-    expect(location).toMatch(/\/$|\/en\/?$/)
+    expect(res.status()).toBe(404)
+  })
+
+  test("unverified static destination stays unreachable", async ({ request }) => {
+    const res = await request.get("/go/dualbrand", { maxRedirects: 0 })
+    expect(res.status()).toBe(404)
   })
 })

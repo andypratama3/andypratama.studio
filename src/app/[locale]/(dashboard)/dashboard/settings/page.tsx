@@ -89,7 +89,7 @@ export default async function SettingsDashboardPage() {
             Status Ketersediaan Publik (Availability Badge)
           </h2>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Ditampilkan di badge ketersediaan FloatingNav & Footer publik.
+            Ditampilkan di halaman About dan Media Kit publik.
           </p>
 
           <form
@@ -148,10 +148,10 @@ export default async function SettingsDashboardPage() {
         {/* Form Estimasi Balas Pesan */}
         <div className="rounded-xl border border-border bg-card p-5">
           <h2 className="text-sm font-semibold text-foreground">
-            Estimasi Waktu Balas Pesan (/start)
+            Estimasi Waktu Balas Pesan (FAQ)
           </h2>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Teks yang muncul di halaman kontak kanonik saat prospek mengisi formulir.
+            Jawaban FAQ yang tampil hanya setelah teks ini diisi.
           </p>
 
           <form

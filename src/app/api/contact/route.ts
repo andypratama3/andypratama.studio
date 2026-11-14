@@ -73,21 +73,38 @@ export async function POST(request: Request) {
   try {
     await db.insert(leads).values({
       name: parsed.data.name,
+      email: parsed.data.email,
       platform: "email",
       segment: contactTopicToSegment(parsed.data.topic),
       stage: "baru",
       notes: buildLeadNotes(parsed.data.topic, parsed.data.message),
     })
-  } catch (error) {
+  } catch {
     stored = false
-    console.error("[contact] failed to store lead:", error)
+    console.error("[contact] failed to store lead")
   }
 
-  await sendMail({
-    to: process.env.LEAD_NOTIFY_TO ?? "owner@localhost",
-    subject: `${stored ? "[Lead]" : "[Lead · DB error]"} ${parsed.data.topic} — ${parsed.data.name}`,
-    text: `${parsed.data.name} <${parsed.data.email}>\nTopic: ${parsed.data.topic}\n\n${parsed.data.message}`,
-  })
+  try {
+    await sendMail({
+      to: process.env.LEAD_NOTIFY_TO ?? "owner@localhost",
+      subject: `${stored ? "[Lead]" : "[Lead · DB error]"} ${parsed.data.topic} — ${parsed.data.name}`,
+      text: `${parsed.data.name} <${parsed.data.email}>\nTopic: ${parsed.data.topic}\n\n${parsed.data.message}`,
+    })
+  } catch {
+    // The lead is already stored — a notification failure must not make the
+    // visitor resubmit and create duplicates.
+    console.error("[contact] failed to send lead notification")
+  }
+
+  if (!stored) {
+    return NextResponse.json(
+      {
+        error:
+          "Pesan belum tersimpan. Silakan coba lagi atau kirim email langsung ke contact@andypratama.studio.",
+      },
+      { status: 500 }
+    )
+  }
 
   return NextResponse.json({ ok: true })
 }

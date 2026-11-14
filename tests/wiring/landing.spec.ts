@@ -52,4 +52,12 @@ test.describe("Landing surface regressions", () => {
     expect(location).toMatch(/\/sign-in$/)
     expect(location).not.toContain("/auth/")
   })
+
+  test("Inter is self-hosted, not fetched from Google Fonts", async ({ request }) => {
+    const response = await request.get("/en")
+    expect(response.status()).toBe(200)
+    const html = await response.text()
+    expect(html).toMatch(/\/_next\/static\/media\/inter[^"]*\.woff2/)
+    expect(html).not.toContain("fonts.gstatic.com")
+  })
 })

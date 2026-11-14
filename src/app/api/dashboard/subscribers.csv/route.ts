@@ -4,13 +4,9 @@ import { desc } from "drizzle-orm"
 import { db } from "@/db"
 import { subscribers } from "@/db/schema"
 import { getOwnerSession } from "@/lib/auth"
+import { csvCell } from "@/lib/csv"
 
 export const dynamic = "force-dynamic"
-
-function csvCell(value: string | null): string {
-  if (!value) return ""
-  return /[",\n\r]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value
-}
 
 function iso(value: Date | null): string {
   return value ? value.toISOString() : ""

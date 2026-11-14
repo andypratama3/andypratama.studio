@@ -36,7 +36,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           500
         </p>
         <h1 style={{ fontSize: "2rem", fontWeight: 700, margin: 0 }}>Something went wrong</h1>
-        <p style={{ color: "#666", margin: 0 }}>
+        <p style={{ color: "inherit", opacity: 0.7, margin: 0 }}>
           An unexpected error occurred. Try again or come back later.
         </p>
         <button

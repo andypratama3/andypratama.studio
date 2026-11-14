@@ -8,7 +8,7 @@ type Metrics = {
   observerErrors: string[]
 }
 
-const outDir = process.env.BASELINE_DIR ?? "docs/baseline/before"
+const outDir = process.env.BASELINE_DIR ?? "test-results/baseline"
 
 for (const path of ["/", "/start", "/products/dualbrand"]) {
   test(`metrik ${path}`, async ({ page }) => {

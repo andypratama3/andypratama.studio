@@ -74,7 +74,7 @@ export function FloatingNav() {
       observer.disconnect()
       window.removeEventListener("resize", apply)
     }
-  }, [])
+  }, [pathname])
 
   const isDark = surface === "dark"
 

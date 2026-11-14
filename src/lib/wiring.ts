@@ -70,7 +70,7 @@ export function getWiringInventory(): WiringRow[] {
       id: "unicorn",
       label: "unicornstudio-react",
       status: "partial",
-      detail: "HeroScene slot + static fallback; SDK not loaded",
+      detail: "Hero slot + static fallback; SDK not loaded",
     },
     {
       id: "view-transition",

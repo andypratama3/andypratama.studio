@@ -1,5 +1,10 @@
 # PLUGIN-AUDIT — Status nyata vs Lampiran C.1 / D.5
 
+> **Update 13 November 2026 (J0-02).** Sumber status tunggal: `docs/STATUS.md`.
+> Koreksi: motion memakai `domAnimation` (bukan `domMax`); drizzle + better-auth **sudah terpasang**
+> (20 tabel aplikasi, owner-only); `react-hook-form` dipakai di contact form; `pnpm test:e2e` → 63 passed.
+> Isi di bawah adalah arsip 9 Nov 2026.
+
 Tanggal: 9 November 2026 (eksekusi penuh Owner).
 
 Sumber: `package.json`, `components.json`, `src/lib/wiring.ts`, `/dev/wiring`.
@@ -9,9 +14,9 @@ Sumber: `package.json`, `components.json`, `src/lib/wiring.ts`, `/dev/wiring`.
 | Plugin | Status | Bukti |
 |---|---|---|
 | Next 16 + React 19 + next-intl + next-themes | ok | locale layout |
-| motion (LazyMotion) | ok | `MotionProvider` + `domMax`; reveal/scroll Motion; marquee hero tetap CSS |
+| motion (LazyMotion) | ok | `MotionProvider` + `domAnimation` (13 Nov 2026); reveal/scroll Motion; marquee hero tetap CSS |
 | sonner | ok | AppToaster |
-| shadcn G1 (accordion, tabs, table, tooltip, scroll-area, skeleton, toggle) | ok | `src/components/ui/*` |
+| shadcn G1 (accordion, tabs, table, tooltip, skeleton, toggle) | ok | `src/components/ui/*` |
 | react-hook-form + zod server | partial | RHF terpasang; form publik pakai fetch + zod server |
 | nodemailer file transport | ok | `src/lib/mail.ts` → `tmp/outbox.jsonl` |
 | rate-limit | ok | contact + newsletter |
@@ -20,9 +25,9 @@ Sumber: `package.json`, `components.json`, `src/lib/wiring.ts`, `/dev/wiring`.
 | Playwright + axe | ok | `tests/wiring/*`, `pnpm test:e2e` |
 | lenis | skipped | ditunda Owner A.7 |
 | gsap | skipped | ditolak ukuran |
-| unicornstudio-react | partial | HeroScene slot; SDK menunggu A-08 |
-| drizzle-orm | missing | leads → `tmp/leads.jsonl` (Owner gate DB) |
-| better-auth | missing | dashboard belum (Owner gate) |
+| unicornstudio-react | partial | slot hero + fallback statis; SDK menunggu A-08 |
+| drizzle-orm | ok (13 Nov 2026) | 20 tabel aplikasi, migrasi `0000`–`0002`; arsip lama mencatat `missing` |
+| better-auth | ok (13 Nov 2026) | owner-only + proxy/layout guard; arsip lama mencatat `missing` |
 
 ## Perintah verifikasi
 

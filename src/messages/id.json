@@ -80,6 +80,13 @@
     "title": "FAQ",
     "description": "Jawaban langsung tentang proyek, rekrutmen, DualBrand, dan pilot sekolah."
   },
+  "errorPage": {
+    "kicker": "500",
+    "title": "Terjadi kesalahan",
+    "description": "Ada kendala tak terduga. Coba lagi, atau kembali ke beranda.",
+    "retryCta": "Coba lagi",
+    "homeCta": "Kembali ke beranda"
+  },
   "notFound": {
     "kicker": "404",
     "title": "Halaman ini tidak ada",

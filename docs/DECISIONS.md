@@ -52,11 +52,13 @@ Dokumen ini mencatat keputusan arsitektural dan teknis yang diambil selama pemba
 - **Keputusan**: Pass layout v2 menutup crash `SakolentraDiagram` (nodes wajib aman), memperkuat StickySteps (min-height sticky ≥640), truncate wordmark FloatingNav, `navTheme` di `PublicPageShell`. **Tidak** mengubah `facts.ts`. Copy messages tidak disentuh di pass layout ini. Lampiran C (plugin gaps G1–G14), Playwright E2E, dan LHCI **ditunda** — Playwright/`@lhci/cli` belum terpasang di repo.
 - **Alasan**: Prompt layout §5–§7; verifikasi yang ada: typecheck, lint, vitest, build, grep §7/B.6.
 - **Tanggal**: 9 November 2026.
+- **Status 13 Nov 2026 — digantikan**: Playwright + axe terpasang dan `pnpm test:e2e` hijau (61 tes). LHCI masih belum terpasang (lihat J4-08).
 
 ## 11. Lampiran D L0–L1 (9 Nov 2026)
 - **Keputusan**: Mulai D.9 dari L0 (audit jujur) lalu L1 fondasi: `src/lib/motion.ts`, `events.ts`, `wiring.ts`, SkipLink, `/dev/wiring` + `/dev/components` (dev-only via `notFound` di production), `pnpm wiring:check` (saat ini gagal dengan sengaja sampai Playwright hijau). **Belum** memasang `motion` / `lenis` / `gsap` — ukuran dilaporkan di PLUGIN-AUDIT; GSAP ditolak sementara (A.7); Lenis ditunda; `motion` menunggu persetujuan Owner bila anggaran JS Home ketat.
 - **Alasan**: Konflik D vs C: D menang; bukti runtime wajib, bukan klaim terpasang.
 - **Tanggal**: 9 November 2026.
+- **Status 13 Nov 2026 — digantikan**: `wiring:check` tidak lagi gagal (missing=0) dan `motion` sudah terpasang (lihat #20–#22).
 
 ## 12. Owner Defaults O-01..O-11 — Batch 1 (9 Nov 2026)
 
@@ -72,7 +74,8 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 | O-06  | Note internal | `fact.note` tidak pernah ditampilkan ke publik; gunakan `publicNote` bila perlu. |
 | O-07  | CTA DualBrand | Demo dan beli disembunyikan sampai `OUTBOUND_LINKS.*.verified = true`. |
 | O-08  | Harga produk | Tidak ada harga hardcode di komponen atau pesan; gunakan `products.ts`. |
-| O-09  | Video intro | Bagian IntroVideo dihapus dari Home sampai aset video tersedia. |
+| O-09  | Video intro | Bagian IntroVideo (video) dihapus dari Home; hanya poster statis yang tersisa sampai aset video tersedia. |
+| O-09b | Redirect lama | URL situs lama di-301 sesuai `docs/REDIRECTS.md` (dipisah dari O-09 agar tidak bentrok). |
 | O-10  | Periode proyek | Kolom periode dihilangkan dari HairlineTable di Home (data umum). |
 | O-11  | FAQ pendingOwner | Item `ai` dan `start` disembunyikan dari publik sampai Owner mengonfirmasi. |
 
@@ -84,21 +87,6 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 - **Rencana Phase 3**: Tambah kembali `/dashboard` ke `protectedPaths` setelah `better-auth` tersambung dan `/auth/sign-in` ada.
 - **Tanggal**: 9 November 2026.
 
-## 15. ThemeHotkey removed (B-19, Batch 3) — 9 Nov 2026
-- **Keputusan**: `ThemeHotkey` (single-key `d`) dihapus dari `src/components/theme-provider.tsx`. Toggle tema tetap tersedia lewat `ThemeSwitcher` di FloatingNav.
-- **Alasan**: Single-key shortcut tanpa modifier tidak memenuhi standar aksesibilitas keyboard (mengganggu pengguna screen reader dan pengguna keyboard). Preferensi spec B-19: hapus bila tidak dibutuhkan.
-- **Tanggal**: 9 November 2026.
-
-## 16. `/start` sebagai form kanonik, kontak dialihkan (O-05, B-24, Batch 3) — 9 Nov 2026
-- **Keputusan**: `/start` adalah halaman kontak kanonik satu-satunya. CTA "Tell me what you need" / "Ceritakan kebutuhan Anda" selalu menuju `/start`. Halaman `/contact` tetap ada tetapi bukan CTA utama.
-- **Alasan**: O-05 menetapkan `/start?topic=…` sebagai entry point untuk semua permintaan; menghindari dua form yang bersaing.
-- **Tanggal**: 9 November 2026.
-
-## 17. Nav & footer link ke halaman nyata, bukan anchor (B-23, Batch 3) — 9 Nov 2026
-- **Keputusan**: FloatingNav dan Footer menggunakan `/work`, `/products`, `/services`, `/journal`, `/about` — bukan `/#work` dll. Home page mempertahankan anchor in-page secara terpisah via `id` di `<Section>`.
-- **Alasan**: Hash link ke halaman lain tidak berfungsi saat pengguna sudah berada di halaman selain Home. Link nyata memberikan navigasi yang dapat diandalkan dari halaman mana pun.
-- **Tanggal**: 9 November 2026.
-
 ## 14. In-memory Rate Limit & IP Spoofing (B-32, Batch 2) — 9 Nov 2026
 - **Keputusan**: `src/lib/rate-limit.ts` menggunakan `Map` in-process. Batasan diketahui:
   1. **IP spoofing**: header `x-forwarded-for` bisa dipalsukan oleh klien tanpa trusted proxy. Mudah dilewati.
@@ -108,8 +96,19 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 - **Rencana Phase 3**: Ganti dengan Redis-backed rate limit (misal `@upstash/ratelimit`) di balik trusted reverse proxy yang men-set `x-forwarded-for` dengan benar.
 - **Tanggal**: 9 November 2026.
 
-## 19. Redirect lama + CSP baseline (Batch 4, O-09, B-26, B-34) — 9 Nov 2026
-- **Keputusan**: 301 sesuai default O-09. CSP memakai `script-src 'unsafe-inline' 'unsafe-eval'` dan `style-src 'unsafe-inline'` supaya Next + next-themes tetap jalan. Host Unicorn/analitik **belum** masuk `connect-src` sampai A-08 / D-02.
+## 15. ThemeHotkey removed (B-19, Batch 3) — 9 Nov 2026
+- **Keputusan**: `ThemeHotkey` (single-key `d`) dihapus dari `src/components/theme-provider.tsx`. Toggle tema tetap tersedia lewat `ThemeSwitcher` di FloatingNav.
+- **Alasan**: Single-key shortcut tanpa modifier tidak memenuhi standar aksesibilitas keyboard (mengganggu pengguna screen reader dan pengguna keyboard). Preferensi spec B-19: hapus bila tidak dibutuhkan.
+- **Tanggal**: 9 November 2026.
+
+## 16. `/start` sebagai form kanonik, kontak dialihkan (B-24, Batch 3) — 9 Nov 2026
+- **Keputusan**: `/start` adalah halaman kontak kanonik satu-satunya. CTA "Tell me what you need" / "Ceritakan kebutuhan Anda" selalu menuju `/start`. Halaman `/contact` tetap ada tetapi bukan CTA utama.
+- **Alasan**: B-24 menetapkan `/start?topic=…` sebagai entry point untuk semua permintaan; menghindari dua form yang bersaing. (O-05 hanya mengatur sumber fakta, bukan rute form.)
+- **Tanggal**: 9 November 2026.
+
+## 17. Nav & footer link ke halaman nyata, bukan anchor (B-23, Batch 3) — 9 Nov 2026
+- **Keputusan**: FloatingNav dan Footer menggunakan `/work`, `/products`, `/services`, `/journal`, `/about` — bukan `/#work` dll. Home page mempertahankan anchor in-page secara terpisah via `id` di `<Section>`.
+- **Alasan**: Hash link ke halaman lain tidak berfungsi saat pengguna sudah berada di halaman selain Home. Link nyata memberikan navigasi yang dapat diandalkan dari halaman mana pun.
 - **Tanggal**: 9 November 2026.
 
 ## 18. Pengecualian Aksesibilitas Honeypot (Batch 3B) — 9 Nov 2026
@@ -117,13 +116,35 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 - **Alasan**: Honeypot harus tersembunyi secara visual dari pengguna manusia, tidak dapat difokuskan melalui navigasi keyboard (`tabIndex={-1}`), dan diabaikan oleh teknologi asistif / screen reader (`aria-hidden="true"`), namun tetap terbaca oleh bot spam otomatis yang memindai formulir.
 - **Tanggal**: 9 November 2026.
 
+## 19. Redirect lama + CSP baseline (Batch 4, O-09b, B-26, B-34) — 9 Nov 2026
+- **Keputusan**: 301 sesuai default O-09b. CSP memakai `script-src 'unsafe-inline' 'unsafe-eval'` dan `style-src 'unsafe-inline'` supaya Next + next-themes tetap jalan. Host Unicorn/analitik **belum** masuk `connect-src` sampai A-08 / D-02.
+- **Tanggal**: 9 November 2026.
+
 ## 20. motion untuk interaksi, CSS untuk gerak terus-menerus — 9 Nov 2026
 - **Keputusan**: Pasang `motion@14.11.1` lewat `LazyMotion` + `domAnimation` saja. Dipakai untuk pegas pointer hero, pil nav aktif, dan langkah alur yang bisa dipilih. Marquee, reveal, dan sticky steps tetap CSS. Tanpa Lenis/GSAP.
 - **Alasan**: Owner minta landing interaktif dan Framer benar-benar terpasang. Paket penuh npm unpacked 999743 byte; tree `motion-dom` 6.2M. Subset DOM menjaga anggaran JS. Gerak tak terbatas lebih murah di compositor CSS, dan tetap statis saat `prefers-reduced-motion`.
 - **Tanggal**: 9 November 2026.
+- **Status 13 Nov 2026 — final**: kode memakai `domAnimation` (lihat #22). #21 di bawah **digantikan**.
 
 ## 21. Motion untuk narasi scroll — 9 Nov 2026
 - **Keputusan**: `LazyMotion` memakai `domMax` dari paket `motion` yang sama, tanpa dependency baru. Reveal section, mask media, panel, progress nav, dan wordmark penghubung memakai `motion/react`. Koreografi hero dan loop wordmark tetap CSS supaya first paint tidak transparan. Tanpa Lenis/GSAP.
 - **Alasan**: Owner minta landing terasa hidup dari hero sampai footer. Konten tetap terbaca tanpa JavaScript dan saat `prefers-reduced-motion`.
 - **Tanggal**: 9 November 2026.
+- **Status 13 Nov 2026 — digantikan oleh #22**: pengukuran ulang menunjukkan `domAnimation` cukup setelah indikator nav tidak lagi memakai `layoutId`. `src/components/providers/motion-provider.tsx` memakai `domAnimation`.
 
+## 22. Motion final: `domAnimation` (J0-02) — 13 Nov 2026
+- **Keputusan**: `MotionProvider` memakai `LazyMotion features={domAnimation} strict`. `domMax` tidak masuk bundel global. Ini menggantikan #21 dan menegaskan #20.
+- **Bukti**: `src/components/providers/motion-provider.tsx:3` mengimpor `domAnimation`; tidak ada `domMax` di `src`.
+- **Tanggal**: 13 November 2026.
+
+## 23. `/go` fail-closed untuk tujuan statis — 13 Nov 2026
+- **Keputusan**: `/go/[slug]` hanya mengalihkan bila slug ada di tabel `links` (aktif) atau `OUTBOUND_LINKS` dengan `verified: true`. Slug tak dikenal dan tujuan statis yang belum diverifikasi → `notFound()` 404, bukan redirect ke beranda. Tujuan wajib `https` (http localhost hanya di mode dev).
+- **Alasan**: Menyamakan gate CTA publik (`presentDualBrand`, halaman lisensi, Home) dengan route handler; slug yang ditebak tidak boleh membuka checkout/demo yang belum disetujui Owner.
+- **Bukti**: `tests/wiring/go.spec.ts` (302 untuk slug DB, 404 slug asing, 404 `dualbrand` belum verified); smoke `curl /go/dualbrand` → 404.
+- **Tanggal**: 13 November 2026.
+
+## 24. Inter di-vendor, bukan `next/font/google` — 13 Nov 2026
+- **Keputusan**: `src/app/[locale]/layout.tsx` memakai `next/font/local` dengan `src/fonts/inter-latin.woff2` (48.432 byte, variable 100–900, subset latin). Lisensi SIL OFL 1.1 disimpan di `src/fonts/LICENSE-Inter.txt`.
+- **Alasan**: Next 16 + Turbopack gagal me-resolve `@vercel/turbopack-next/internal/font/google/font` ketika pengambilan `fonts.gstatic.com` gagal (proxy/TLS, URL gstatic yang dirotasi). Gejalanya error overlay di setiap muat halaman dev dan build yang bisa gagal acak. Self-host menghapus ketergantungan jaringan saat dev/build dan menyelaraskan `font-src 'self'`.
+- **Bukti**: log `pnpm dev` baru → 0 baris `internal/font/google`/`fonts.gstatic.com`; HTML memuat `/_next/static/media/inter_latin-*.woff2`; `pnpm build` tanpa permintaan Google; e2e `Inter is self-hosted, not fetched from Google Fonts` lulus.
+- **Tanggal**: 13 November 2026.

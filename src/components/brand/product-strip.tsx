@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { MarqueePause } from "@/components/brand/marquee-pause"
+import { Reveal } from "@/components/brand/reveal"
 import { Link } from "@/lib/navigation"
 import { productCatalog, type ProductCatalogItem } from "@/content/product-catalog"
 import { cn } from "@/lib/utils"
@@ -60,12 +61,16 @@ export function ProductStrip({
   soonLabel,
   browseLabel,
   className,
+  scrollReveal = false,
+  scrollRevealDelayMs = 0,
 }: {
   items: ProductStripCard[]
   liveLabel: string
   soonLabel: string
   browseLabel: string
   className?: string
+  scrollReveal?: boolean
+  scrollRevealDelayMs?: number
 }) {
   const shelf = items.length > 0 ? items : productCatalog.map((item) => ({
     ...item,
@@ -79,41 +84,83 @@ export function ProductStrip({
       data-decor=""
       className={cn("relative overflow-hidden border-b border-border bg-background py-7", className)}
     >
-      <MarqueePause />
-      <div className="edge-fade-x overflow-hidden">
-        <div className="fluid-marquee-track flex w-max items-start gap-5">
-          <div className="flex items-start gap-5 pr-5">
-            {shelf.map((item) => (
-              <ProductCardFace
-                key={`live-${item.id}`}
-                item={item}
-                liveLabel={liveLabel}
-                soonLabel={soonLabel}
-                interactive
-              />
-            ))}
+      {scrollReveal ? (
+        <Reveal delayMs={scrollRevealDelayMs}>
+          <MarqueePause />
+          <div className="edge-fade-x overflow-hidden">
+            <div className="fluid-marquee-track flex w-max items-start gap-5">
+              <div className="flex items-start gap-5 pr-5">
+                {shelf.map((item) => (
+                  <ProductCardFace
+                    key={`live-${item.id}`}
+                    item={item}
+                    liveLabel={liveLabel}
+                    soonLabel={soonLabel}
+                    interactive
+                  />
+                ))}
+              </div>
+              <div className="flex items-start gap-5 pr-5" aria-hidden>
+                {shelf.map((item) => (
+                  <ProductCardFace
+                    key={`dup-${item.id}`}
+                    item={item}
+                    liveLabel={liveLabel}
+                    soonLabel={soonLabel}
+                    interactive={false}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="flex items-start gap-5 pr-5" aria-hidden>
-            {shelf.map((item) => (
-              <ProductCardFace
-                key={`dup-${item.id}`}
-                item={item}
-                liveLabel={liveLabel}
-                soonLabel={soonLabel}
-                interactive={false}
-              />
-            ))}
+          <div className="mt-5 flex justify-center px-[clamp(20px,4vw,40px)]">
+            <Link
+              href="/products"
+              className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              {browseLabel}
+            </Link>
           </div>
-        </div>
-      </div>
-      <div className="mt-5 flex justify-center px-[clamp(20px,4vw,40px)]">
-        <Link
-          href="/products"
-          className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-        >
-          {browseLabel}
-        </Link>
-      </div>
+        </Reveal>
+      ) : (
+        <>
+          <MarqueePause />
+          <div className="edge-fade-x overflow-hidden">
+            <div className="fluid-marquee-track flex w-max items-start gap-5">
+              <div className="flex items-start gap-5 pr-5">
+                {shelf.map((item) => (
+                  <ProductCardFace
+                    key={`live-${item.id}`}
+                    item={item}
+                    liveLabel={liveLabel}
+                    soonLabel={soonLabel}
+                    interactive
+                  />
+                ))}
+              </div>
+              <div className="flex items-start gap-5 pr-5" aria-hidden>
+                {shelf.map((item) => (
+                  <ProductCardFace
+                    key={`dup-${item.id}`}
+                    item={item}
+                    liveLabel={liveLabel}
+                    soonLabel={soonLabel}
+                    interactive={false}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-5 flex justify-center px-[clamp(20px,4vw,40px)]">
+            <Link
+              href="/products"
+              className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              {browseLabel}
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   )
 }

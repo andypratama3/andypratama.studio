@@ -33,3 +33,32 @@ export async function getAvailabilityNote(
     return null
   }
 }
+
+export const replyTimeSchema = z.object({
+  en: z.string().max(280).default(""),
+  id: z.string().max(280).default(""),
+})
+
+/**
+ * Resolves `{setting:*}` tokens for the public FAQ. Settings are stored as
+ * `{ en, id }` pairs, so the FAQ needs the locale-specific string.
+ */
+export async function getFaqSettings(
+  locale: string
+): Promise<Record<string, string>> {
+  try {
+    const rows = await db
+      .select({ key: siteSettings.key, value: siteSettings.value })
+      .from(siteSettings)
+      .where(eq(siteSettings.key, "reply_time"))
+      .limit(1)
+
+    const parsed = replyTimeSchema.safeParse(rows[0]?.value)
+    if (!parsed.success) return {}
+
+    const value = (locale === "id" ? parsed.data.id : parsed.data.en).trim()
+    return value ? { reply_time: value } : {}
+  } catch {
+    return {}
+  }
+}

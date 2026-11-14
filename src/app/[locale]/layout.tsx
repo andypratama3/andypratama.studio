@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import { notFound } from "next/navigation"
 import { hasLocale, NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
@@ -12,9 +12,17 @@ import { routing } from "@/i18n/routing"
 import { introBootScript } from "@/lib/intro-boot-script"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({
-  subsets: ["latin"],
+// Inter is vendored (SIL OFL 1.1) so dev and builds never depend on a
+// fonts.gstatic.com fetch — Turbopack's Google Fonts resolver fails on Windows
+// proxies and on rotated gstatic URLs. Same family, same latin subset.
+const inter = localFont({
+  src: "../../fonts/inter-latin.woff2",
+  weight: "100 900",
+  style: "normal",
+  display: "swap",
   variable: "--font-inter",
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+  adjustFontFallback: "Arial",
 })
 
 export function generateStaticParams() {

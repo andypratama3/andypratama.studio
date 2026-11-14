@@ -124,6 +124,10 @@ export default async function ProductsDashboardPage() {
 
                 {/* Form Ubah Harga (Owner Action) */}
                 <div className="mt-6 border-t border-border pt-4">
+                  <p className="mb-2 text-[10px] text-muted-foreground">
+                    Harga internal — tidak ditampilkan di halaman publik sampai sumber harga
+                    DualBrand disetujui (D-06).
+                  </p>
                   <form
                     action={async (fd: FormData) => {
                       "use server"

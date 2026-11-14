@@ -1,4 +1,5 @@
 import Image from "next/image"
+import type { Metadata } from "next"
 import { ArrowUpRight, MapPin } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Container } from "@/components/brand/container"
@@ -9,9 +10,25 @@ import { Reveal } from "@/components/brand/reveal"
 import { Section } from "@/components/brand/section"
 import { footnoteIdsFromStats } from "@/components/brand/stats-grid"
 import { buttonVariants } from "@/components/ui/button"
+import { buildPageMetadata } from "@/lib/page-metadata"
 import { getAvailabilityNote } from "@/lib/site-settings"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "aboutPage" })
+  return buildPageMetadata({
+    locale,
+    path: "/about",
+    title: t("title"),
+    description: t("intro"),
+  })
+}
 
 export default async function AboutPage({
   params,

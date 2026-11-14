@@ -1,5 +1,9 @@
 # LAYOUT-AUDIT — Home (revisi v2, 9 Nov 2026)
 
+> **Update 13 November 2026 (J0-02).** Sumber status tunggal: `docs/STATUS.md`.
+> Butir 4: video intro **tidak ada**; yang tersisa hanya poster statis di seksi `#proof`
+> (`src/app/[locale]/(site)/page.tsx`). Angka tes di bawah adalah arsip 9 Nov 2026.
+
 Viewport acuan: 375 / 768 / 1280 / 1440. Sumber: Norvane + Velto + Apple (pola saja).
 Audit ulang setelah pass FloatingNav / StatsGrid / StickySteps.
 
@@ -10,7 +14,7 @@ Audit ulang setelah pass FloatingNav / StatsGrid / StickySteps.
 | 1 | FloatingNav kapsul adaptif | **Ada** | Wordmark kapsul panjang di mobile; pantau overflow |
 | 2 | Hero 100svh + wordmark + path | **Ada** | Unicorn A-08 masih fallback SVG/poster |
 | 3 | StatsGrid + ¹→FootnoteList | **Ada** | — |
-| 4 | Video intro + poster | **Ada** | Video file belum (poster only) |
+| 4 | Video intro + poster | **Poster saja** | Video file belum (poster only); `IntroVideo` tidak dirender |
 | 5 | Row tipografis 01–03 | **Ada** | — |
 | 6 | SAKOLENTRA bento + SVG | **Ada** | Crash `nodes` undefined diperbaiki 9 Nov |
 | 7 | HairlineTable proyek | **Ada** | — |

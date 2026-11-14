@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname } from "@/i18n/routing"
 import {
   Calendar,
   CheckSquare,
@@ -19,6 +18,7 @@ import {
   X,
   ExternalLink,
 } from "lucide-react"
+import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 export const navItems = [

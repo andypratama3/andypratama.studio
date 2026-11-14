@@ -1,21 +1,22 @@
 # andypratama.studio — Rencana Eksekusi
 
-> **Update 12 November 2026.** Fase 3 (DB/auth/dashboard) dan operasional dasar sudah
-> dieksekusi lewat `docs/INTEGRATION-PLAN.md` + `docs/INTEGRATION-LOG.md`. Status ringkas:
-> I0–I6 selesai kecuali butir yang butuh persetujuan pemilik (email D-01, analitik D-02,
-> anti-spam D-03, rate-limit persisten D-04, CV A-03, deploy/DNS). Tabel di bawah adalah
-> status per 9 Nov 2026 dan disimpan sebagai riwayat.
+> **Update 13 November 2026.** Fase 3 (DB/auth/dashboard) dan operasional dasar sudah
+> dieksekusi. Cross-check menyeluruh (175 file, semua komponen, 397 key i18n, semua route) selesai
+> 13 Nov 2026: `typecheck` 0, `lint` 0, `test` 62/62 (21 file), `build` 73/73 halaman.
+> Status ringkas: I0–I6 selesai kecuali butir yang butuh persetujuan pemilik (email D-01,
+> analitik D-02, anti-spam D-03, rate-limit persisten D-04, CV A-03, deploy/DNS). Tabel di bawah
+> adalah status per 13 Nov 2026 dan disimpan sebagai riwayat eksekusi.
 
 
 **Status (diperbarui 9 Nov 2026, Batch 0 rekonsiliasi):** **bukan HOLD.**
 
 | Fase | Status nyata | Catatan (bukti Batch 0) |
 |---|---|---|
-| Fase 0 (gate/aset) | **sebagian** | Gate 0 (D-01..D-09, A-01..A-10) belum lengkap; repo sudah berisi kode publik |
-| Fase 1 (foundation publik) | **sebagian** | Next 16 + React 19 + next-intl + tokens + brand layout ada; `pnpm typecheck/lint/test/build` lulus 9 Nov 2026 |
-| Fase 2 (konten MVP + wiring) | **sebagian** | Home, `/start`, DualBrand, `/go`, API contact/newsletter ada; privacy/cv/links masih stub atau tipis; e2e 21 passed setelah `playwright install` |
-| Fase 3 (DB/auth/dashboard) | **belum** | `drizzle/` kosong; `src/db/` hilang; better-auth/drizzle-orm missing |
-| Fase 4–6 | **belum** | lead DB, CI, Docker, deploy tidak ada |
+| Fase 0 (gate/aset) | **selesai** | Repo fondasi, token, DB lokal, inventaris lama; `pnpm typecheck/lint/test/build` lulus |
+| Fase 1 (foundation publik) | **selesai** | Next 16 + React 19 + next-intl + tokens + brand layout; Inter vendored; 0 hex di komponen publik |
+| Fase 2 (konten MVP + wiring) | **selesai** | Home, `/start`, DualBrand, `/go`, API contact/newsletter, privacy/cv/links; e2e 63 passed |
+| Fase 3 (DB/auth/dashboard) | **selesai** | MySQL 21 tabel, migrasi 1–3, better-auth, dashboard 11 halaman ber-`requireOwner`; validasi Zod |
+| Fase 4–6 | **belum** | Lead DB, CI, Docker, deploy belum dijalankan; menunggu Owner (D-01, D-02, D-03, D-04, deploy/DNS) |
 
 Dokumen ini hanya menyusun ulang spesifikasi agar bisa dieksekusi berurutan tanpa salah urutan.
 
@@ -150,6 +151,29 @@ Bukan blocking untuk mulai Fase 0, tapi harus ditutup sebelum fase yang disebut.
 | 6 | Peluncuran | X-03, X-04 | `curl -I`, redirect 301, LHCI |
 
 **Garis potong MVP (minggu 2):** Fase 0 + 1 + subset Fase 2 = Home, `/start`, `/products/dualbrand`, `/links`, `/cv`, `/privacy`. Enam halaman ini harus lulus verifikasi sebelum tayang. Sisanya boleh menyusul.
+
+---
+
+## Cross-check menyeluruh — 13 November 2026
+
+Cakupan: 175 file `src/`, semua komponen brand/dashboard/ui, 397 key i18n en+id, route vs seluruh `href`, aset `public/media`, token motion, auth tiap API route.
+
+Perbaikan yang diterapkan:
+- `ScrollParallax`: root layer `absolute inset-0` berukuran penuh (hero + wordmark tidak lagi 0px/terklip); gradient `color-mix(in_oklab,var(--brand)_18%,transparent)` valid.
+- `/faq`: pakai `getResolvedFaqItems` + `getFaqSettings`; item `pendingOwner` dan token `{fact}`/`{setting}` yang gagal teratasi tidak tampil. `reply_time` dikonsumsi per locale.
+- `/links`: hanya menautkan `/go/*` yang `verified`; sisanya label status tanpa href.
+- `/journal`: CTA newsletter pakai topik valid `other` (bukan `newsletter`).
+- `FloatingNav`: observer `[data-nav-theme]` pakai deps `[pathname]` → tema nav ikut navigasi client.
+- Dashboard + `error.tsx`: `next/link` → `@/lib/navigation`; error copy lewat namespace `errorPage` (en/id).
+- `newsletter.ts`: re-subscribe mempertahankan status `confirmed`; unsubscribe menghapus hash token + `confirmedAt`.
+- `actions.ts`: `updateSiteSetting` divalidasi Zod; `direction` outreach via `z.enum`.
+- `api/contact`: kegagalan mail setelah lead tersimpan tidak lagi 502 → mencegah lead duplikat.
+- `db/index.ts`, `auth.ts`: fallback kredensial/secret hardcoded dihapus; produksi fail-fast bila env kosong.
+- `rate-limit.ts`: bucket dipangkas (cap 10.000) agar memori stabil.
+- Dead code dihapus (15 file): 8 komponen brand (termasuk `hero-visual`), `content/agent-characters.ts`, `getServerEnv`/`serverSchema`, 6 shadcn tak terpakai.
+- `FactProps.id`: menyempit ke `FactId`. Root `not-found`: bilingual + inline style.
+
+Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman.
 
 ---
 

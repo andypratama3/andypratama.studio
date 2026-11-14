@@ -4,7 +4,15 @@ import * as schema from "./schema"
 
 const connectionString =
   process.env.DATABASE_URL ??
-  "mysql://andy:studio_secret@127.0.0.1:3306/andypratama_studio"
+  (process.env.NODE_ENV === "production"
+    ? null
+    : "mysql://root@127.0.0.1:3306/andypratama_studio")
+
+if (!connectionString) {
+  throw new Error(
+    "DATABASE_URL is not set. Copy .env.example to .env and point it at your MySQL instance."
+  )
+}
 
 // Global pool cache for serverless / Next.js hot reload
 declare global {

@@ -1,9 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { notFound } from "next/navigation"
 import { and, eq } from "drizzle-orm"
 
 import { getOutboundLink } from "@/content/outbound-links"
 import { db } from "@/db"
 import { linkClicks, links } from "@/db/schema"
+import { isSafeDestination } from "@/lib/link-validation"
 import { rateLimit } from "@/lib/rate-limit"
 
 export const dynamic = "force-dynamic"
@@ -56,18 +58,24 @@ export async function GET(
 
   if (!destination) {
     const link = getOutboundLink(slug)
-    if (!link) {
-      return NextResponse.redirect(new URL("/", request.url), 302)
+    // Fail closed: static destinations stay unreachable until the Owner
+    // verifies them, matching the CTA gating on public pages.
+    if (!link || !link.verified) {
+      notFound()
     }
     destination = link.href
     fallbackUtm = link.utmSource
+  }
+
+  if (!isSafeDestination(destination)) {
+    notFound()
   }
 
   let target: URL
   try {
     target = new URL(destination)
   } catch {
-    return NextResponse.redirect(new URL("/", request.url), 302)
+    notFound()
   }
 
   if (fallbackUtm && !target.searchParams.has("utm_source")) {

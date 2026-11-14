@@ -32,7 +32,7 @@ function NeonWord({
 
   return (
     <m.span
-      className="inline-block whitespace-nowrap pr-[0.32em] last:pr-0"
+      className="whitespace-nowrap"
       style={motionOk ? { color, opacity, textShadow } : { color: "var(--foreground)", opacity: 0.4 }}
     >
       {word}
@@ -59,7 +59,7 @@ export function ScrollBridge({ text }: { text: string }) {
   return (
     <div ref={ref} className="relative overflow-hidden py-12 sm:py-16" aria-hidden="true">
       <m.p
-        className="text-wordmark whitespace-nowrap"
+        className="text-wordmark flex items-center gap-[0.32em]"
         style={motionOk ? { x, scale } : { x: 0 }}
       >
         {words.map((word, index) => (

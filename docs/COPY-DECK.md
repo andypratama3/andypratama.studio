@@ -64,7 +64,7 @@ Catatan: `siteDescription` adalah meta description global. `stubNote`/`stubCta` 
 | Kunci | EN | ID |
 |---|---|---|
 | `brand` | Andy Pratama Studio | Andy Pratama Studio |
-| `siteDescription` | Andy Pratama Studio — day-to-day operations software from Samarinda, Indonesia. | Andy Pratama Studio — perangkat lunak operasional harian dari Samarinda, Indonesia. |
+| `siteDescription` | Andy Pratama Studio builds billing, payments, and WhatsApp tools for schools and teams from Samarinda, Indonesia. | Andy Pratama Studio membangun alat tagihan, pembayaran, dan WhatsApp untuk sekolah dan tim dari Samarinda, Indonesia. |
 | `comingSoon` | Coming soon | Segera hadir |
 | `stubStatus` | In progress | Sedang disiapkan |
 | `stubNote` | This page is being prepared. Content will appear here when it is ready. | Halaman ini masih disusun. Isinya akan muncul di sini setelah siap. |
@@ -72,8 +72,8 @@ Catatan: `siteDescription` adalah meta description global. `stubNote`/`stubCta` 
 | `scrollHint` | Scroll down | Geser ke bawah |
 | `pause` | Pause | Jeda |
 | `play` | Play | Putar |
-| `marqueePause` | Pause wordmark marquee | Jeda tulisan berjalan |
-| `marqueePlay` | Play wordmark marquee | Putar tulisan berjalan |
+| `marqueePause` | Pause scrolling text | Jeda tulisan berjalan |
+| `marqueePlay` | Play scrolling text | Putar tulisan berjalan |
 
 ## 2. Navigasi, tema, bahasa, footer
 
@@ -147,16 +147,16 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 
 | Kunci | EN | ID |
 |---|---|---|
-| `title` | Clearer day-to-day operations—without you needing the tech talk. | Operasional yang lebih rapi—tanpa Anda harus paham teknisnya. |
-| `description` | I help schools, agencies, and companies tidy billing, payments, notifications, and how teams work each day. This studio is open to see. | Saya membantu sekolah, instansi, dan perusahaan merapikan tagihan, pembayaran, pemberitahuan, dan kerja harian tim. Studio ini terbuka untuk dilihat. |
-| `primaryCta` | See the work | Lihat hasil kerja |
+| `title` | Clearer day-to-day operations—without you needing the tech talk. | Operasional harian yang lebih jelas—tanpa Anda harus ikut membahas teknisnya. |
+| `description` | I help schools, agencies, and companies tidy billing, payments, notifications, and how teams work each day. You can watch this studio take shape in the open. | Saya membantu sekolah, instansi, dan perusahaan merapikan tagihan, pembayaran, pemberitahuan, dan kerja harian tim. Anda bisa mengikuti proses studio ini secara terbuka. |
+| `primaryCta` | See the work | Lihat karya |
 | `secondaryCta` | Tell me what you need | Ceritakan kebutuhan Anda |
 | `pathBuild` | I need something built | Saya butuh dibuatkan |
 | `pathTemplate` | I need a ready-made template | Saya butuh template siap pakai |
 | `pathHiring` | I'm hiring | Saya ingin merekrut |
 | `mark` | A·P | A·P |
 | `discipline` | Day-to-day operations | Operasional harian |
-| `cubeCaption` | Scroll to turn — six sides of the practice | Gulir untuk memutar — enam sisi praktik |
+| `cubeCaption` | Scroll to turn—six sides of what I do | Gulir untuk memutar—enam sisi dari yang saya kerjakan |
 | `surface` | Surface | Permukaan |
 | `depth` | Depth | Kedalaman |
 | `skipIntro` | Skip intro | Lewati pembuka |
@@ -174,8 +174,8 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 
 | Kunci | EN | ID |
 |---|---|---|
-| `title` | A quick hello, 45 seconds | Kenalan singkat, 45 detik |
-| `summary` | I help real operations—from schools to businesses—from Samarinda, Indonesia. | Saya membantu operasional nyata—dari sekolah sampai bisnis—dari Samarinda, Indonesia. |
+| `title` | A quick hello, 45 seconds | Perkenalan singkat, 45 detik |
+| `summary` | I help schools and businesses run day-to-day operations more clearly, from Samarinda, Indonesia. | Saya membantu sekolah dan bisnis menjalankan operasional harian dengan lebih jelas, dari Samarinda, Indonesia. |
 | `placeholder` | Video coming soon | Video segera hadir |
 
 ### `home.whatIDo`
@@ -188,14 +188,14 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `productsTitle` | Products | Produk |
 | `productsDesc` | DualBrand: a website template for one parent brand and two child brands. Live demo included. | DualBrand: template website untuk satu merek induk dan dua merek anak. Ada demo langsung. |
 | `journalTitle` | Journal | Jurnal |
-| `journalDesc` | Every week I share one win and one problem—plain language, no fluff. | Setiap minggu saya bagikan satu yang berhasil dan satu yang bermasalah—bahasa plain, tanpa basa-basi. |
+| `journalDesc` | Every week I share one win and one problem—plain language, no fluff. | Setiap minggu saya bagikan satu yang berhasil dan satu yang bermasalah—bahasa sederhana, tanpa basa-basi. |
 
 ### `home.sakolentra`
 
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | SAKOLENTRA at SD Muhammadiyah 3 Samarinda | SAKOLENTRA di SD Muhammadiyah 3 Samarinda |
-| `description` | Helps school admin and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. | Membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. |
+| `description` | SAKOLENTRA helps with school administration and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. | SAKOLENTRA membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. |
 | `pilotCta` | Try it at your school | Coba di sekolah Anda |
 | `caseStudyCta` | Read the story | Baca ceritanya |
 | `flowTitle` | How SAKOLENTRA flows | Alur SAKOLENTRA |
@@ -205,9 +205,9 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `step1Title` | Billing | Tagihan |
 | `step1Desc` | Tuition & school fee schedule | Jadwal SPP & biaya sekolah |
 | `step2Title` | Pay via bank | Bayar lewat bank |
-| `step2Desc` | A unique pay number per student | Nomor bayar unik per siswa |
+| `step2Desc` | A unique payment number per student | Nomor pembayaran unik per siswa |
 | `step3Title` | Matched | Dicocokkan |
-| `step3Desc` | Incoming transfers are spotted | Transfer masuk langsung ketahuan |
+| `step3Desc` | Incoming transfers are spotted | Transfer masuk langsung terdeteksi |
 | `step4Title` | WhatsApp | WhatsApp |
 | `step4Desc` | Parents get an update | Orang tua dapat kabar |
 
@@ -216,7 +216,7 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Other projects | Proyek lain |
-| `description` | Other projects—general descriptions. | Proyek lain—deskripsi umum. |
+| `description` | A few more projects, described in general terms because client details stay private. | Beberapa proyek lain, digambarkan secara umum karena detail klien dijaga kerahasiaannya. |
 | `colName` | Project | Proyek |
 | `colType` | Type | Jenis |
 | `colBuilt` | Outcome for the client | Hasil untuk klien |
@@ -244,7 +244,7 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `buyCta` | Buy template | Beli template |
 | `licenseNote` | Read the license before you buy. | Baca ketentuan lisensi sebelum membeli. |
 | `previewTitle` | One parent brand. Two child brands. | Satu merek induk. Dua merek anak. |
-| `previewLead` | A ready-made website package that handles a holding brand and two distinct sub-brands in one codebase. | Paket website siap pakai untuk merek holding dan dua sub-merek berbeda dalam satu kode. |
+| `previewLead` | A ready-made website package that handles a holding brand and two distinct sub-brands in one codebase. | Paket website siap pakai untuk merek holding dan dua sub-merek berbeda dalam satu codebase. |
 | `previewItems` | Source files · Documentation · Live demo · License · Setup guide | File sumber · Dokumentasi · Demo langsung · Lisensi · Panduan pemasangan |
 | `packageHeading` | What ships in the package | Isi paket |
 | `docsLead` | The full write-up comes with the download. This is what the package includes. | Tulisan lengkap ikut di unduhan. Ini yang ada di dalam paket. |
@@ -259,8 +259,8 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `techList` | Midtrans · WhatsApp · Laravel · dashboards · portals · attendance · data migration | Midtrans · WhatsApp · Laravel · dasbor · portal · absensi · migrasi data |
 | `habitsTitle` | Working together | Langkah kerja sama |
 | `habit1` | We clarify the need first—then I build and hand over something ready to use. | Kita bahas kebutuhannya dulu—baru saya bangun sampai siap dipakai. |
-| `habit2` | Before people rely on it, the flow is checked so common mistakes are caught early. | Sebelum dipakai, alurnya dicek supaya kesalahan umum tertangkap lebih awal. |
-| `habit3` | The setup stays simple so your team can keep it going after launch. | Susunannya dijaga sederhana agar mudah dirawat setelah tim Anda memakai. |
+| `habit2` | Before your team relies on it, I check the flow so common mistakes surface early. | Sebelum dipakai, saya cek alurnya agar kesalahan umum terdeteksi lebih awal. |
+| `habit3` | The setup stays simple so your team can keep it going after launch. | Susunannya dijaga sederhana agar mudah dirawat setelah tim Anda mulai memakainya. |
 | `habit4` | After it goes live, I watch that it keeps running smoothly. | Setelah jalan, saya pantau apakah semuanya tetap berjalan baik. |
 
 ### `home.journal`
@@ -273,8 +273,8 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `emptyState` | First notes coming soon | Catatan pertama segera hadir |
 | `builtLabel` | Win | Berhasil |
 | `brokenLabel` | Problem | Bermasalah |
-| `builtEmpty` | First win landing soon | Cerita berhasil segera hadir |
-| `brokenEmpty` | First problem landing soon | Cerita masalah segera hadir |
+| `builtEmpty` | First win coming soon | Catatan berhasil pertama segera hadir |
+| `brokenEmpty` | First problem coming soon | Catatan masalah pertama segera hadir |
 
 ### `home.socialProof`
 
@@ -306,7 +306,7 @@ Catatan: Urutan bagian di halaman: hero → proof → video → how I can help �
 | `title` | Ready to start? | Siap mulai? |
 | `hireMe` | Hire me | Rekrut saya |
 | `getTemplate` | Get the template | Ambil template |
-| `workWithMe` | Book a project | Pesan jasa |
+| `workWithMe` | Tell me what you need | Ceritakan kebutuhan Anda |
 | `downloadCv` | Download CV | Unduh CV |
 | `cvEn` | English CV (PDF) | CV Bahasa Inggris (PDF) |
 | `cvId` | Indonesian CV (PDF) | CV Bahasa Indonesia (PDF) |
@@ -338,7 +338,7 @@ Catatan: Status setiap produk diambil dari `product-catalog.ts` (DualBrand live,
 | `dualbrandTitle` | DualBrand | DualBrand |
 | `dualbrandDesc` | A website for one parent brand and two child brands. Live demo included. | Website untuk satu merek induk dan dua merek anak. Ada demo langsung. |
 | `dualbrandCta` | See DualBrand | Lihat DualBrand |
-| `moreSoon` | Four more packages are being prepared. They stay unlabeled as live until checkout is ready. | Empat paket lain sedang disiapkan. Belum ditandai tersedia sampai checkout siap. |
+| `moreSoon` | Four more packages are in preparation. Each one is marked available once checkout is ready. | Empat paket lain sedang disiapkan. Masing-masing ditandai tersedia setelah checkout siap. |
 | `availabilityNote` | Checkout and the live demo open here when the listing is ready. | Checkout dan demo langsung muncul di sini setelah listing siap. |
 | `layerParent` | Parent brand | Merek induk |
 | `layerChildA` | Child brand A | Merek anak A |
@@ -391,12 +391,12 @@ Catatan: Dua paket: integrasi pembayaran + WhatsApp, dan software khusus. Tidak 
 | `pkg1Label` | 01 | 01 |
 | `pkg1Title` | Payments + WhatsApp for Laravel | Pembayaran + WhatsApp untuk Laravel |
 | `pkg1Desc` | Connect Midtrans payment gateway and WhatsApp Business API to your existing Laravel application. Invoices are created, matched to incoming transfers, and the right person gets a WhatsApp message automatically. | Sambungkan Midtrans payment gateway dan WhatsApp Business API ke aplikasi Laravel yang sudah ada. Tagihan dibuat, dicocokkan dengan transfer masuk, lalu orang yang perlu tahu mendapat pesan WhatsApp secara otomatis. |
-| `pkg1Scope` | Scope: Midtrans webhook, payment matching, WhatsApp template message send. | Lingkup: webhook Midtrans, pencocokan pembayaran, pengiriman template WhatsApp. |
+| `pkg1Scope` | Scope: Midtrans webhook, payment matching, and sending WhatsApp template messages. | Lingkup: webhook Midtrans, pencocokan pembayaran, pengiriman template WhatsApp. |
 | `pkg1Prereq` | Prerequisite: running Laravel application with database access. | Prasyarat: aplikasi Laravel yang sudah berjalan dengan akses database. |
 | `pkg2Label` | 02 | 02 |
 | `pkg2Title` | Custom software | Perangkat lunak khusus |
 | `pkg2Desc` | Portals, attendance systems, dashboards, data migration—anything your team uses every day. We agree the full scope before anything is built, and I hand over something ready to use. | Portal, sistem absensi, dasbor, migrasi data—apa pun yang dipakai tim setiap hari. Lingkup disepakati sebelum pekerjaan dimulai, lalu saya serahkan sesuatu yang siap dipakai. |
-| `pkg2Scope` | Scope: agreed before work begins. No open-ended engagements. | Lingkup: disepakati sebelum pekerjaan dimulai. Tidak ada keterlibatan tanpa batas. |
+| `pkg2Scope` | Scope: agreed before work begins. No open-ended engagements. | Lingkup: disepakati sebelum pekerjaan dimulai. Tidak ada kerja sama tanpa batas lingkup. |
 | `pkg2Prereq` | Prerequisite: a clear problem statement. We work it out together if needed. | Prasyarat: pernyataan masalah yang jelas. Kita diskusikan bersama jika diperlukan. |
 | `cta` | Tell me what you need | Ceritakan kebutuhan Anda |
 
@@ -412,7 +412,7 @@ Catatan: Halaman studi kasus memakai namespace `home.sakolentra` di atas. `workP
 
 | Kunci | EN | ID |
 |---|---|---|
-| `description` | Selected work — school systems, operations tools, and client projects. | Karya pilihan — sistem sekolah, alat operasional, dan proyek klien. |
+| `description` | Selected work—school systems, operations tools, and client projects. | Karya pilihan—sistem sekolah, alat operasional, dan proyek klien. |
 
 ## 7. About
 
@@ -433,15 +433,15 @@ Catatan: Angka di halaman ini berasal dari `src/content/facts.ts`. Jangan ubah n
 | `timezone` | WITA (UTC+8) | WITA (UTC+8) |
 | `availability` | Open for projects | Terbuka untuk proyek |
 | `intro` | Andy Pratama is a software engineer based in Samarinda, Indonesia. | Andy Pratama adalah software engineer berbasis di Samarinda, Indonesia. |
-| `bio` | I build web systems for schools, agencies, and companies — focused on billing, payments, and day-to-day operations. | Saya membangun sistem web untuk sekolah, instansi, dan perusahaan — fokus pada tagihan, pembayaran, dan operasional harian. |
+| `bio` | I build web systems for schools, agencies, and companies—focused on billing, payments, and day-to-day operations. | Saya membangun sistem web untuk sekolah, instansi, dan perusahaan—fokus pada tagihan, pembayaran, dan operasional harian. |
 | `school` | Creator of SAKOLENTRA, a school administration system running at SD Muhammadiyah 3 Samarinda. | Pembuat SAKOLENTRA, sistem administrasi sekolah yang berjalan di SD Muhammadiyah 3 Samarinda. |
-| `positioning` | Clearer day-to-day operations—without you needing the tech talk. Scope first, then a handoff your team can keep running. | Operasional harian yang lebih jelas—tanpa Anda harus ikut bahas teknis. Lingkup dulu, lalu serah terima yang bisa dijaga tim Anda. |
-| `numbersTitle` | Numbers I can stand behind | Angka yang bisa saya tanggung |
+| `positioning` | Clearer day-to-day operations—without you needing the tech talk. Scope first, then a handoff your team can keep running. | Operasional harian yang lebih jelas—tanpa Anda harus ikut membahas teknisnya. Lingkup dulu, lalu serah terima yang bisa dijaga tim Anda. |
+| `numbersTitle` | Numbers, and how they were checked | Angka dan status pengecekannya |
 | `studentsLabel` | students served at SD Muhammadiyah 3 Samarinda | siswa terlayani di SD Muhammadiyah 3 Samarinda |
 | `yearsLabel` | years helping day-to-day operations | tahun membantu operasional harian |
 | `modulesLabel` | active features in SAKOLENTRA | fitur aktif di SAKOLENTRA |
 | `howTitle` | How the numbers are used | Cara angka dipakai |
-| `howNote` | Only stated or verified facts appear here. Empty or unverified claims stay off the page. | Hanya fakta stated atau verified yang tampil di sini. Klaim kosong atau belum diverifikasi tidak ditampilkan. |
+| `howNote` | Only stated or verified facts appear here. Empty or unverified claims stay off the page. | Hanya fakta yang dinyatakan atau terverifikasi yang tampil di sini. Klaim kosong atau belum diverifikasi tidak ditampilkan. |
 | `audienceTitle` | Who I work with | Dengan siapa saya bekerja |
 | `audience1` | Schools that need billing, payments, and parent updates to stay clear. | Sekolah yang butuh tagihan, pembayaran, dan kabar ke orang tua yang jelas. |
 | `audience2` | Agencies that want a multi-brand site without three separate codebases. | Agensi yang ingin situs multi-merek tanpa tiga codebase terpisah. |
@@ -457,14 +457,14 @@ Catatan: Angka di halaman ini berasal dari `src/content/facts.ts`. Jangan ubah n
 | `formatsTitle` | Ways to work together | Cara kerja sama |
 | `format1Name` | Payments + WhatsApp for Laravel | Pembayaran + WhatsApp untuk Laravel |
 | `format1Note` | Fixed scope → fixed quote after we confirm the app and flow. | Lingkup tetap → harga tetap setelah aplikasi dan alur dikonfirmasi. |
-| `format1Price` | Quote after brief | Quote setelah brief |
+| `format1Price` | Quote after you share the problem | Penawaran harga setelah Anda menceritakan masalahnya |
 | `format2Name` | Custom software | Perangkat lunak khusus |
-| `format2Note` | Portals, attendance, dashboards, migrations — scope agreed first. | Portal, absensi, dasbor, migrasi — lingkup disepakati dulu. |
-| `format2Price` | Quote after brief | Quote setelah brief |
+| `format2Note` | Portals, attendance, dashboards, migrations—scope agreed first. | Portal, absensi, dasbor, migrasi—lingkup disepakati dulu. |
+| `format2Price` | Quote after you share the problem | Penawaran harga setelah Anda menceritakan masalahnya |
 | `format3Name` | DualBrand template | Template DualBrand |
 | `format3Note` | Ready-made site for one parent brand and two child brands. | Situs siap pakai untuk satu merek induk dan dua merek anak. |
 | `format3Price` | Listed when checkout is ready | Tampil saat checkout siap |
-| `formatsNote` | There is no public price list yet. Full terms follow the FAQ and the license at checkout for products. | Belum ada daftar harga publik. Ketentuan lengkap mengikuti FAQ dan lisensi di checkout untuk produk. |
+| `formatsNote` | There is no public price list yet. Full terms are in the FAQ; for products, the license at checkout applies. | Belum ada daftar harga publik. Ketentuan lengkap ada di FAQ; untuk produk berlaku lisensi di checkout. |
 | `formatsFaq` | Read the pricing FAQ | Baca FAQ harga |
 | `quickLinksTitle` | On this site | Di situs ini |
 | `linkWork` | Work | Karya |
@@ -474,8 +474,8 @@ Catatan: Angka di halaman ini berasal dari `src/content/facts.ts`. Jangan ubah n
 | `ctaTitle` | Want a clear scope and quote? | Butuh lingkup dan quote yang jelas? |
 | `ctaBody` | Send the problem, who will use it, and any deadline that matters. I reply with questions or a simple plan. | Kirim masalahnya, siapa yang memakai, dan tenggat yang penting. Saya balas dengan pertanyaan atau rencana sederhana. |
 | `ctaMail` | Email contact@andypratama.studio | Email contact@andypratama.studio |
-| `ctaBrief` | Send a brief | Kirim brief |
-| `ctaDisclaimer` | Numbers on this page come from facts.ts. Rates stay private until we agree scope — so social posts and this page stay aligned. | Angka di halaman ini dari facts.ts. Harga tetap privat sampai lingkup disepakati — supaya postingan sosial dan halaman ini selaras. |
+| `ctaBrief` | Tell me what you need | Ceritakan kebutuhan Anda |
+| `ctaDisclaimer` | Rates are shared once we agree on scope. Numbers on this page are labeled as stated or checked. | Harga disampaikan setelah lingkup disepakati. Angka di halaman ini diberi label dinyatakan atau sudah dicek. |
 | `startCta` | Start here | Mulai di sini |
 | `workCta` | See the work | Lihat karya |
 | `cvCta` | Request CV | Minta CV |
@@ -497,13 +497,13 @@ Catatan: Bio siap tempel per platform. Handle/URL profil masih `null` sampai pem
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Media kit | Media kit |
-| `description` | One source for TikTok, Threads, Instagram, and LinkedIn — same facts, same offers, no invented numbers. | Satu sumber untuk TikTok, Threads, Instagram, dan LinkedIn — fakta sama, tawaran sama, tanpa angka dikarang. |
+| `description` | One source for TikTok, Threads, Instagram, and LinkedIn: the same facts and the same offers everywhere. | Satu sumber untuk TikTok, Threads, Instagram, dan LinkedIn: fakta dan tawaran yang sama di mana pun. |
 | `kicker` | Media kit · Andy Pratama Studio | Media kit · Andy Pratama Studio |
 | `role` | Software engineer · day-to-day operations | Software engineer · operasional harian |
 | `location` | Samarinda, Indonesia | Samarinda, Indonesia |
 | `timezone` | WITA (UTC+8) | WITA (UTC+8) |
 | `availability` | Open for projects | Terbuka untuk proyek |
-| `positioning` | Clearer day-to-day operations—without you needing the tech talk. Scope first, then a handoff your team can keep running. | Operasional harian yang lebih jelas—tanpa Anda harus ikut bahas teknis. Lingkup dulu, lalu serah terima yang bisa dijaga tim Anda. |
+| `positioning` | Clearer day-to-day operations—without you needing the tech talk. Scope first, then a handoff your team can keep running. | Operasional harian yang lebih jelas—tanpa Anda harus ikut membahas teknisnya. Lingkup dulu, lalu serah terima yang bisa dijaga tim Anda. |
 | `platformsTitle` | Social channels | Kanal sosial |
 | `platformsLead` | Use this page in each bio. Profile links appear live only after the owner verifies the URL. | Pakai halaman ini di setiap bio. Tautan profil baru muncul live setelah URL diverifikasi pemilik. |
 | `pendingProfile` | Profile URL pending confirmation | URL profil menunggu konfirmasi |
@@ -514,19 +514,19 @@ Catatan: Bio siap tempel per platform. Handle/URL profil masih `null` sampai pem
 | `platform.instagram` | Instagram | Instagram |
 | `platform.linkedin` | LinkedIn | LinkedIn |
 | `bioTitle` | Ready-to-paste bios | Bio siap tempel |
-| `bioLead` | Same studio story, trimmed per platform. Numbers only from facts.ts. | Cerita studio yang sama, dipotong per platform. Angka hanya dari facts.ts. |
-| `bio.tiktok` | Andy Pratama Studio · Samarinda. Day-to-day ops software for schools & teams — billing, payments, WhatsApp. Start: andypratama.studio/start | Andy Pratama Studio · Samarinda. Software operasional harian untuk sekolah & tim — tagihan, bayar, WhatsApp. Mulai: andypratama.studio/start |
-| `bio.threads` | I build day-to-day operations software from Samarinda — billing, payments, WhatsApp updates, portals. Scope first, then a handoff your team can keep. andypratama.studio/media-kit | Saya bangun software operasional harian dari Samarinda — tagihan, pembayaran, kabar WhatsApp, portal. Lingkup dulu, lalu serah terima yang bisa dijaga tim. andypratama.studio/media-kit |
-| `bio.instagram` | Andy Pratama Studio · Samarinda<br />Day-to-day ops for schools & companies<br />Billing · payments · WhatsApp · portals<br />↓ Media kit & start | Andy Pratama Studio · Samarinda<br />Operasional harian untuk sekolah & perusahaan<br />Tagihan · bayar · WhatsApp · portal<br />↓ Media kit & mulai |
-| `bio.linkedin` | Software engineer based in Samarinda, Indonesia. I help schools, agencies, and companies tidy billing, payments, WhatsApp updates, portals, and attendance — with clear scope and a handoff teams can keep running. Creator of SAKOLENTRA (school ops). Open for projects and roles. | Software engineer berbasis di Samarinda, Indonesia. Saya membantu sekolah, instansi, dan perusahaan merapikan tagihan, pembayaran, kabar WhatsApp, portal, dan absensi — dengan lingkup jelas dan serah terima yang bisa dijaga tim. Pembuat SAKOLENTRA (operasional sekolah). Terbuka untuk proyek dan peran penuh waktu. |
+| `bioLead` | The same studio story, trimmed for each platform. The only numbers are the ones listed on this page. | Cerita studio yang sama, dipotong untuk tiap platform. Angka yang dipakai hanya yang tercantum di halaman ini. |
+| `bio.tiktok` | Billing, payments & WhatsApp for schools and teams. Samarinda, Indonesia. | Tagihan, pembayaran & WhatsApp untuk sekolah dan tim. Samarinda, Indonesia. |
+| `bio.threads` | Software engineer in Samarinda. Billing, payments, WhatsApp updates, and portals for schools and teams. Scope first, then a handoff you can keep. | Software engineer di Samarinda. Tagihan, pembayaran, kabar WhatsApp, dan portal untuk sekolah dan tim. Lingkup dulu, lalu serah terima yang jelas. |
+| `bio.instagram` | Andy Pratama Studio · Samarinda<br />Day-to-day ops for schools & companies<br />Billing · payments · WhatsApp · portals<br />↓ Start here | Andy Pratama Studio · Samarinda<br />Operasional harian untuk sekolah & perusahaan<br />Tagihan · pembayaran · WhatsApp · portal<br />↓ Mulai di sini |
+| `bio.linkedin` | Software engineer based in Samarinda, Indonesia. I help schools, agencies, and companies tidy billing, payments, WhatsApp updates, portals, and attendance—with clear scope and a handoff teams can keep running. Creator of SAKOLENTRA (school ops). Open for projects and roles. | Software engineer berbasis di Samarinda, Indonesia. Saya membantu sekolah, instansi, dan perusahaan merapikan tagihan, pembayaran, kabar WhatsApp, portal, dan absensi—dengan lingkup jelas dan serah terima yang bisa dijaga tim. Pembuat SAKOLENTRA (operasional sekolah). Terbuka untuk proyek dan peran penuh waktu. |
 | `pinTitle` | Suggested bio link | Tautan bio yang disarankan |
 | `pinUrl` | andypratama.studio/media-kit | andypratama.studio/media-kit |
 | `pinAlt` | Or send people to /start for a brief. | Atau arahkan ke /start untuk brief. |
-| `numbersTitle` | Numbers I can stand behind | Angka yang bisa saya tanggung |
+| `numbersTitle` | Numbers, and how they were checked | Angka dan status pengecekannya |
 | `studentsLabel` | students served at SD Muhammadiyah 3 Samarinda | siswa terlayani di SD Muhammadiyah 3 Samarinda |
 | `yearsLabel` | years helping day-to-day operations | tahun membantu operasional harian |
 | `modulesLabel` | active features in SAKOLENTRA | fitur aktif di SAKOLENTRA |
-| `howNote` | Only stated or verified facts. Unverified claims stay off this kit. | Hanya fakta stated atau verified. Klaim belum diverifikasi tidak masuk kit ini. |
+| `howNote` | Only stated or verified facts. Unverified claims stay off this kit. | Hanya fakta yang dinyatakan atau terverifikasi. Klaim yang belum diverifikasi tidak masuk kit ini. |
 | `audienceTitle` | Who this is for | Untuk siapa |
 | `audience1` | Schools that need billing, payments, and parent updates to stay clear. | Sekolah yang butuh tagihan, pembayaran, dan kabar ke orang tua yang jelas. |
 | `audience2` | Agencies that want a multi-brand site without three separate codebases. | Agensi yang ingin situs multi-merek tanpa tiga codebase terpisah. |
@@ -539,14 +539,14 @@ Catatan: Bio siap tempel per platform. Handle/URL profil masih `null` sampai pem
 | `formatsTitle` | Ways to work together | Cara kerja sama |
 | `format1Name` | Payments + WhatsApp for Laravel | Pembayaran + WhatsApp untuk Laravel |
 | `format1Note` | Fixed scope → fixed quote after we confirm the app and flow. | Lingkup tetap → harga tetap setelah aplikasi dan alur dikonfirmasi. |
-| `format1Price` | Quote after brief | Quote setelah brief |
+| `format1Price` | Quote after you share the problem | Penawaran harga setelah Anda menceritakan masalahnya |
 | `format2Name` | Custom software | Perangkat lunak khusus |
-| `format2Note` | Portals, attendance, dashboards, migrations — scope agreed first. | Portal, absensi, dasbor, migrasi — lingkup disepakati dulu. |
-| `format2Price` | Quote after brief | Quote setelah brief |
+| `format2Note` | Portals, attendance, dashboards, migrations—scope agreed first. | Portal, absensi, dasbor, migrasi—lingkup disepakati dulu. |
+| `format2Price` | Quote after you share the problem | Penawaran harga setelah Anda menceritakan masalahnya |
 | `format3Name` | DualBrand template | Template DualBrand |
 | `format3Note` | Ready-made site for one parent brand and two child brands. | Situs siap pakai untuk satu merek induk dan dua merek anak. |
 | `format3Price` | Listed when checkout is ready | Tampil saat checkout siap |
-| `formatsNote` | No public price list yet — so social captions and this kit stay aligned. Details in the FAQ. | Belum ada daftar harga publik — supaya caption sosial dan kit ini selaras. Detail di FAQ. |
+| `formatsNote` | No public price list yet—so social captions and this kit stay aligned. Details in the FAQ. | Belum ada daftar harga publik—supaya caption sosial dan kit ini selaras. Detail di FAQ. |
 | `formatsFaq` | Pricing FAQ | FAQ harga |
 | `assetsTitle` | Link destinations for captions | Tujuan tautan untuk caption |
 | `assetStart` | Start / brief | Mulai / brief |
@@ -557,8 +557,8 @@ Catatan: Bio siap tempel per platform. Handle/URL profil masih `null` sampai pem
 | `ctaTitle` | Want a scope and quote? | Butuh lingkup dan quote? |
 | `ctaBody` | Send the problem, who will use it, and any deadline. Same contact for every platform. | Kirim masalahnya, siapa yang memakai, dan tenggat. Kontak sama untuk semua platform. |
 | `ctaMail` | Email contact@andypratama.studio | Email contact@andypratama.studio |
-| `ctaBrief` | Send a brief | Kirim brief |
-| `ctaDisclaimer` | Use this kit as the single source for TikTok, Threads, Instagram, and LinkedIn. Do not invent follower counts, rates, or client logos in posts. | Pakai kit ini sebagai satu sumber untuk TikTok, Threads, Instagram, dan LinkedIn. Jangan karang jumlah follower, harga, atau logo klien di postingan. |
+| `ctaBrief` | Tell me what you need | Ceritakan kebutuhan Anda |
+| `ctaDisclaimer` | These are the official descriptions for TikTok, Threads, Instagram, and LinkedIn. Follower counts, rates, and client logos are not part of this kit. | Ini deskripsi resmi untuk TikTok, Threads, Instagram, dan LinkedIn. Jumlah pengikut, harga, dan logo klien tidak termasuk dalam kit ini. |
 | `footnoteTitle` | About these numbers | Tentang angka ini |
 | `statedLabel` | Stated here, not rechecked | Dinyatakan di sini, belum dicek ulang |
 | `verifiedLabel` | Verified | Terverifikasi |
@@ -578,7 +578,7 @@ Catatan: Halaman ini belum menyajikan berkas PDF (aset A-03 tertunda). CTA di ho
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | CV | CV |
-| `intro` | Andy Pratama — software engineer based in Samarinda, Indonesia. | Andy Pratama — software engineer berbasis di Samarinda, Indonesia. |
+| `intro` | Andy Pratama—software engineer based in Samarinda, Indonesia. | Andy Pratama—software engineer berbasis di Samarinda, Indonesia. |
 | `skills` | Full-stack web development, payment integration, WhatsApp automation, and school management systems. | Pengembangan web full-stack, integrasi pembayaran, otomasi WhatsApp, dan sistem manajemen sekolah. |
 | `requestNote` | The full CV is available on request. Use the link below. | CV lengkap tersedia atas permintaan. Gunakan tautan di bawah. |
 | `requestCta` | Request CV | Minta CV |
@@ -596,13 +596,13 @@ Catatan: Belum ada entri; yang tampil hanya empty state.
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Journal | Jurnal |
-| `subtitle` | One win, one problem — plain language, no fluff. | Satu yang berhasil, satu masalah — bahasa plain, tanpa basa-basi. |
+| `subtitle` | One win, one problem—plain language, no fluff. | Satu yang berhasil, satu masalah—bahasa sederhana, tanpa basa-basi. |
 | `emptyTitle` | No entries yet | Belum ada catatan |
-| `emptyDescription` | Weekly notes will appear here — one thing that worked, one problem found. | Catatan mingguan akan muncul di sini — satu yang berhasil, satu masalah yang ditemui. |
+| `emptyDescription` | Weekly notes will appear here—one thing that worked, one problem found. | Catatan mingguan akan muncul di sini—satu yang berhasil, satu masalah yang ditemui. |
 | `winLabel` | Win | Berhasil |
-| `problemLabel` | Problem | Masalah |
-| `winEmpty` | First win landing soon | Catatan berhasil pertama segera hadir |
-| `problemEmpty` | First problem landing soon | Catatan masalah pertama segera hadir |
+| `problemLabel` | Problem | Bermasalah |
+| `winEmpty` | First win coming soon | Catatan berhasil pertama segera hadir |
+| `problemEmpty` | First problem coming soon | Catatan masalah pertama segera hadir |
 | `subscribeCta` | Subscribe for updates | Langganan pembaruan |
 | `homeCta` | Back to home | Kembali ke beranda |
 
@@ -619,9 +619,9 @@ Catatan: Konten kurasi, bukan tabel database. Tautan keluar tetap di balik konfi
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Links | Tautan |
-| `dualbrandLabel` | DualBrand — website template | DualBrand — template website |
-| `dualbrandDemoLabel` | DualBrand — live demo | DualBrand — demo langsung |
-| `mediaKitLabel` | Media kit — for TikTok, Threads, Instagram, LinkedIn | Media kit — untuk TikTok, Threads, Instagram, LinkedIn |
+| `dualbrandLabel` | DualBrand—website template | DualBrand—template website |
+| `dualbrandDemoLabel` | DualBrand—live demo | DualBrand—demo langsung |
+| `mediaKitLabel` | Media kit—for TikTok, Threads, Instagram, LinkedIn | Media kit—untuk TikTok, Threads, Instagram, LinkedIn |
 | `pendingNote` | pending confirmation | menunggu konfirmasi |
 
 ## 12. FAQ
@@ -700,7 +700,7 @@ Catatan: Alur double opt-in: konfirmasi lewat email, lalu halaman status menampi
 |---|---|---|
 | `title` | Newsletter status | Status newsletter |
 | `confirmed` | Subscription confirmed | Langganan dikonfirmasi |
-| `confirmedNote` | You are on the list. You can unsubscribe from any email we send. | Email Anda sudah terdaftar. Anda bisa berhenti kapan saja lewat tautan di setiap email. |
+| `confirmedNote` | You are on the list. You can unsubscribe from any email I send. | Email Anda sudah terdaftar. Anda bisa berhenti kapan saja lewat tautan di setiap email. |
 | `unsubscribed` | You have been unsubscribed | Anda sudah berhenti berlangganan |
 | `unsubscribedNote` | You will not receive further newsletter emails. | Anda tidak akan menerima email newsletter berikutnya. |
 | `invalid` | This link is no longer valid | Tautan ini tidak valid lagi |
@@ -720,7 +720,7 @@ Catatan: Ketiganya masih berstatus draft kecuali teks lisensi yang mengikat di c
 | Kunci | EN | ID |
 |---|---|---|
 | `description` | How DualBrand may be used. The binding terms are shown at checkout. | Cara DualBrand boleh dipakai. Ketentuan yang mengikat tampil saat checkout. |
-| `body` | DualBrand is sold as a template package. What you can and cannot do — including client work — is defined by the license you accept when you buy. | DualBrand dijual sebagai paket template. Apa yang boleh dan tidak — termasuk untuk klien — ditentukan oleh lisensi yang Anda setujui saat membeli. |
+| `body` | DualBrand is sold as a template package. What you can and cannot do—including client work—is defined by the license you accept when you buy. | DualBrand dijual sebagai paket template. Apa yang boleh dan tidak—termasuk untuk klien—ditentukan oleh lisensi yang Anda setujui saat membeli. |
 | `pointCheckout` | Full license text appears on Gumroad before payment. | Teks lisensi lengkap muncul di Gumroad sebelum pembayaran. |
 | `pointFaq` | Common license questions are answered on the FAQ page. | Pertanyaan lisensi umum dijawab di halaman FAQ. |
 | `pointContact` | For a clarification before you buy, use Start here. | Untuk klarifikasi sebelum membeli, gunakan Mulai di sini. |
@@ -731,11 +731,11 @@ Catatan: Ketiganya masih berstatus draft kecuali teks lisensi yang mengikat di c
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Privacy | Privasi |
-| `draftDisclaimer` | Draft — full policy in preparation. | Draf — kebijakan lengkap sedang disiapkan. |
+| `draftDisclaimer` | Draft—full policy in preparation. | Draf—kebijakan lengkap sedang disiapkan. |
 | `intro` | This site collects personal data only when you take an action: | Situs ini mengumpulkan data pribadi hanya saat Anda mengambil tindakan: |
 | `contactForm` | Contact form: name, email address, and message content. | Formulir kontak: nama, alamat email, dan isi pesan. |
 | `newsletter` | Newsletter: email address (when you subscribe). | Newsletter: alamat email (saat Anda berlangganan). |
-| `shortLinks` | Short-link clicks through /go/* routes — destination only, no IP address or user-agent stored. | Klik tautan singkat melalui jalur /go/* — hanya tujuan yang dicatat, tanpa alamat IP atau user-agent. |
+| `shortLinks` | Clicks on short links (addresses that start with /go/): only the destination is recorded. No IP address or browser details are stored. | Klik pada tautan singkat (alamat yang diawali /go/): hanya tujuan yang dicatat. Alamat IP dan detail peramban tidak disimpan. |
 | `contact` | Questions? Email contact@andypratama.studio. | Ada pertanyaan? Email contact@andypratama.studio. |
 
 ### `termsPage`
@@ -743,7 +743,7 @@ Catatan: Ketiganya masih berstatus draft kecuali teks lisensi yang mengikat di c
 | Kunci | EN | ID |
 |---|---|---|
 | `title` | Terms | Syarat & Ketentuan |
-| `draftDisclaimer` | Draft — full terms in preparation. | Draf — ketentuan lengkap sedang disiapkan. |
+| `draftDisclaimer` | Draft—full terms in preparation. | Draf—ketentuan lengkap sedang disiapkan. |
 | `intro` | By using this site you agree to these terms. | Dengan menggunakan situs ini Anda menyetujui ketentuan berikut. |
 | `products` | Product purchases are governed by the license shown at checkout. | Pembelian produk diatur oleh lisensi yang ditampilkan saat checkout. |
 | `contact` | Questions? Email contact@andypratama.studio. | Ada pertanyaan? Email contact@andypratama.studio. |
@@ -778,7 +778,7 @@ belum tampil sampai pemilik mengisi/menyetujui.
 
 **A (en):** Day-to-day operations your team actually uses: billing and payments, matching bank transfers, WhatsApp updates, dashboards, and connecting the tools you already have. I handle the work from first conversation to launch.
 
-**A (id):** Operasional harian yang benar-benar dipakai tim Anda: tagihan dan pembayaran, pencocokan transfer bank, kabar WhatsApp, dasbor, dan menyambungkan alat yang sudah ada. Saya kerjakan dari percakapan pertama sampai siap dipakai.
+**A (id):** Operasional harian yang benar-benar dipakai tim Anda: tagihan dan pembayaran, pencocokan transfer bank, kabar WhatsApp, dasbor, dan menyambungkan alat yang sudah ada. Saya mengerjakannya dari percakapan pertama sampai siap dipakai.
 
 #### 2. `availability` — tampil di home
 
@@ -848,9 +848,9 @@ belum tampil sampai pemilik mengisi/menyetujui.
 
 **Q (id):** Apa itu SAKOLENTRA?
 
-**A (en):** Helps school admin and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. It runs at SD Muhammadiyah 3 Samarinda with {fact:students} students. I built it and I own it.
+**A (en):** SAKOLENTRA helps with school administration and finance: tuition billing, bank payments, automatic matching, and WhatsApp updates for parents. It runs at SD Muhammadiyah 3 Samarinda with {fact:students} students. I built it and I own it.
 
-**A (id):** Membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. Berjalan di SD Muhammadiyah 3 Samarinda dengan {fact:students} siswa. Saya yang membangunnya dan saya pemiliknya.
+**A (id):** SAKOLENTRA membantu administrasi dan keuangan sekolah: tagihan SPP, pembayaran lewat bank, pencocokan otomatis, dan kabar WhatsApp ke orang tua. Berjalan di SD Muhammadiyah 3 Samarinda dengan {fact:students} siswa. Saya yang membangunnya dan saya pemiliknya.
 
 #### 9. `sakolentra-school` — tampil di home
 

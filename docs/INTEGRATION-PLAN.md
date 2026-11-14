@@ -1,5 +1,10 @@
 # INTEGRATION-PLAN — Frontend ⇄ Backend sampai selesai
 
+> **Update 13 November 2026 (J0-02).** Dokumen ini **arsip rencana** (baseline 12 Nov: 17 file/47 tes,
+> MySQL mati). Eksekusi sebenarnya ada di `docs/INTEGRATION-LOG.md`; status tunggal di `docs/STATUS.md`.
+> Angka baseline terkini: `pnpm test` 21 file / 62 tes, `pnpm test:e2e` 63 passed.
+> `EXECUTION-PLAN.md` **tidak ada** di repo — rujukan ke berkas itu hanya historis.
+
 Tanggal: 12 November 2026. Cabang: `motion/polish` (tree bersih, 3 commit terakhir).
 Dokumen ini menggantikan status Fase 3–6 di `EXECUTION-PLAN.md` (masih menyebut DB/auth "belum", padahal sudah ada).
 Aturan: satu fase = satu laporan + output perintah nyata. Tanpa output = belum selesai.

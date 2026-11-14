@@ -18,7 +18,21 @@ import {
   tasks,
 } from "@/db/schema"
 import { requireOwner } from "@/lib/auth"
+import { createLinkSchema } from "@/lib/link-validation"
+import { availabilitySchema } from "@/lib/site-settings"
 import { and, eq } from "drizzle-orm"
+import { z } from "zod"
+
+const siteSettingSchema = z.discriminatedUnion("key", [
+  z.object({ key: z.literal("availability"), value: availabilitySchema }),
+  z.object({
+    key: z.literal("reply_time"),
+    value: z.object({
+      en: z.string().trim().max(280),
+      id: z.string().trim().max(280),
+    }),
+  }),
+])
 
 // ==========================================
 // Tasks Actions
@@ -100,6 +114,7 @@ export async function updateLeadStage(
 export async function createLead(formData: FormData): Promise<void> {
   await requireOwner()
   const name = String(formData.get("name") || "").trim()
+  const email = String(formData.get("email") || "").trim() || null
   const handle = String(formData.get("handle") || "").trim() || null
   const platform = (formData.get("platform") || "linkedin") as
     | "linkedin"
@@ -122,6 +137,7 @@ export async function createLead(formData: FormData): Promise<void> {
 
   await db.insert(leads).values({
     name,
+    email,
     handle,
     platform,
     segment,
@@ -137,7 +153,11 @@ export async function addOutreachEvent(formData: FormData): Promise<void> {
   await requireOwner()
   const leadId = String(formData.get("leadId") || "")
   const channel = String(formData.get("channel") || "linkedin").trim()
-  const direction = (formData.get("direction") || "keluar") as "keluar" | "masuk"
+  const parsedDirection = z
+    .enum(["keluar", "masuk"])
+    .safeParse(formData.get("direction") ?? "keluar")
+  if (!parsedDirection.success) throw new Error("Arah kontak tidak valid.")
+  const direction = parsedDirection.data
   const body = String(formData.get("body") || "").trim() || null
 
   if (!leadId) throw new Error("Lead ID diperlukan")
@@ -335,18 +355,22 @@ export async function resolveAgentTask(
 // ==========================================
 export async function createLink(formData: FormData): Promise<void> {
   await requireOwner()
-  const slug = String(formData.get("slug") || "").trim()
-  const destination = String(formData.get("destination") || "").trim()
-  const platform = String(formData.get("platform") || "").trim() || null
-  const campaign = String(formData.get("campaign") || "").trim() || null
+  const parsed = createLinkSchema.safeParse({
+    slug: formData.get("slug"),
+    destination: formData.get("destination"),
+    platform: String(formData.get("platform") || "").trim() || undefined,
+    campaign: String(formData.get("campaign") || "").trim() || undefined,
+  })
 
-  if (!slug || !destination) throw new Error("Slug dan URL tujuan wajib diisi")
+  if (!parsed.success) {
+    throw new Error(parsed.error.issues[0]?.message ?? "Data tautan tidak valid.")
+  }
 
   await db.insert(links).values({
-    slug,
-    destination,
-    platform,
-    campaign,
+    slug: parsed.data.slug,
+    destination: parsed.data.destination,
+    platform: parsed.data.platform ?? null,
+    campaign: parsed.data.campaign ?? null,
     medium: "organic",
   })
 
@@ -355,14 +379,17 @@ export async function createLink(formData: FormData): Promise<void> {
 
 export async function updateSiteSetting(key: string, value: unknown): Promise<void> {
   await requireOwner()
+  const parsed = siteSettingSchema.safeParse({ key, value })
+  if (!parsed.success) throw new Error("Setelan tidak valid.")
+
   await db
     .insert(siteSettings)
     .values({
-      key,
-      value,
+      key: parsed.data.key,
+      value: parsed.data.value,
     })
     .onDuplicateKeyUpdate({
-      set: { value },
+      set: { value: parsed.data.value },
     })
 
   revalidatePath("/dashboard/settings")
@@ -474,9 +501,15 @@ export async function updateProductPrice(
   priceUsd: string
 ): Promise<void> {
   await requireOwner()
+  const normalized = priceUsd.trim()
+  if (normalized && !/^\d+(\.\d{1,2})?$/.test(normalized)) {
+    throw new Error("Harga harus berupa angka non-negatif dengan maksimal 2 desimal.")
+  }
+  if (!productId) throw new Error("Produk tidak valid.")
+
   await db
     .update(products)
-    .set({ priceUsd })
+    .set({ priceUsd: normalized || null })
     .where(eq(products.id, productId))
   revalidatePath("/dashboard/products")
 }

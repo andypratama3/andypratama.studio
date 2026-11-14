@@ -27,28 +27,42 @@ export async function createNewsletterSubscription(input: {
   const email = input.email.trim().toLowerCase()
   const confirmToken = newToken()
   const unsubscribeToken = newToken()
+  const locale = input.locale ?? "en"
+  const sourceUtm = input.sourceUtm ?? null
 
-  await db
-    .insert(subscribers)
-    .values({
+  const existing = await db
+    .select({ id: subscribers.id, status: subscribers.status })
+    .from(subscribers)
+    .where(eq(subscribers.email, email))
+    .limit(1)
+
+  if (!existing[0]) {
+    await db.insert(subscribers).values({
       email,
-      locale: input.locale ?? "en",
+      locale,
       status: "pending",
-      sourceUtm: input.sourceUtm ?? null,
+      sourceUtm,
       confirmTokenHash: hashNewsletterToken(confirmToken),
       unsubscribeTokenHash: hashNewsletterToken(unsubscribeToken),
       confirmedAt: null,
     })
-    .onDuplicateKeyUpdate({
-      set: {
-        locale: input.locale ?? "en",
-        status: "pending",
-        sourceUtm: input.sourceUtm ?? null,
-        confirmTokenHash: hashNewsletterToken(confirmToken),
-        unsubscribeTokenHash: hashNewsletterToken(unsubscribeToken),
-        confirmedAt: null,
-      },
+    return { confirmToken, unsubscribeToken }
+  }
+
+  // Re-subscribing must never downgrade a confirmed subscriber back to pending.
+  const keptConfirmed = existing[0].status === "confirmed"
+
+  await db
+    .update(subscribers)
+    .set({
+      locale,
+      sourceUtm,
+      status: keptConfirmed ? "confirmed" : "pending",
+      confirmTokenHash: hashNewsletterToken(confirmToken),
+      unsubscribeTokenHash: hashNewsletterToken(unsubscribeToken),
+      ...(keptConfirmed ? {} : { confirmedAt: null }),
     })
+    .where(eq(subscribers.id, existing[0].id))
 
   return { confirmToken, unsubscribeToken }
 }
@@ -95,7 +109,12 @@ export async function unsubscribeNewsletter(
 
   await db
     .update(subscribers)
-    .set({ status: "unsubscribed", confirmTokenHash: null })
+    .set({
+      status: "unsubscribed",
+      confirmedAt: null,
+      confirmTokenHash: null,
+      unsubscribeTokenHash: null,
+    })
     .where(eq(subscribers.id, row.id))
 
   return row.email
