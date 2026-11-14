@@ -154,11 +154,13 @@ Perbaikan yang diterapkan:
 - Dead code dihapus: 8 komponen brand (termasuk `hero-visual`), `content/agent-characters.ts`, `getServerEnv`/`serverSchema`, 6 komponen shadcn tak terpakai.
 - `FactProps.id` menyempit ke `FactId`; root `not-found` bilingual + inline style (tanpa ketergantungan token).
 
-Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman.
+Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman · Playwright motion 4/4 (cube rotate + scroll bridge).
 
 ## Perbaikan bug scroll/neon — 14 November 2026
 - `ScrollBridge` kata (`scroll-bridge.tsx`): ganti `inline-block whitespace-nowrap pr-[0.32em] last:pr-0` (spasi kata merata karena gap samar antar `inline-block`) → `flex items-center gap-[0.32em]` pada wadah + `whitespace-nowrap` pada tiap kata. Scroll marker merata.
 - Neon (`word-neon.ts`): jendela neon sekarang mencakup rentang penuh scroll 0–1 (`slot = 1/count`, `start = index·slot`, `end = start + slot`) tanpa zona mati di ujung → neon menyelimuti progresif setiap kata saat di-scroll.
 
-## Perbaikan rotasi cube — 14 November 2026
-- `practice-cube.tsx`: `scrollYaw` (rotasi driven scroll) terus berubah saat discroll dan bentrok dengan drag. Ditambahkan `scrollEnabled` motion value: saat pointer down, `scrollEnabled.set(0)` mencegah scroll mempengaruhi rotasi selama dan setelah drag. `baseYawRef` menangkap scrollYaw saat drag mulai agar snap-to-90 hitung dari base yang frozen, bukan nilai scroll yang berubah-ubah. Cube sekarang bisa dirotasi ke 0/90/180/-90 dan tetap di posisi tersebut.
+## Perbaikan rotasi cube — 14 November 2026 (commit 2f68757)
+- `practice-cube.tsx`: `scrollEnabled` motion value mencegah scroll mempengaruhi rotasi saat drag; `baseYaw` motion value (bukan ref) menangkap yaw saat pointer down sehingga snap-to-90 (`yawAdjustToFace`) dihitung dari base yang frozen dan TETEP di posisi tersebut setelah discroll. `dragYaw` di-reset ke 0 saat pointer mulai.
+- Verifikasi browser nyata (Playwright Chromium): error snap 0.000° untuk +90/−90/+180, tetep setelah scroll ±600px, tepat satu face tidak `inert`.
+- Tambah `tests/motion/cube-rotate.spec.ts` dan `tests/motion/scroll-bridge.spec.ts` (Playwright, 4/4 lulus).
