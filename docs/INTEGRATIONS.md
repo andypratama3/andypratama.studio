@@ -1,6 +1,6 @@
 # INTEGRATIONS — Matriks alat vs bukti
 
-> **Update 14 November 2026 (J7).** Angka tes: `pnpm test` → 23 file / 68 tes; `pnpm test:e2e` → 65 passed.
+> **Update 14 November 2026 (J7 + J8).** Angka tes: `pnpm test` → 24 file / 70 tes; `pnpm test:e2e` → 69 passed.
 > Sumber status tunggal: `docs/STATUS.md`. `react-hook-form` **dipakai** di `src/components/brand/contact-form.tsx`.
 > Motion final `domAnimation` (`src/components/providers/motion-provider.tsx`), bukan `domMax`.
 > Klien DB lazy (`src/db/index.ts`) → `pnpm build` lulus tanpa `DATABASE_URL`.
@@ -14,8 +14,8 @@
 > | better-auth | ok | owner-only, proxy + layout guard, bootstrap token; fail-closed saat runtime |
 > | react-hook-form + zod | ok | contact form RHF; route zod (contact/newsletter/agent) |
 > | nodemailer | sebagian | file transport dev; SMTP produksi menunggu D-01 |
-> | vitest | ok | 23 file / 68 test |
-> | Playwright + axe | ok | `pnpm test:e2e` → 65 passed (server standalone) |
+> | vitest | ok | 24 file / 70 test |
+> | Playwright + axe | ok | `pnpm test:e2e` → 69 passed (server standalone) |
 > | Docker | sebagian | Dockerfile + compose produksi ada; image belum dibangun |
 > | Backup | ok | `scripts/backup.sh`; dump + restore DB bersih teruji; enkripsi GPG teruji |
 > | Analytics (Umami) | menunggu D-02 | env + `track()` no-op; tidak ada script dimuat |

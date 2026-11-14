@@ -2,7 +2,7 @@
 
 > **Update 14 November 2026 (J7).** Dokumen ini **arsip rencana** (baseline 12 Nov: 17 file/47 tes,
 > MySQL mati). Eksekusi sebenarnya ada di `docs/INTEGRATION-LOG.md`; status tunggal di `docs/STATUS.md`.
-> Angka terkini: `pnpm test` 23 file / 68 tes, `pnpm test:e2e` 65 passed, `pnpm build` sukses
+> Angka terkini: `pnpm test` 24 file / 70 tes, `pnpm test:e2e` 69 passed, `pnpm build` sukses
 > tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`.
 > `EXECUTION-PLAN.md` ada di root repo (dipulihkan lewat `origin/main`); rujukan ke arsip
 > fase di bawah tetap historis.

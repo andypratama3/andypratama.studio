@@ -1,7 +1,7 @@
 # STATUS — sumber tunggal status proyek
 
-Update: **14 November 2026**. Cabang `rebuild/studio` (merge `origin/main` `e28bdd2` +
-audit J7). Rincian audit: `docs/AUDIT-2026-11-12.md`.
+Update: **14 November 2026**. Cabang `rebuild/studio` (merge `origin/main` `bff4c7e` +
+audit J7 + perbaikan J8 drag cube). Rincian audit: `docs/AUDIT-2026-11-12.md`.
 Dokumen lain (`PLUGIN-AUDIT`, `COMPONENT-QA`, `LAYOUT-AUDIT`, `REFERENCES`, `INTEGRATIONS`, `MOTION`)
 menunjuk ke halaman ini untuk status; isi mereka adalah arsip bertanggal.
 
@@ -10,9 +10,9 @@ menunjuk ke halaman ini untuk status; isi mereka adalah arsip bertanggal.
 | Area | Status | Bukti | Tanggal |
 |---|---|---|---|
 | Typecheck & lint | ok | `pnpm typecheck` 0 error, `pnpm lint` 0 error | 14 Nov 2026 |
-| Unit test | ok | `pnpm test` → 23 file / 68 tes lulus | 14 Nov 2026 |
+| Unit test | ok | `pnpm test` → 24 file / 70 tes lulus | 14 Nov 2026 |
 | Build | ok | `pnpm build` sukses tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`; `.next/standalone/server.js` ada | 14 Nov 2026 |
-| E2E + axe | ok | 65 passed (wiring + motion + axe) | 14 Nov 2026 |
+| E2E + axe | ok | 69 passed (wiring + motion + axe) | 14 Nov 2026 |
 | Wiring | sebagian | `ok=13 partial=1 missing=0 skipped=2`; partial `unicornstudio-react` (A-08), skipped `lenis`/`gsap` | 14 Nov 2026 |
 | Database | ok | MySQL 8.4 (docker) 21 tabel, migrasi `0000`–`0002`, seed idempoten, `pnpm db:up` → `migrate` → `seed` sukses | 14 Nov 2026 |
 | Auth owner | ok | `/dashboard` tanpa sesi → 307 `/sign-in`; build & runtime tanpa secret → fail-closed (503/redirect), bukan crash | 14 Nov 2026 |
@@ -155,14 +155,36 @@ Perbaikan yang diterapkan:
 - Dead code dihapus: 8 komponen brand (termasuk `hero-visual`), `content/agent-characters.ts`, `getServerEnv`/`serverSchema`, 6 komponen shadcn tak terpakai.
 - `FactProps.id` menyempit ke `FactId`; root `not-found` bilingual + inline style (tanpa ketergantungan token).
 
-Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman.
+Verifikasi: `pnpm typecheck` 0 error · `pnpm lint` 0 masalah · `pnpm test` 62/62 (21 file) · `pnpm build` sukses 73/73 halaman · Playwright motion 4/4 (cube rotate + scroll bridge).
 
 ## Perbaikan bug scroll/neon — 14 November 2026
 - `ScrollBridge` kata (`scroll-bridge.tsx`): ganti `inline-block whitespace-nowrap pr-[0.32em] last:pr-0` (spasi kata merata karena gap samar antar `inline-block`) → `flex items-center gap-[0.32em]` pada wadah + `whitespace-nowrap` pada tiap kata. Scroll marker merata.
 - Neon (`word-neon.ts`): jendela neon sekarang mencakup rentang penuh scroll 0–1 (`slot = 1/count`, `start = index·slot`, `end = start + slot`) tanpa zona mati di ujung → neon menyelimuti progresif setiap kata saat di-scroll.
 
-## Perbaikan rotasi cube — 14 November 2026
-- `practice-cube.tsx`: `scrollYaw` (rotasi driven scroll) terus berubah saat discroll dan bentrok dengan drag. Ditambahkan `scrollEnabled` motion value: saat pointer down, `scrollEnabled.set(0)` mencegah scroll mempengaruhi rotasi selama dan setelah drag. `baseYawRef` menangkap scrollYaw saat drag mulai agar snap-to-90 hitung dari base yang frozen, bukan nilai scroll yang berubah-ubah. Cube sekarang bisa dirotasi ke 0/90/180/-90 dan tetap di posisi tersebut.
+## Perbaikan rotasi cube — 14 November 2026 (commit 2f68757)
+- `practice-cube.tsx`: `scrollEnabled` motion value mencegah scroll mempengaruhi rotasi saat drag; `baseYaw` motion value (bukan ref) menangkap yaw saat pointer down sehingga snap-to-90 (`yawAdjustToFace`) dihitung dari base yang frozen dan TETEP di posisi tersebut setelah discroll. `dragYaw` di-reset ke 0 saat pointer mulai.
+- Verifikasi browser nyata (Playwright Chromium): error snap 0.000° untuk +90/−90/+180, tetap setelah scroll ±600px, tepat satu face tidak `inert`.
+- Tambah `tests/motion/cube-rotate.spec.ts` dan `tests/motion/scroll-bridge.spec.ts` (Playwright, 4/4 lulus).
+
+## Perbaikan drag cube: native drag & drop membatalkan gesture — 14 November 2026 (J8)
+
+- **Gejala**: `tests/motion/cube-rotate.spec.ts` (spec baru dari `origin/main`, commit `2f68757`)
+  gagal: drag +90° berakhir di 180° (error 90°), bukan 270°. Reproduksi konsisten di
+  Chrome lokal (system Chrome via `PLAYWRIGHT_CHANNEL=chrome`).
+- **Akar masalah** (bukti: event `dragstart` → `pointercancel` tercatat di DOM saat drag):
+  muka cube adalah tautan (`<a href>`). Chromium memulai **native HTML5 drag-and-drop**
+  saat tautan itu didrag; browser kemudian menembakkan `pointercancel`, sehingga
+  `onPointerCancel` mengakhiri gestur rotasi lebih awal dan snap terjadi pada sudut yang salah.
+  Ini bug produk nyata di browser pengguna, bukan hanya masalah test.
+- **Perbaikan**: `src/components/brand/practice-cube.tsx` — tiap muka (`FaceCard`) memakai
+  `draggable={false}`, dan scene membatalkan `dragstart` (`onDragStart` → `preventDefault()`).
+  Tautan tetap bisa diklik; gestur rotasi tidak lagi dibatalkan browser.
+- **Regresi**: `tests/practice-cube-native-drag.test.tsx` (2 tes: link muka non-draggable +
+  `dragstart` di-cancel di dalam scene).
+- **Spec motion di-hardening**: `tests/motion/cube-rotate.spec.ts` kini menunggu yaw stabil
+  (`readStableYaw`) sebelum membaca nilai, sehingga tidak lagi menangkap animasi yang belum selesai.
+- **Bukti**: `tests/motion/cube-rotate.spec.ts` `--repeat-each=3` → 9/9 lulus, error snap 0.000°
+  untuk +90/−90/+180 dan tetap terkunci setelah scroll ±600px; `pnpm test:e2e` → 69 passed.
 
 ## Audit J7 — 14 November 2026 (merge `origin/main` + audit seluruh app)
 
@@ -190,5 +212,5 @@ Verifikasi: `pnpm typecheck` 0 · `pnpm lint` 0 · `pnpm test` 23 file / 68 tes 
 sweep 252 pengukuran tanpa overflow/duplicate id/heading skip/input tanpa label · DB `db:up`→`migrate`→`seed`
 21 tabel · tulis: kontak→`leads`, newsletter pending→confirmed→unsubscribed, `/go`→302+`link_clicks`.
 
-Produksi tidak disentuh: `next-server v16.3.3` di port 3001 tetap berjalan (200). Commit lokal di
-`rebuild/studio` (3 commit), belum push/deploy.
+Produksi tidak disentuh: `next-server v16.3.3` di port 3001 tetap berjalan (200). Commit sudah
+dipush ke `origin/rebuild/studio` dengan target merge ke `origin/main`; deploy produksi tidak dilakukan.

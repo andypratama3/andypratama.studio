@@ -130,7 +130,7 @@
   src/messages                   en.json, id.json (397 kunci masing-masing)
   drizzle/                       migrasi SQL
   scripts/                       db-up/down, seed, import-csv, agent-key, backup, wiring-check, start-standalone, export-copy-deck
-  tests/                         23 file unit + tests/wiring, tests/motion
+  tests/                         24 file unit + tests/wiring, tests/motion
   ```
 
   ---
@@ -435,9 +435,9 @@
   |---|---|
   | `pnpm typecheck` | 0 error |
   | `pnpm lint` | 0 error |
-  | `pnpm test` | 23 file / 68 tes lulus |
+  | `pnpm test` | 24 file / 70 tes lulus |
   | `pnpm build` | sukses **tanpa** `DATABASE_URL`/`BETTER_AUTH_SECRET`; `.next/standalone/server.js` ada |
-  | `pnpm test:e2e` | 65 lulus (server standalone, port 3010) |
+  | `pnpm test:e2e` | 69 lulus (server standalone, port 3010) |
   | `pnpm wiring:check` | `ok=13 partial=1 missing=0 skipped=2` |
   | Backup + restore | dump 33K → restore ke DB bersih → 21 tabel |
   | Axe WCAG AA | 0 pelanggaran di 22 route × light/dark |

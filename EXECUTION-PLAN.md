@@ -1,22 +1,22 @@
 # andypratama.studio — Rencana Eksekusi
 
-> **Update 14 November 2026 (Audit J7).** `origin/main` (7 commit: DB/auth/dashboard tulis,
-> copy deck, compose, Dockerfile) sudah di-merge ke `rebuild/studio`; 4 konflik diresolusi dan
-> fix Batch 1 dipertahankan. Cross-check 14 Nov 2026: `typecheck` 0, `lint` 0,
-> `test` 68/68 (23 file), `build` 73/73 halaman **tanpa** `DATABASE_URL`/`BETTER_AUTH_SECRET`,
-> `test:e2e` 65 passed, axe 0 pelanggaran di 22 route × 2 tema, sweep 252 pengukuran tanpa
+> **Update 14 November 2026 (Audit J7 + J8).** `origin/main` sudah di-merge ke `rebuild/studio`
+> (7 commit di Batch J7 + 2 commit `2f68757`/`bff4c7e` di J8); konflik diresolusi dan fix
+> Batch 1 dipertahankan. Cross-check 14 Nov 2026: `typecheck` 0, `lint` 0,
+> `test` 70/70 (24 file), `build` 73/73 halaman **tanpa** `DATABASE_URL`/`BETTER_AUTH_SECRET`,
+> `test:e2e` 69 passed, axe 0 pelanggaran di 22 route × 2 tema, sweep 252 pengukuran tanpa
 > overflow/duplicate id/heading skip/input tanpa label. Rincian: `docs/AUDIT-2026-11-12.md`.
 > Status ringkas: I0–I6 selesai; sisanya butir yang butuh persetujuan pemilik (email D-01,
 > analitik D-02, anti-spam D-03, rate-limit persisten D-04, CV A-03, deploy/DNS). Tabel di bawah
 > adalah status per 14 Nov 2026 dan disimpan sebagai riwayat eksekusi.
 
-**Status (diperbarui 14 Nov 2026, Audit J7):** **bukan HOLD.**
+**Status (diperbarui 14 Nov 2026, Audit J7 + J8):** **bukan HOLD.**
 
 | Fase | Status nyata | Catatan (bukti 14 Nov 2026) |
 |---|---|---|
 | Fase 0 (gate/aset) | **selesai** | Repo fondasi, token, DB lokal (docker MySQL 8.4, 21 tabel), inventaris lama; `pnpm typecheck/lint/test/build` lulus |
 | Fase 1 (foundation publik) | **selesai** | Next 16 + React 19 + next-intl + tokens + brand layout; Inter vendored; 0 hex di komponen publik |
-| Fase 2 (konten MVP + wiring) | **selesai** | Home, `/start`, DualBrand, `/go`, API contact/newsletter, privacy/cv/links; e2e 65 passed |
+| Fase 2 (konten MVP + wiring) | **selesai** | Home, `/start`, DualBrand, `/go`, API contact/newsletter, privacy/cv/links; e2e 69 passed |
 | Fase 3 (DB/auth/dashboard) | **selesai** | MySQL 21 tabel (migrasi `0000`–`0002`), better-auth fail-closed, dashboard 11 halaman ber-`requireOwner`; DB lazy → build tanpa env tetap lulus |
 | Fase 4–6 | **sebagian** | Lead DB, newsletter double opt-in, `/go` → `link_clicks`, CI, Docker/compose sudah ada dan teruji lokal; newsletter+kontak produksi masih butuh SMTP (D-01); image Docker belum di-build; deploy/DNS menunggu Owner |
 
@@ -217,6 +217,30 @@ Tulis: kontak → leads; newsletter pending → confirmed → unsubscribed; /go 
 Menunggu Owner (tidak dieksekusi otomatis): `NEXT_PUBLIC_SITE_URL` produksi, verifikasi
 `OUTBOUND_LINKS.dualbrand*` (DNS demo belum resolve), SMTP (D-01), image Docker, deploy/DNS,
 `facts.ts`, harga, publish, hapus data.
+
+---
+
+## Audit J8 — 14 November 2026 (merge `origin/main` `bff4c7e` + perbaikan drag cube)
+
+Lingkup: verifikasi ulang setelah merge 2 commit baru dari `origin/main`
+(`2f68757` snap-to-90 cube + spec Playwright, `bff4c7e` tracker). Ledger: `docs/INTEGRATION-LOG.md` (I9).
+
+| Area | Temuan | Perbaikan |
+|---|---|---|
+| Cube | drag +90° berakhir di 180° (error 90°), spec `cube-rotate` gagal | akar masalah: Chromium memulai native drag-and-drop pada muka cube (tautan) → `pointercancel` membatalkan gestur; muka `draggable={false}` + scene membatalkan `dragstart` |
+| Regresi | belum ada tes untuk native drag | `tests/practice-cube-native-drag.test.tsx` (2 tes) |
+| Test motion | spec membaca yaw sebelum animasi snap selesai | `readStableYaw()` menunggu yaw stabil |
+
+Verifikasi (perintah nyata):
+
+```text
+pnpm typecheck → 0 error
+pnpm lint → 0 error
+pnpm test → 24 file / 70 tes lulus
+pnpm build → sukses 73/73 halaman (tanpa DATABASE_URL/BETTER_AUTH_SECRET)
+PORT=3010 PLAYWRIGHT_BASE_URL=http://127.0.0.1:3010 PLAYWRIGHT_CHANNEL=chrome pnpm test:e2e → 69 passed
+tests/motion/cube-rotate.spec.ts --repeat-each=3 → 9/9 lulus, error snap 0.000°
+```
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **Update 14 November 2026 (J7).** Sumber status tunggal: `docs/STATUS.md`.
 > Dashboard **ada** (11 halaman, 21 server action ber-`requireOwner`); Drizzle + Better Auth terpasang.
-> `pnpm test:e2e` → **65 passed** (bukan 21). Axe WCAG 2.x AA: 0 pelanggaran di 22 route ×
+> `pnpm test:e2e` → **69 passed** (bukan 21). Axe WCAG 2.x AA: 0 pelanggaran di 22 route ×
 > light/dark (390px). Sweep 36 route × 7 viewport (320–1440): 0 overflow, 0 duplicate `id`,
 > 0 heading skip, semua input berlabel. Matriks D.6 di bawah adalah arsip 9 Nov 2026.
 
@@ -76,6 +76,6 @@ Titik D.6: (1) token (2) dua tema AA (3) 375/768/1280 (4) keyboard (5) SR/axe (6
 | `/work` + `/work/sakolentra` stub | HIGH | Diisi dari messages Home |
 | `/license` kosong di jalur DualBrand | MEDIUM | Overview + Gumroad/FAQ (tanpa klausul dikarang) |
 
-Verifier: `pnpm test:e2e` → **65 passed** (14 Nov 2026; 63 passed pada 13 Nov; arsip 9 Nov mencatat 21 passed).
+Verifier: `pnpm test:e2e` → **69 passed** (14 Nov 2026; 65 passed setelah J7, 63 passed pada 13 Nov; arsip 9 Nov mencatat 21 passed).
 
 Owner: tambah profil sosial di `src/content/outbound-links.ts` bila URL sudah diverifikasi.

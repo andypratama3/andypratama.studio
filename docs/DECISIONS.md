@@ -190,3 +190,9 @@ Keputusan-keputusan berikut dikonfirmasi Owner sebelum eksekusi Batch 1.
 - **Alasan**: Bypass sebelumnya tidak pernah bisa dipakai (proxy selalu redirect), sedangkan halaman diagnostik ikut terindeks.
 - **Bukti**: `DASHBOARD_DEV_BYPASS=1` → `/dashboard` 200 dengan banner DB down (tanpa MySQL) dan 200 dengan data (MySQL aktif); test wiring "diagnostic routes stay out of the index" lulus.
 - **Tanggal**: 14 November 2026.
+
+## 32. Muka cube non-draggable agar gestur rotasi tidak dibatalkan browser (J8) — 14 Nov 2026
+- **Keputusan**: Tiap muka cube (`FaceCard`) memakai `draggable={false}` dan scene membatalkan event `dragstart` (`onDragStart` → `preventDefault()`). Tautan muka tetap dapat diklik; gestur pointer untuk rotasi tidak lagi diinterupsi `pointercancel`.
+- **Alasan**: Muka cube adalah tautan (`<a href>`). Chromium memulai native HTML5 drag-and-drop saat tautan didrag dan menembakkan `pointercancel`, sehingga `onPointerCancel` mengakhiri rotasi lebih awal dan cube snap ke sudut yang salah (drag +90° berakhir di 180°, bukan 270°). Ini perilaku nyata di browser pengguna, bukan hanya di test.
+- **Bukti**: `tests/practice-cube-native-drag.test.tsx` (2 tes regresi); `tests/motion/cube-rotate.spec.ts --repeat-each=3` → 9/9 lulus dengan error snap 0.000° untuk +90/−90/+180 dan tetap terkunci setelah scroll ±600px; `pnpm test:e2e` → 69 passed.
+- **Tanggal**: 14 November 2026.

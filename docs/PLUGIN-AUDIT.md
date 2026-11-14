@@ -3,7 +3,7 @@
 > **Update 14 November 2026 (J7).** Sumber status tunggal: `docs/STATUS.md`.
 > Koreksi: motion memakai `domAnimation` (bukan `domMax`); drizzle + better-auth **sudah terpasang**
 > (21 tabel aplikasi, owner-only, fail-closed saat runtime); `react-hook-form` dipakai di contact form;
-> `pnpm test:e2e` → 65 passed; `pnpm build` lulus tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`.
+> `pnpm test:e2e` → 69 passed; `pnpm build` lulus tanpa `DATABASE_URL`/`BETTER_AUTH_SECRET`.
 > Isi di bawah adalah arsip 9 Nov 2026.
 
 Tanggal: 9 November 2026 (eksekusi penuh Owner).

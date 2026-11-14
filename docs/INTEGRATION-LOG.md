@@ -162,13 +162,47 @@ Belum (butuh Owner): `NEXT_PUBLIC_SITE_URL` produksi, verifikasi `OUTBOUND_LINKS
 SMTP (D-01), image Docker, deploy/DNS. Produksi tidak disentuh: `next-server v16.3.3`
 di port 3001 tetap berjalan.
 
-## Verifikasi kumulatif I0–I8 (14 November 2026)
+## I9 — Merge `origin/main` (`bff4c7e`) + perbaikan drag cube (J8) — 14 November 2026
+
+Merge: `origin/main` (2 commit: `2f68757` snap-to-90 cube + spec Playwright,
+`bff4c7e` tracker) di-merge ke `rebuild/studio`; 1 konflik di `docs/STATUS.md`
+diresolusi dengan mempertahankan Audit J7 **dan** versi terbaru rotasi cube.
+
+Temuan saat verifikasi merge — spec `tests/motion/cube-rotate.spec.ts` (baru dari main) gagal:
+drag +90° berakhir di 180° (error 90°), bukan 270°.
+
+- **Akar masalah**: muka cube adalah tautan (`<a href>`). Chromium memulai native HTML5
+  drag-and-drop saat tautan didrag → browser menembakkan `pointercancel` → `onPointerCancel`
+  mengakhiri gestur rotasi lebih awal → snap ke sudut yang salah. Terbukti dari event DOM
+  (`dragstart` → `pointercancel`) saat drag, dan dari reproduksi manual: dengan
+  `draggable="false"` pada muka, drag berjalan penuh dan snap tepat (270.000°).
+- **Perbaikan**: `src/components/brand/practice-cube.tsx` — `FaceCard` memakai
+  `draggable={false}`; scene membatalkan `dragstart` (`onDragStart` → `preventDefault()`).
+  Tautan tetap dapat diklik; gestur rotasi tidak dibatalkan browser.
+- **Regresi unit**: `tests/practice-cube-native-drag.test.tsx` (2 tes: link muka non-draggable,
+  `dragstart` di-cancel di dalam scene).
+- **Spec motion di-hardening**: `tests/motion/cube-rotate.spec.ts` menunggu yaw stabil
+  (`readStableYaw`) sebelum membaca nilai — tidak lagi menangkap animasi yang belum selesai.
+- **Tidak ada perubahanproduksi**: `next-server v16.3.3` di port 3001 tetap berjalan.
+
+Bukti (perintah nyata, 14 Nov 2026):
 
 ```text
 pnpm typecheck → 0 error
 pnpm lint → 0 error
-pnpm test → 23 files / 68 tests passed
+pnpm test → 24 files / 70 tests passed
+pnpm build → sukses tanpa DATABASE_URL/BETTER_AUTH_SECRET, 73/73 halaman statis
+pnpm test:e2e → 69 passed (PORT=3010, standalone server)
+tests/motion/cube-rotate.spec.ts --repeat-each=3 → 9/9 passed, error snap 0.000°
+```
+
+## Verifikasi kumulatif I0–I9 (14 November 2026)
+
+```text
+pnpm typecheck → 0 error
+pnpm lint → 0 error
+pnpm test → 24 files / 70 tests passed
 pnpm build → sukses tanpa DATABASE_URL/BETTER_AUTH_SECRET, .next/standalone/server.js ada
-pnpm test:e2e → 65 passed (PORT=3010, standalone server)
+pnpm test:e2e → 69 passed (PORT=3010, standalone server)
 pnpm wiring:check → ok=13 partial=1 missing=0 skipped=2
 ```
