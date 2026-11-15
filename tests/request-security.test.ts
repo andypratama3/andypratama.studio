@@ -37,12 +37,15 @@ describe("isAllowedBrowserOrigin", () => {
     ).toBe(true)
   })
 
-  it("allows the origin that matches the addressed host", () => {
+  it("rejects an origin spoofed with forwarded host headers", () => {
     const req = new Request("http://internal-host:3000/api/contact", {
       method: "POST",
-      headers: { origin: "https://andypratama.studio", host: "andypratama.studio" },
+      headers: {
+        origin: "https://attacker.example",
+        "x-forwarded-host": "attacker.example",
+      },
     })
-    expect(isAllowedBrowserOrigin(req)).toBe(true)
+    expect(isAllowedBrowserOrigin(req)).toBe(false)
   })
 
   it("rejects cross-site origins", () => {

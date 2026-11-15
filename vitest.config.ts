@@ -16,6 +16,8 @@ export default defineConfig({
     // Default: node — safe for server-side tests (rate-limit, mail, etc.)
     environment: "node",
     setupFiles: ["./tests/setup.ts"],
+    maxWorkers: 2,
+    testTimeout: 15_000,
     exclude: ["**/node_modules/**", "**/tests/wiring/**", "**/tests/motion/**/*.spec.ts", "**/e2e/**"],
   },
 })

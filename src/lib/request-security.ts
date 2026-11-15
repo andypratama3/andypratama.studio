@@ -22,18 +22,5 @@ export function isAllowedBrowserOrigin(request: Request): boolean {
     // keep the configured origin only
   }
 
-  // Reverse proxies rewrite the internal URL, so the browser origin is also
-  // matched against the host the request was addressed to.
-  try {
-    const host =
-      request.headers.get("x-forwarded-host") ?? request.headers.get("host")
-    if (host) {
-      const protocol = new URL(origin).protocol
-      allowed.add(`${protocol}//${host}`)
-    }
-  } catch {
-    // ignore malformed origin
-  }
-
   return allowed.has(origin)
 }

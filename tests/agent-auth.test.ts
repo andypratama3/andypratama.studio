@@ -16,6 +16,7 @@ vi.mock("@/db", () => ({
   },
 }))
 
+import { authenticateAgent, agentCanWrite } from "@/lib/agent-auth"
 import {
   hashAgentKey,
   isAgentKeyFormat,
@@ -54,7 +55,6 @@ describe("agent key helpers", () => {
 
 describe("authenticateAgent", () => {
   it("rejects missing and malformed keys", async () => {
-    const { authenticateAgent } = await import("@/lib/agent-auth")
     expect(await authenticateAgent(request())).toBeNull()
     expect(
       await authenticateAgent(request("Bearer not-an-agent-key"))
@@ -63,7 +63,6 @@ describe("authenticateAgent", () => {
 
   it("rejects unknown keys", async () => {
     state.rows = []
-    const { authenticateAgent } = await import("@/lib/agent-auth")
     expect(await authenticateAgent(request(`Bearer ${token}`))).toBeNull()
   })
 
@@ -77,9 +76,6 @@ describe("authenticateAgent", () => {
         apiKeyHash: hashAgentKey(token),
       },
     ]
-    const { agentCanWrite, authenticateAgent } = await import(
-      "@/lib/agent-auth"
-    )
     const agent = await authenticateAgent(request(`Bearer ${token}`))
     expect(agent).toMatchObject({ id: "agent-1", slug: "engineering-lead" })
     expect(agentCanWrite(agent!, "tasks")).toBe(true)

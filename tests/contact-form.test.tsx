@@ -6,8 +6,7 @@
  * 3. Server error for 429 rate limit
  */
 import { describe, expect, it, vi, beforeEach } from "vitest"
-import { render, screen, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 
 // ── next-intl mock ────────────────────────────────────────────────────────────
 vi.mock("next-intl", () => ({
@@ -71,7 +70,7 @@ describe("<ContactForm />", () => {
     render(<ContactForm labels={labels} />)
 
     const submitBtn = screen.getByRole("button", { name: /send message/i })
-    await userEvent.click(submitBtn)
+    fireEvent.click(submitBtn)
 
     await waitFor(() => {
       expect(screen.getByText("fieldRequired")).toBeInTheDocument()
@@ -88,13 +87,17 @@ describe("<ContactForm />", () => {
 
     render(<ContactForm labels={labels} />)
 
-    await userEvent.type(screen.getByLabelText("Name"), "Andy")
-    await userEvent.type(screen.getByLabelText("Email"), "andy@example.com")
+    fireEvent.change(screen.getByLabelText("Name"), { target: { value: "Andy" } })
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "andy@example.com" },
+    })
     // topic defaults to "project" so no need to change
-    await userEvent.type(screen.getByLabelText("Message"), "Hello, this is a test message.")
+    fireEvent.change(screen.getByLabelText("Message"), {
+      target: { value: "Hello, this is a test message." },
+    })
 
     const submitBtn = screen.getByRole("button", { name: /send message/i })
-    await userEvent.click(submitBtn)
+    fireEvent.click(submitBtn)
 
     await waitFor(() => {
       expect(screen.getByRole("status")).toBeInTheDocument()
@@ -107,12 +110,16 @@ describe("<ContactForm />", () => {
 
     render(<ContactForm labels={labels} />)
 
-    await userEvent.type(screen.getByLabelText("Name"), "Andy")
-    await userEvent.type(screen.getByLabelText("Email"), "andy@example.com")
-    await userEvent.type(screen.getByLabelText("Message"), "Hello, testing rate limit error.")
+    fireEvent.change(screen.getByLabelText("Name"), { target: { value: "Andy" } })
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "andy@example.com" },
+    })
+    fireEvent.change(screen.getByLabelText("Message"), {
+      target: { value: "Hello, testing rate limit error." },
+    })
 
     const submitBtn = screen.getByRole("button", { name: /send message/i })
-    await userEvent.click(submitBtn)
+    fireEvent.click(submitBtn)
 
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument()

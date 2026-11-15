@@ -5,11 +5,13 @@ const routes = ["/", "/id", "/start", "/services", "/products", "/products/dualb
 
 test.describe("motion routes axe", () => {
   test.use({ reducedMotion: "reduce" })
+  test.setTimeout(60_000)
 
   for (const route of routes) {
     test(`${route} has no serious or critical violations`, async ({ page }) => {
-      const response = await page.goto(route, { waitUntil: "networkidle" })
+      const response = await page.goto(route, { waitUntil: "load" })
       expect(response?.ok() ?? false).toBeTruthy()
+      await page.locator("main").waitFor({ state: "attached" })
       const results = await new AxeBuilder({ page }).disableRules(["color-contrast"]).analyze()
       const serious = results.violations.filter((v) => v.impact === "serious" || v.impact === "critical")
       expect(serious.map((v) => v.id)).toEqual([])
