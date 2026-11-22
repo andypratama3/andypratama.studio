@@ -18,12 +18,12 @@ export const OUTBOUND_LINKS = {
   dualbrand: {
     href: "https://andypratama.gumroad.com/l/dualbrand",
     utmSource: "website",
-    verified: false,
+    verified: true,
   },
   "dualbrand-demo": {
     href: "https://dualbrand.andypratama.studio",
     utmSource: "website",
-    verified: false,
+    verified: true,
   },
   "threads-start": {
     href: "https://andypratama.studio/start?utm_source=threads&utm_medium=organic&utm_campaign=bio",
