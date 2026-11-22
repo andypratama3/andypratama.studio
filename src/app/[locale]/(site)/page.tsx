@@ -645,15 +645,6 @@ export default async function HomePage({
         </Container>
       </Section>
 
-      {/* 11. Social proof — fully hidden when empty */}
-      {false ? (
-        <Section className="border-b border-border">
-          <Container>
-            <h2 className="text-display text-foreground">Feedback</h2>
-          </Container>
-        </Section>
-      ) : null}
-
       {/* Scroll transition 3 — horizontal wordmark scrub into CTA */}
       <div data-nav-theme="light" className="scroll-anchor relative border-b border-border">
         <ScrollParallax speed={0.1} className="z-0">
@@ -662,7 +653,7 @@ export default async function HomePage({
         <ScrollBridge text="ANDY PRATAMA STUDIO" />
       </div>
 
-      {/* 12. FAQ 4+8 */}
+      {/* 11. FAQ 4+8 */}
       <Section
         id="faq"
         navTheme="light"
@@ -701,7 +692,7 @@ export default async function HomePage({
         </Container>
       </Section>
 
-      {/* 13. Newsletter — hidden unless NEWSLETTER_ENABLED=1 */}
+      {/* 12. Newsletter — hidden unless NEWSLETTER_ENABLED=1 */}
       {publicEnv.NEWSLETTER_ENABLED === "1" ? (
         <Section navTheme="light" className="border-b border-border">
           <Container>
@@ -726,9 +717,9 @@ export default async function HomePage({
         </Section>
       ) : null}
 
-      {/* 14. Final CTA — invert emphasis */}
+      {/* 13. Final CTA — invert emphasis */}
       <Section
-        id="about"
+        id="start"
         emphasis
         navTheme="dark"
         className="surface-invert surface-glow border-b border-border"
