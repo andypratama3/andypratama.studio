@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import { randomUUID } from "node:crypto"
 import { db } from "@/db"
 import { agentMessages, agentTasks } from "@/db/schema"
-import { desc } from "drizzle-orm"
+import { desc, eq } from "drizzle-orm"
 import { z } from "zod"
 
 import { authenticateAgent, agentCanWrite } from "@/lib/agent-auth"
@@ -50,6 +50,7 @@ export async function GET(request: NextRequest) {
     const list = await db
       .select()
       .from(agentTasks)
+      .where(eq(agentTasks.agentId, agent.id))
       .orderBy(desc(agentTasks.createdAt))
       .limit(50)
 
